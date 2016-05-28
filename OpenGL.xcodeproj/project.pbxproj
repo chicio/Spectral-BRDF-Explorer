@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5FA0EDDC1CF9C6E70097BF98 /* tiny_obj_loader.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5FA0EDDA1CF9C6E70097BF98 /* tiny_obj_loader.cc */; };
+		5FA0EDDE1CF9C7E00097BF98 /* suzanne.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5FA0EDDD1CF9C7E00097BF98 /* suzanne.obj */; };
+		5FA0EDE01CF9D9600097BF98 /* suzanne_move.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5FA0EDDF1CF9D9600097BF98 /* suzanne_move.obj */; };
+		5FA0EDE21CF9DBBB0097BF98 /* suzanne_triangulate.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5FA0EDE11CF9DBBB0097BF98 /* suzanne_triangulate.obj */; };
+		5FA0EDE41CF9E5CB0097BF98 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5FA0EDE31CF9E5CB0097BF98 /* cube.obj */; };
 		5FEF360A1CF7B3D7003DE7BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF36091CF7B3D7003DE7BC /* main.m */; };
 		5FEF360D1CF7B3D7003DE7BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF360C1CF7B3D7003DE7BC /* AppDelegate.m */; };
-		5FEF36101CF7B3D7003DE7BC /* GLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF360F1CF7B3D7003DE7BC /* GLViewController.m */; };
+		5FEF36101CF7B3D7003DE7BC /* GLViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF360F1CF7B3D7003DE7BC /* GLViewController.mm */; };
 		5FEF36131CF7B3D7003DE7BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEF36111CF7B3D7003DE7BC /* Main.storyboard */; };
 		5FEF36151CF7B3D7003DE7BC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FEF36141CF7B3D7003DE7BC /* Assets.xcassets */; };
 		5FEF36181CF7B3D7003DE7BC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEF36161CF7B3D7003DE7BC /* LaunchScreen.storyboard */; };
@@ -19,12 +24,18 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5FA0EDDA1CF9C6E70097BF98 /* tiny_obj_loader.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tiny_obj_loader.cc; sourceTree = "<group>"; };
+		5FA0EDDB1CF9C6E70097BF98 /* tiny_obj_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tiny_obj_loader.h; sourceTree = "<group>"; };
+		5FA0EDDD1CF9C7E00097BF98 /* suzanne.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = suzanne.obj; sourceTree = "<group>"; };
+		5FA0EDDF1CF9D9600097BF98 /* suzanne_move.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = suzanne_move.obj; sourceTree = "<group>"; };
+		5FA0EDE11CF9DBBB0097BF98 /* suzanne_triangulate.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = suzanne_triangulate.obj; sourceTree = "<group>"; };
+		5FA0EDE31CF9E5CB0097BF98 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		5FEF36051CF7B3D7003DE7BC /* OpenGL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenGL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEF36091CF7B3D7003DE7BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5FEF360B1CF7B3D7003DE7BC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5FEF360C1CF7B3D7003DE7BC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5FEF360E1CF7B3D7003DE7BC /* GLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLViewController.h; sourceTree = "<group>"; };
-		5FEF360F1CF7B3D7003DE7BC /* GLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLViewController.m; sourceTree = "<group>"; };
+		5FEF360F1CF7B3D7003DE7BC /* GLViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = GLViewController.mm; sourceTree = "<group>"; };
 		5FEF36121CF7B3D7003DE7BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FEF36141CF7B3D7003DE7BC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FEF36171CF7B3D7003DE7BC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -67,10 +78,16 @@
 			children = (
 				5FEF36251CF7C00E003DE7BC /* vertex.vsh */,
 				5FEF36271CF7C023003DE7BC /* fragment.fsh */,
+				5FA0EDE31CF9E5CB0097BF98 /* cube.obj */,
+				5FA0EDDD1CF9C7E00097BF98 /* suzanne.obj */,
+				5FA0EDDF1CF9D9600097BF98 /* suzanne_move.obj */,
+				5FA0EDE11CF9DBBB0097BF98 /* suzanne_triangulate.obj */,
 				5FEF360B1CF7B3D7003DE7BC /* AppDelegate.h */,
 				5FEF360C1CF7B3D7003DE7BC /* AppDelegate.m */,
 				5FEF360E1CF7B3D7003DE7BC /* GLViewController.h */,
-				5FEF360F1CF7B3D7003DE7BC /* GLViewController.m */,
+				5FEF360F1CF7B3D7003DE7BC /* GLViewController.mm */,
+				5FA0EDDA1CF9C6E70097BF98 /* tiny_obj_loader.cc */,
+				5FA0EDDB1CF9C6E70097BF98 /* tiny_obj_loader.h */,
 				5FEF36111CF7B3D7003DE7BC /* Main.storyboard */,
 				5FEF36141CF7B3D7003DE7BC /* Assets.xcassets */,
 				5FEF36161CF7B3D7003DE7BC /* LaunchScreen.storyboard */,
@@ -158,8 +175,12 @@
 			files = (
 				5FEF36281CF7C023003DE7BC /* fragment.fsh in Resources */,
 				5FEF36261CF7C00E003DE7BC /* vertex.vsh in Resources */,
+				5FA0EDDE1CF9C7E00097BF98 /* suzanne.obj in Resources */,
+				5FA0EDE21CF9DBBB0097BF98 /* suzanne_triangulate.obj in Resources */,
 				5FEF36181CF7B3D7003DE7BC /* LaunchScreen.storyboard in Resources */,
 				5FEF36151CF7B3D7003DE7BC /* Assets.xcassets in Resources */,
+				5FA0EDE41CF9E5CB0097BF98 /* cube.obj in Resources */,
+				5FA0EDE01CF9D9600097BF98 /* suzanne_move.obj in Resources */,
 				5FEF36131CF7B3D7003DE7BC /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,8 +192,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FEF36101CF7B3D7003DE7BC /* GLViewController.m in Sources */,
+				5FEF36101CF7B3D7003DE7BC /* GLViewController.mm in Sources */,
 				5FEF360D1CF7B3D7003DE7BC /* AppDelegate.m in Sources */,
+				5FA0EDDC1CF9C6E70097BF98 /* tiny_obj_loader.cc in Sources */,
 				5FEF360A1CF7B3D7003DE7BC /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
