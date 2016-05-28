@@ -6,11 +6,14 @@
 //  Copyright © 2016 Fabrizio Duroni. All rights reserved.
 //
 
+#import <OpenGLES/ES3/gl.h>
 #import "GLViewController.h"
 
 @interface GLViewController () {
-
+    
+    GLuint _programObject;
     GLuint _vboIds[2];
+    GLint _stride;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -55,44 +58,64 @@ GLushort indices[3] = { 0, 1, 2 };
                                     alertControllerWithTitle:@"OpenGL"
                                     message:@"OpenGL ES 3 not available"
                                     preferredStyle:UIAlertControllerStyleAlert];
-
+        
         [self presentViewController:alert animated:YES completion:nil];
     }
     
-    GLKView *view = (GLKView *)self.view;
-    view.context = self.context;
-    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    
-    //Init opengl.
-    [self initOpenGL];
-    
-    //Load opengl data.
-    GLint stride = sizeof(GLfloat) * (VERTEX_POS_SIZE + VERTEX_COLOR_SIZE);
-    [self loadDataOpenGL:vertices andNumVertices:3 andStride:stride andIndices:indices andNumIndices:3];
+    if([EAGLContext setCurrentContext:self.context]) {
+        
+        GLKView *view = (GLKView *)self.view;
+        view.context = self.context;
+        view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+        
+        //Init opengl.
+        [self initOpenGL];
+        
+        //Load opengl data.
+        _stride = sizeof(GLfloat) * (VERTEX_POS_SIZE + VERTEX_COLOR_SIZE);
+        [self loadDataOpenGL:vertices andNumVertices:3 andStride:_stride andIndices:indices andNumIndices:3];
+    }
 }
 
 #pragma mark Init OpenGL
 
 - (void)initOpenGL {
-
-    const char *vertexShaderSource = [self shaderSource:@"vertex"];
-    const char *fragmentShaderSource = [self shaderSource:@"fragment"];
+    
+    const char *vertexShaderSource = [self shaderSource:@"vertex" andExtension:@"vsh"];
+    const char *fragmentShaderSource = [self shaderSource:@"fragment" andExtension:@"fsh"];
     
     //Load shaders.
     GLuint vertexShader = [self loadShader:GL_VERTEX_SHADER source:vertexShaderSource];
     GLuint fragmentShader = [self loadShader:GL_FRAGMENT_SHADER source:fragmentShaderSource];
     
     //Create program.
-    GLuint programObject = glCreateProgram();
+    _programObject = glCreateProgram();
     
     //Attach shader to program.
-    glAttachShader(programObject, vertexShader);
-    glAttachShader(programObject, fragmentShader);
+    glAttachShader(_programObject, vertexShader);
+    glAttachShader(_programObject, fragmentShader);
     
     //Link the program.
-    glLinkProgram(programObject);
+    glLinkProgram(_programObject);
     
-    //TODO: check program status.
+    // Check the link status
+    GLint linked;
+    glGetProgramiv (_programObject, GL_LINK_STATUS, &linked );
+    
+    if (!linked) {
+        
+        GLint infoLen = 0;
+        glGetProgramiv(_programObject, GL_INFO_LOG_LENGTH, &infoLen );
+        
+        if(infoLen > 1) {
+            
+            char *infoLog = malloc ( sizeof ( char ) * infoLen );
+            glGetProgramInfoLog ( _programObject, infoLen, NULL, infoLog );
+            free ( infoLog );
+        }
+        
+        glDeleteProgram ( _programObject );
+    }
     
     // Free up no longer needed shader resources
     glDeleteShader(vertexShader);
@@ -113,30 +136,16 @@ GLushort indices[3] = { 0, 1, 2 };
     //Start buffer for vertex data.
     glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);
     glBufferData(GL_ARRAY_BUFFER, vertexStride * numVertices, verticesArray, GL_STATIC_DRAW);
-
+    
     //start buffer for vertex indices.
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vboIds[1]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort) * numIndices, indicesArray, GL_STATIC_DRAW);
-    
-    //Enable vertex attribute pointer.
-    glEnableVertexAttribArray(VERTEX_POS_INDX);
-    glEnableVertexAttribArray(VERTEX_COLOR_INDX);
-
-//    glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE,
-//                           GL_FLOAT, GL_FALSE, vtxStride,
-//                           ( const void * ) offset );
-//    
-//    offset += VERTEX_POS_SIZE * sizeof ( GLfloat );
-//    glVertexAttribPointer ( VERTEX_COLOR_INDX,
-//                           VERTEX_COLOR_SIZE,
-//                           GL_FLOAT, GL_FALSE, vtxStride,
-//                           ( const void * ) offset );
 }
 
 #pragma mark Draw OpenGL
 
 - (void)update {
- 
+    
     NSLog(@"update");
 }
 
@@ -144,24 +153,45 @@ GLushort indices[3] = { 0, 1, 2 };
     
     NSLog(@"glkView");
     
+    //Set states.
+    glClear(GL_COLOR_BUFFER_BIT);
+//    glViewport(0, 0, 300, 300);
+    
+    //Install program.
+    glUseProgram(_programObject);
+    
+    //Bind buffers.
+    glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vboIds[1]);
+    
+    glEnableVertexAttribArray(VERTEX_POS_INDX);
+    glEnableVertexAttribArray(VERTEX_COLOR_INDX);
+    
+    //Load data using vertex array
+    //Last parameter for vertex buffer object is an offset inside data (array).
+    glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, _stride, 0);
+    glVertexAttribPointer(VERTEX_COLOR_INDX, VERTEX_COLOR_SIZE, GL_FLOAT, GL_FALSE, _stride, (const void * )(VERTEX_POS_SIZE * sizeof(GLfloat)));
+    
+    //Second parameter: number of indices
+    //Third parameter: indices data type
     glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, 0);
 }
 
 #pragma mark Shader OpenGL
 
-- (const char *)shaderSource:(NSString *)shaderName {
+- (const char *)shaderSource:(NSString *)shaderName andExtension:(NSString *)shaderExtension {
     
-    NSString *shaderPath = [[NSBundle mainBundle] pathForResource:shaderName ofType:@"sh"];
+    NSString *shaderPath = [[NSBundle mainBundle] pathForResource:shaderName ofType:shaderExtension];
     const char *shaderSource = [[NSString stringWithContentsOfFile:shaderPath
-                                                        encoding:NSUTF8StringEncoding
-                                                           error:nil] UTF8String];
+                                                          encoding:NSUTF8StringEncoding
+                                                             error:nil] UTF8String];
     return shaderSource;
 }
 
 - (GLuint)loadShader:(GLenum)type source:(const char *)shaderSrc {
     
     //Create the shader object.
-    GLuint shader = glCreateShader ( type );
+    GLuint shader = glCreateShader(type);
     
     if (shader == 0) {
         
@@ -174,7 +204,25 @@ GLushort indices[3] = { 0, 1, 2 };
     //Compile the shader.
     glCompileShader(shader);
     
-    //TODO: check shader status.
+    // Check the compile status
+    GLint compiled;
+    glGetShaderiv ( shader, GL_COMPILE_STATUS, &compiled );
+    
+    if (!compiled){
+        
+        GLint infoLen = 0;
+        glGetShaderiv ( shader, GL_INFO_LOG_LENGTH, &infoLen );
+        
+        if ( infoLen > 1 ){
+            
+            char *infoLog = malloc ( sizeof ( char ) * infoLen );
+            glGetShaderInfoLog ( shader, infoLen, NULL, infoLog );
+            free ( infoLog );
+        }
+        
+        glDeleteShader ( shader );
+        return 0;
+    }
     
     return shader;
 }
