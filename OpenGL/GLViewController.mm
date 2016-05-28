@@ -226,7 +226,7 @@
         if ( infoLen > 1 ){
             
             char *infoLog = (char *)malloc (sizeof(char) * infoLen);
-            glGetProgramInfoLog(_programObject, infoLen, NULL, infoLog);
+            glGetShaderInfoLog(shader, infoLen, NULL, infoLog);
             printf("%s", infoLog);
         }
         
