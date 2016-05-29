@@ -20,7 +20,9 @@
     GLint _stride;
     
     GLKMatrix4 _mvpMatrix;
+    GLKMatrix4 _normalMatrix;
     GLint _mvpLocation;
+    GLint _normalLocation;
     
     std::vector<tinyobj::shape_t> _shapes;
     std::vector<tinyobj::material_t> _materials;
@@ -34,9 +36,58 @@
 #pragma mark Data OpenGL
 
 #define VERTEX_POS_SIZE       3
+#define VERTEX_NORMAL_SIZE    3
 #define VERTEX_POS_INDX       0
+#define VERTEX_NORMAL_INDX    1
 
 #pragma mark Apple View Lifecycle
+
+GLfloat gCubeVertexData[216] =
+{
+    // Data layout for each line below is:
+    // positionX, positionY, positionZ,     normalX, normalY, normalZ,
+    0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,
+    0.5f, 0.5f, -0.5f,         1.0f, 0.0f, 0.0f,
+    0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
+    0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
+    0.5f, 0.5f, -0.5f,          1.0f, 0.0f, 0.0f,
+    0.5f, 0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
+    
+    0.5f, 0.5f, -0.5f,         0.0f, 1.0f, 0.0f,
+    -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
+    0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,
+    0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,
+    -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
+    -0.5f, 0.5f, 0.5f,         0.0f, 1.0f, 0.0f,
+    
+    -0.5f, 0.5f, -0.5f,        -1.0f, 0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,
+    -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
+    -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
+    -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,
+    -0.5f, -0.5f, 0.5f,        -1.0f, 0.0f, 0.0f,
+    
+    -0.5f, -0.5f, -0.5f,       0.0f, -1.0f, 0.0f,
+    0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
+    -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,
+    -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,
+    0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
+    0.5f, -0.5f, 0.5f,         0.0f, -1.0f, 0.0f,
+    
+    0.5f, 0.5f, 0.5f,          0.0f, 0.0f, 1.0f,
+    -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
+    0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
+    0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
+    -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
+    -0.5f, -0.5f, 0.5f,        0.0f, 0.0f, 1.0f,
+    
+    0.5f, -0.5f, -0.5f,        0.0f, 0.0f, -1.0f,
+    -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,
+    0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,
+    0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,
+    -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,
+    -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, -1.0f
+};
 
 - (void)viewDidLoad {
     
@@ -66,15 +117,50 @@
         std::string err;
         tinyobj::LoadObj(_shapes, _materials, err, [filePath cStringUsingEncoding:NSUTF8StringEncoding]);
         std::cout << "shapes: " << _shapes.size() << std::endl;
+
+        for (size_t v = 0; v < _shapes[0].mesh.positions.size() / 3; v++) {
+            printf("  v[%ld] = (%f, %f, %f)\n", v,
+                   _shapes[0].mesh.positions[3*v+0],
+                   _shapes[0].mesh.positions[3*v+1],
+                   _shapes[0].mesh.positions[3*v+2]);
+        }
+        
+        for (size_t v = 0; v < _shapes[0].mesh.normals.size() / 3; v++) {
+            printf("  vn[%ld] = (%f, %f, %f)\n", v,
+                   _shapes[0].mesh.normals[3*v+0],
+                   _shapes[0].mesh.normals[3*v+1],
+                   _shapes[0].mesh.normals[3*v+2]);
+        }
         
         //Init opengl.
         [self initOpenGL];
         
+        unsigned long vertexDataSize =_shapes[0].mesh.positions.size() + _shapes[0].mesh.normals.size();
+        
+        GLfloat vertexData[vertexDataSize];
+        
+        //Prepare data.
+        unsigned long numVertices = _shapes[0].mesh.positions.size() / 3;
+        for (int v = 0; v < numVertices; v++) {
+            
+            int currentVertexPosStart = v * (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE);
+            
+            vertexData[currentVertexPosStart] = _shapes[0].mesh.positions[3 * v + 0];
+            vertexData[currentVertexPosStart + 1] = _shapes[0].mesh.positions[3 * v + 1];
+            vertexData[currentVertexPosStart + 2] = _shapes[0].mesh.positions[3 * v + 2];
+            
+            int currentVertexNormStart = v * (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) + VERTEX_NORMAL_SIZE;
+            
+            vertexData[currentVertexNormStart] = _shapes[0].mesh.normals[3 * v + 0];
+            vertexData[currentVertexNormStart + 1] = _shapes[0].mesh.normals[3 * v + 1];
+            vertexData[currentVertexNormStart + 2] = _shapes[0].mesh.normals[3 * v + 2];
+        }
+        
         //Load opengl data.
-        _stride = sizeof(GLfloat) * (VERTEX_POS_SIZE);
-
-        [self loadDataOpenGL:_shapes[0].mesh.positions.data()
-              andNumVertices:(GLuint)_shapes[0].mesh.positions.size()
+        _stride = sizeof(GLfloat) * (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE);
+        
+        [self loadDataOpenGL:vertexData
+              andNumVertices:(GLuint)_shapes[0].mesh.positions.size()/3
                    andStride:_stride
                   andIndices:_shapes[0].mesh.indices.data()
                andNumIndices:(GLuint)_shapes[0].mesh.indices.size()];
@@ -113,15 +199,17 @@
         
         if(infoLen > 1) {
             
-            GLchar info[infoLen];
-            glGetProgramInfoLog(_programObject, infoLen, NULL, info);
+            char *infoLog = (char *)malloc (sizeof(char) * infoLen);
+            glGetProgramInfoLog(_programObject, infoLen, NULL, infoLog);
+            printf("%s", infoLog);
         }
         
         glDeleteProgram(_programObject);
     }
     
     //Prepare uniform to be loaded.
-    _mvpLocation = glGetUniformLocation(_programObject, "u_mvpMatrix");
+    _mvpLocation = glGetUniformLocation(_programObject, "mvpMatrix");
+    _normalLocation = glGetUniformLocation(_programObject, "normalMatrix");
     
     // Free up no longer needed shader resources
     glDeleteShader(vertexShader);
@@ -158,7 +246,11 @@
     
     //Modelview matrix.
     GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, 1.1, 0.0f, 0.8f, 0.0f);
+    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, 1.1, 0.0f, 1.0f, 0.0f);
+    
+    //Set inverse transpose matrix for normal.
+    _normalMatrix = GLKMatrix4InvertAndTranspose(modelViewMatrix, NULL);
+//    _normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), NULL);
 
     //Set uniform modelviewprojection matrix.
     _mvpMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
@@ -177,14 +269,24 @@
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vboIds[1]);
     
     //Enable vertex attribute.
+    GLuint offset = VERTEX_POS_SIZE * sizeof(GLfloat);
     glEnableVertexAttribArray(VERTEX_POS_INDX);
+    glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
     glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, _stride, 0);
+    glVertexAttribPointer(VERTEX_NORMAL_INDX, VERTEX_NORMAL_SIZE, GL_FLOAT, GL_FALSE, _stride, (const void *)offset);
     
-    //Load the MVP matrix.
+    //Load uniforms.
     glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, (GLfloat *)_mvpMatrix.m);
-
+    glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, (GLfloat *)_normalMatrix.m);
+    
     //Draw model.
     glDrawElements(GL_TRIANGLES, (GLuint)_shapes[0].mesh.indices.size(), GL_UNSIGNED_INT, 0);
+    
+    glDisableVertexAttribArray ( VERTEX_POS_INDX );
+    glDisableVertexAttribArray ( VERTEX_NORMAL_INDX );
+    
+    glBindBuffer ( GL_ARRAY_BUFFER, 0 );
+    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, 0 );
 }
 
 #pragma mark Shader OpenGL
