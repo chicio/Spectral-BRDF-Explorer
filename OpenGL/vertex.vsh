@@ -23,7 +23,7 @@ void main() {
     vec4 lightPosition = vec4(0.0, 0.0, 1.0, 0.0);
     float nDotVP = max(0.0, dot(eyeNormal, normalize(lightPosition)));
     
-    vec4 ambient = scolor * 0.2;
+    vec4 ambient = color * 0.2;
     vec4 diffuse = color * nDotVP;
     
     //Output position and color for fragment shader.

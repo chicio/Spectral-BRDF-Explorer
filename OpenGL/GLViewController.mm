@@ -76,7 +76,7 @@
         view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
         
         //Load obj.
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"buddha" ofType:@"obj"];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"suzanne" ofType:@"obj"];
 
         FILE* file = fopen([filePath cStringUsingEncoding:NSUTF8StringEncoding], "r");
         
@@ -242,7 +242,7 @@
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 20.0f);
     
     //Modelview matrix.
-    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -3.0f);
+    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
     modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f);
     
     //Set inverse transpose matrix for normal.
