@@ -14,6 +14,12 @@
 #import "GLViewController.h"
 
 @interface GLViewController () {
+
+    struct vector3 {
+        float x;
+        float y;
+        float z;
+    };
     
     GLuint _programObject;
     GLuint _vboIds[2];
@@ -24,8 +30,12 @@
     GLint _mvpLocation;
     GLint _normalLocation;
     
-    std::vector<tinyobj::shape_t> _shapes;
-    std::vector<tinyobj::material_t> _materials;
+    float _rotation;
+    
+    std::vector<float> vertexData;
+    std::vector<unsigned int> vertexIndices, normalIndices;
+    std::vector<vector3> vertices;
+    std::vector<vector3> normals;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -41,53 +51,6 @@
 #define VERTEX_NORMAL_INDX    1
 
 #pragma mark Apple View Lifecycle
-
-GLfloat gCubeVertexData[216] =
-{
-    // Data layout for each line below is:
-    // positionX, positionY, positionZ,     normalX, normalY, normalZ,
-    0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,
-    0.5f, 0.5f, -0.5f,         1.0f, 0.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-    0.5f, 0.5f, -0.5f,          1.0f, 0.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,         1.0f, 0.0f, 0.0f,
-    
-    0.5f, 0.5f, -0.5f,         0.0f, 1.0f, 0.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,
-    0.5f, 0.5f, 0.5f,          0.0f, 1.0f, 0.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 1.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 1.0f, 0.0f,
-    
-    -0.5f, 0.5f, -0.5f,        -1.0f, 0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
-    -0.5f, 0.5f, 0.5f,         -1.0f, 0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,       -1.0f, 0.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        -1.0f, 0.0f, 0.0f,
-    
-    -0.5f, -0.5f, -0.5f,       0.0f, -1.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, -1.0f, 0.0f,
-    0.5f, -0.5f, -0.5f,        0.0f, -1.0f, 0.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, -1.0f, 0.0f,
-    
-    0.5f, 0.5f, 0.5f,          0.0f, 0.0f, 1.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    0.5f, -0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    -0.5f, 0.5f, 0.5f,         0.0f, 0.0f, 1.0f,
-    -0.5f, -0.5f, 0.5f,        0.0f, 0.0f, 1.0f,
-    
-    0.5f, -0.5f, -0.5f,        0.0f, 0.0f, -1.0f,
-    -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,
-    0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,
-    0.5f, 0.5f, -0.5f,         0.0f, 0.0f, -1.0f,
-    -0.5f, -0.5f, -0.5f,       0.0f, 0.0f, -1.0f,
-    -0.5f, 0.5f, -0.5f,        0.0f, 0.0f, -1.0f
-};
 
 - (void)viewDidLoad {
     
@@ -113,57 +76,92 @@ GLfloat gCubeVertexData[216] =
         view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
         
         //Load obj.
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"cube" ofType:@"obj"];
-        std::string err;
-        tinyobj::LoadObj(_shapes, _materials, err, [filePath cStringUsingEncoding:NSUTF8StringEncoding]);
-        std::cout << "shapes: " << _shapes.size() << std::endl;
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"buddha" ofType:@"obj"];
 
-        for (size_t v = 0; v < _shapes[0].mesh.positions.size() / 3; v++) {
-            printf("  v[%ld] = (%f, %f, %f)\n", v,
-                   _shapes[0].mesh.positions[3*v+0],
-                   _shapes[0].mesh.positions[3*v+1],
-                   _shapes[0].mesh.positions[3*v+2]);
+        FILE* file = fopen([filePath cStringUsingEncoding:NSUTF8StringEncoding], "r");
+        
+        if(file == NULL){
+            
+            printf("Impossible to open the file !\n");
         }
         
-        for (size_t v = 0; v < _shapes[0].mesh.normals.size() / 3; v++) {
-            printf("  vn[%ld] = (%f, %f, %f)\n", v,
-                   _shapes[0].mesh.normals[3*v+0],
-                   _shapes[0].mesh.normals[3*v+1],
-                   _shapes[0].mesh.normals[3*v+2]);
+        while( 1 ){
+            
+            char lineHeader[128];
+            // read the first word of the line
+            int res = fscanf(file, "%s", lineHeader);
+            
+            if (res == EOF) {
+                
+                //End of file, exit parser.
+                break;
+            }
+            
+            if (strcmp(lineHeader, "v") == 0){
+                
+                struct vector3 vertex;
+                fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z );
+                vertices.push_back(vertex);
+            }else if(strcmp(lineHeader, "vn") == 0){
+                
+                struct vector3 normal;
+                fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z );
+                normals.push_back(normal);
+            }else if ( strcmp( lineHeader, "f" ) == 0 ){
+                
+                std::string vertex1, vertex2, vertex3;
+                unsigned int vertexIndex[3], normalIndex[3];
+                int matches = fscanf(file,
+                                     "%d//%d %d//%d %d//%d\n",
+                                     &vertexIndex[0],
+                                     &normalIndex[0],
+                                     &vertexIndex[1],
+                                     &normalIndex[1],
+                                     &vertexIndex[2],
+                                     &normalIndex[2]);
+                
+                if (matches != 6){
+                    printf("File can't be read by our simple parser : ( Try exporting with other options\n");
+                }
+                
+                //Indices array.
+                vertexIndices.push_back(vertexIndex[0]);
+                vertexIndices.push_back(vertexIndex[1]);
+                vertexIndices.push_back(vertexIndex[2]);
+                normalIndices.push_back(normalIndex[0]);
+                normalIndices.push_back(normalIndex[1]);
+                normalIndices.push_back(normalIndex[2]);
+                
+                //Vertex data.
+                for (int i = 0 ; i < 3; i++) {
+                    
+                    struct vector3 vertex = vertices[vertexIndex[i] - 1];
+                    struct vector3 normal = normals[normalIndex[i] - 1];
+                    
+                    vertexData.push_back(vertex.x);
+                    vertexData.push_back(vertex.y);
+                    vertexData.push_back(vertex.z);
+                    vertexData.push_back(normal.x);
+                    vertexData.push_back(normal.y);
+                    vertexData.push_back(normal.z);
+                }
+            }
         }
         
         //Init opengl.
         [self initOpenGL];
         
-        unsigned long vertexDataSize =_shapes[0].mesh.positions.size() + _shapes[0].mesh.normals.size();
-        
-        GLfloat vertexData[vertexDataSize];
-        
-        //Prepare data.
-        unsigned long numVertices = _shapes[0].mesh.positions.size() / 3;
-        for (int v = 0; v < numVertices; v++) {
-            
-            int currentVertexPosStart = v * (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE);
-            
-            vertexData[currentVertexPosStart] = _shapes[0].mesh.positions[3 * v + 0];
-            vertexData[currentVertexPosStart + 1] = _shapes[0].mesh.positions[3 * v + 1];
-            vertexData[currentVertexPosStart + 2] = _shapes[0].mesh.positions[3 * v + 2];
-            
-            int currentVertexNormStart = v * (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) + VERTEX_NORMAL_SIZE;
-            
-            vertexData[currentVertexNormStart] = _shapes[0].mesh.normals[3 * v + 0];
-            vertexData[currentVertexNormStart + 1] = _shapes[0].mesh.normals[3 * v + 1];
-            vertexData[currentVertexNormStart + 2] = _shapes[0].mesh.normals[3 * v + 2];
-        }
-        
         //Load opengl data.
         _stride = sizeof(GLfloat) * (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE);
+        int numberOfTotalVertex = ((int)vertexData.size() / (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE));
+        int vertexDataSize = _stride * numberOfTotalVertex;
+        int vertexIndicesSize = (int)vertexIndices.size() * sizeof(GLuint);
         
-        [self loadDataOpenGL:vertexData
-              andNumVertices:(GLuint)_shapes[0].mesh.positions.size()/3
+        [self loadDataOpenGL:vertexData.data()
+            verticesDataSize:vertexDataSize
                    andStride:_stride
-                  andIndices:_shapes[0].mesh.indices.data()
-               andNumIndices:(GLuint)_shapes[0].mesh.indices.size()];
+                  andIndices:vertexIndices.data()
+              andIndicesSize:vertexIndicesSize];
     }
 }
 
@@ -187,6 +185,9 @@ GLfloat gCubeVertexData[216] =
     
     //Link the program.
     glLinkProgram(_programObject);
+    
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
     
     // Check the link status
     GLint linked;
@@ -219,21 +220,17 @@ GLfloat gCubeVertexData[216] =
 #pragma mark Data OpenGL
 
 - (void)loadDataOpenGL:(GLfloat *)verticesArray
-        andNumVertices:(GLuint)numVertices
+        verticesDataSize:(int)verticesSize
              andStride:(GLint)vertexStride
             andIndices:(GLuint *)indicesArray
-         andNumIndices:(GLuint)numIndices {
+        andIndicesSize:(int)indicesSize {
     
     //Generate buffer objects: one for vertex data and one for vertex indices.
-    glGenBuffers(2, _vboIds);
+    glGenBuffers(1, _vboIds);
     
     //Start buffer for vertex data.
     glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);
-    glBufferData(GL_ARRAY_BUFFER, vertexStride * numVertices, verticesArray, GL_STATIC_DRAW);
-    
-    //start buffer for vertex indices.
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vboIds[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * numIndices, indicesArray, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, verticesSize, verticesArray, GL_STATIC_DRAW);
 }
 
 #pragma mark Draw OpenGL
@@ -245,28 +242,29 @@ GLfloat gCubeVertexData[216] =
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 20.0f);
     
     //Modelview matrix.
-    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, 1.1, 0.0f, 1.0f, 0.0f);
+    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -3.0f);
+    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f);
     
     //Set inverse transpose matrix for normal.
     _normalMatrix = GLKMatrix4InvertAndTranspose(modelViewMatrix, NULL);
-//    _normalMatrix = GLKMatrix3InvertAndTranspose(GLKMatrix4GetMatrix3(modelViewMatrix), NULL);
 
     //Set uniform modelviewprojection matrix.
     _mvpMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
+    
+    _rotation += self.timeSinceLastUpdate * 0.5f;
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
     
     //Set states.
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     //Install program.
     glUseProgram(_programObject);
     
     //Bind buffers.
     glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vboIds[1]);
     
     //Enable vertex attribute.
     GLuint offset = VERTEX_POS_SIZE * sizeof(GLfloat);
@@ -280,13 +278,12 @@ GLfloat gCubeVertexData[216] =
     glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, (GLfloat *)_normalMatrix.m);
     
     //Draw model.
-    glDrawElements(GL_TRIANGLES, (GLuint)_shapes[0].mesh.indices.size(), GL_UNSIGNED_INT, 0);
+    glDrawArrays(GL_TRIANGLES, 0, ((int)vertexData.size() / (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE)));
     
     glDisableVertexAttribArray ( VERTEX_POS_INDX );
     glDisableVertexAttribArray ( VERTEX_NORMAL_INDX );
     
     glBindBuffer ( GL_ARRAY_BUFFER, 0 );
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, 0 );
 }
 
 #pragma mark Shader OpenGL

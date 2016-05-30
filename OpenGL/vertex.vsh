@@ -17,12 +17,16 @@ out vec4 v_color;
 
 void main() {
     
+    vec4 color = vec4(1.0, 0.0, 0.0, 1.0);
+    
     vec4 eyeNormal = normalize(normalMatrix * a_normal);
     vec4 lightPosition = vec4(0.0, 0.0, 1.0, 0.0);
-    vec4 diffuseColor = vec4(1.0, 0.0, 0.0, 1.0);
-
     float nDotVP = max(0.0, dot(eyeNormal, normalize(lightPosition)));
     
-    v_color = diffuseColor * nDotVP;
+    vec4 ambient = scolor * 0.2;
+    vec4 diffuse = color * nDotVP;
+    
+    //Output position and color for fragment shader.
+    v_color = ambient + diffuse;
     gl_Position = mvpMatrix * a_position;
 }
