@@ -10,8 +10,9 @@
 		5F1A13D31CFCD91F00DF3498 /* suzanne.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F1A13D21CFCD91F00DF3498 /* suzanne.obj */; };
 		5F1A13D51CFCDF4B00DF3498 /* bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F1A13D41CFCDF4B00DF3498 /* bunny.obj */; };
 		5F1A13D91CFCE13800DF3498 /* buddha.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F1A13D81CFCE13800DF3498 /* buddha.obj */; };
-		5FA0EDDC1CF9C6E70097BF98 /* tiny_obj_loader.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5FA0EDDA1CF9C6E70097BF98 /* tiny_obj_loader.cc */; };
+		5F1A13E51CFCF10600DF3498 /* OpenGLObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F1A13E31CFCF10600DF3498 /* OpenGLObj.cpp */; };
 		5FA0EDE41CF9E5CB0097BF98 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5FA0EDE31CF9E5CB0097BF98 /* cube.obj */; };
+		5FDAFADA1CFD089300053067 /* ObjListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDAFAD91CFD089300053067 /* ObjListViewController.m */; };
 		5FEF360A1CF7B3D7003DE7BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF36091CF7B3D7003DE7BC /* main.m */; };
 		5FEF360D1CF7B3D7003DE7BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF360C1CF7B3D7003DE7BC /* AppDelegate.m */; };
 		5FEF36101CF7B3D7003DE7BC /* GLViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF360F1CF7B3D7003DE7BC /* GLViewController.mm */; };
@@ -27,9 +28,11 @@
 		5F1A13D21CFCD91F00DF3498 /* suzanne.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = suzanne.obj; sourceTree = "<group>"; };
 		5F1A13D41CFCDF4B00DF3498 /* bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bunny.obj; sourceTree = "<group>"; };
 		5F1A13D81CFCE13800DF3498 /* buddha.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = buddha.obj; sourceTree = "<group>"; };
-		5FA0EDDA1CF9C6E70097BF98 /* tiny_obj_loader.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tiny_obj_loader.cc; sourceTree = "<group>"; };
-		5FA0EDDB1CF9C6E70097BF98 /* tiny_obj_loader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tiny_obj_loader.h; sourceTree = "<group>"; };
+		5F1A13E31CFCF10600DF3498 /* OpenGLObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLObj.cpp; sourceTree = "<group>"; };
+		5F1A13E41CFCF10600DF3498 /* OpenGLObj.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLObj.hpp; sourceTree = "<group>"; };
 		5FA0EDE31CF9E5CB0097BF98 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
+		5FDAFAD81CFD089300053067 /* ObjListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjListViewController.h; sourceTree = "<group>"; };
+		5FDAFAD91CFD089300053067 /* ObjListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjListViewController.m; sourceTree = "<group>"; };
 		5FEF36051CF7B3D7003DE7BC /* OpenGL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenGL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEF36091CF7B3D7003DE7BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5FEF360B1CF7B3D7003DE7BC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -57,6 +60,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F1A13E21CFCF10600DF3498 /* OpenGLObj */ = {
+			isa = PBXGroup;
+			children = (
+				5F1A13E31CFCF10600DF3498 /* OpenGLObj.cpp */,
+				5F1A13E41CFCF10600DF3498 /* OpenGLObj.hpp */,
+			);
+			path = OpenGLObj;
+			sourceTree = "<group>";
+		};
 		5FEF35FC1CF7B3D7003DE7BC = {
 			isa = PBXGroup;
 			children = (
@@ -84,10 +96,11 @@
 				5F1A13D81CFCE13800DF3498 /* buddha.obj */,
 				5FEF360B1CF7B3D7003DE7BC /* AppDelegate.h */,
 				5FEF360C1CF7B3D7003DE7BC /* AppDelegate.m */,
+				5FDAFAD81CFD089300053067 /* ObjListViewController.h */,
+				5FDAFAD91CFD089300053067 /* ObjListViewController.m */,
 				5FEF360E1CF7B3D7003DE7BC /* GLViewController.h */,
 				5FEF360F1CF7B3D7003DE7BC /* GLViewController.mm */,
-				5FA0EDDA1CF9C6E70097BF98 /* tiny_obj_loader.cc */,
-				5FA0EDDB1CF9C6E70097BF98 /* tiny_obj_loader.h */,
+				5F1A13E21CFCF10600DF3498 /* OpenGLObj */,
 				5FEF36111CF7B3D7003DE7BC /* Main.storyboard */,
 				5FEF36141CF7B3D7003DE7BC /* Assets.xcassets */,
 				5FEF36161CF7B3D7003DE7BC /* LaunchScreen.storyboard */,
@@ -194,7 +207,8 @@
 			files = (
 				5FEF36101CF7B3D7003DE7BC /* GLViewController.mm in Sources */,
 				5FEF360D1CF7B3D7003DE7BC /* AppDelegate.m in Sources */,
-				5FA0EDDC1CF9C6E70097BF98 /* tiny_obj_loader.cc in Sources */,
+				5FDAFADA1CFD089300053067 /* ObjListViewController.m in Sources */,
+				5F1A13E51CFCF10600DF3498 /* OpenGLObj.cpp in Sources */,
 				5FEF360A1CF7B3D7003DE7BC /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

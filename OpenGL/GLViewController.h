@@ -10,4 +10,6 @@
 
 @interface GLViewController : GLKViewController
 
+- (void)setModel:(NSString *)name;
+
 @end

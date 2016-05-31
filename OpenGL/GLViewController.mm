@@ -10,20 +10,15 @@
 #include <vector>
 #include <iostream>
 
-#import "tiny_obj_loader.h"
+#import "OpenGLObj.hpp"
 #import "GLViewController.h"
 
 @interface GLViewController () {
-
-    struct vector3 {
-        float x;
-        float y;
-        float z;
-    };
+    
+    NSString *_modelFilePath;
     
     GLuint _programObject;
     GLuint _vboIds[2];
-    GLint _stride;
     
     GLKMatrix4 _mvpMatrix;
     GLKMatrix4 _normalMatrix;
@@ -31,11 +26,8 @@
     GLint _normalLocation;
     
     float _rotation;
-    
-    std::vector<float> vertexData;
-    std::vector<unsigned int> vertexIndices, normalIndices;
-    std::vector<vector3> vertices;
-    std::vector<vector3> normals;
+
+    OpenGLObj openglObj;
 }
 
 @property (strong, nonatomic) EAGLContext *context;
@@ -43,10 +35,15 @@
 
 @implementation GLViewController
 
+#pragma setter
+
+- (void)setModel:(NSString *)name {
+    
+    _modelFilePath = [[NSBundle mainBundle] pathForResource:name ofType:@"obj"];
+}
+
 #pragma mark Data OpenGL
 
-#define VERTEX_POS_SIZE       3
-#define VERTEX_NORMAL_SIZE    3
 #define VERTEX_POS_INDX       0
 #define VERTEX_NORMAL_INDX    1
 
@@ -75,93 +72,15 @@
         view.context = self.context;
         view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
         
-        //Load obj.
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"cube" ofType:@"obj"];
-
-        FILE* file = fopen([filePath cStringUsingEncoding:NSUTF8StringEncoding], "r");
-        
-        if(file == NULL){
-            
-            printf("Impossible to open the file !\n");
-        }
-        
-        while( 1 ){
-            
-            char lineHeader[128];
-            // read the first word of the line
-            int res = fscanf(file, "%s", lineHeader);
-            
-            if (res == EOF) {
-                
-                //End of file, exit parser.
-                break;
-            }
-            
-            if (strcmp(lineHeader, "v") == 0){
-                
-                struct vector3 vertex;
-                fscanf(file, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z );
-                vertices.push_back(vertex);
-            }else if(strcmp(lineHeader, "vn") == 0){
-                
-                struct vector3 normal;
-                fscanf(file, "%f %f %f\n", &normal.x, &normal.y, &normal.z );
-                normals.push_back(normal);
-            }else if ( strcmp( lineHeader, "f" ) == 0 ){
-                
-                std::string vertex1, vertex2, vertex3;
-                unsigned int vertexIndex[3], normalIndex[3];
-                int matches = fscanf(file,
-                                     "%d//%d %d//%d %d//%d\n",
-                                     &vertexIndex[0],
-                                     &normalIndex[0],
-                                     &vertexIndex[1],
-                                     &normalIndex[1],
-                                     &vertexIndex[2],
-                                     &normalIndex[2]);
-                
-                if (matches != 6){
-                    printf("File can't be read by our simple parser : ( Try exporting with other options\n");
-                }
-                
-                //Indices array.
-                vertexIndices.push_back(vertexIndex[0]);
-                vertexIndices.push_back(vertexIndex[1]);
-                vertexIndices.push_back(vertexIndex[2]);
-                normalIndices.push_back(normalIndex[0]);
-                normalIndices.push_back(normalIndex[1]);
-                normalIndices.push_back(normalIndex[2]);
-                
-                //Vertex data.
-                for (int i = 0 ; i < 3; i++) {
-                    
-                    struct vector3 vertex = vertices[vertexIndex[i] - 1];
-                    struct vector3 normal = normals[normalIndex[i] - 1];
-                    
-                    vertexData.push_back(vertex.x);
-                    vertexData.push_back(vertex.y);
-                    vertexData.push_back(vertex.z);
-                    vertexData.push_back(normal.x);
-                    vertexData.push_back(normal.y);
-                    vertexData.push_back(normal.z);
-                }
-            }
-        }
+        //Init obj.
+        std::string error;
+        openglObj.parseObj([_modelFilePath cStringUsingEncoding:NSUTF8StringEncoding], error);
         
         //Init opengl.
         [self initOpenGL];
-        
-        //Load opengl data.
-        _stride = sizeof(GLfloat) * (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE);
-        int numberOfTotalVertex = ((int)vertexData.size() / (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE));
-        int vertexDataSize = _stride * numberOfTotalVertex;
-        int vertexIndicesSize = (int)vertexIndices.size() * sizeof(GLuint);
-        
-        [self loadDataOpenGL:vertexData.data()
-            verticesDataSize:vertexDataSize
-                   andStride:_stride
-                  andIndices:vertexIndices.data()
-              andIndicesSize:vertexIndicesSize];
+
+        //Load obj data.
+        [self loadOpenGLObjData];
     }
 }
 
@@ -219,18 +138,14 @@
 
 #pragma mark Data OpenGL
 
-- (void)loadDataOpenGL:(GLfloat *)verticesArray
-        verticesDataSize:(int)verticesSize
-             andStride:(GLint)vertexStride
-            andIndices:(GLuint *)indicesArray
-        andIndicesSize:(int)indicesSize {
+- (void)loadOpenGLObjData {
     
     //Generate buffer objects: one for vertex data and one for vertex indices.
     glGenBuffers(1, _vboIds);
     
     //Start buffer for vertex data.
     glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);
-    glBufferData(GL_ARRAY_BUFFER, verticesSize, verticesArray, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, openglObj.getVerticesDataSize(), openglObj.getVerticesData().data(), GL_STATIC_DRAW);
 }
 
 #pragma mark Draw OpenGL
@@ -267,18 +182,18 @@
     glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);
     
     //Enable vertex attribute.
-    GLuint offset = VERTEX_POS_SIZE * sizeof(GLfloat);
+    GLvoid *offset = (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat));
     glEnableVertexAttribArray(VERTEX_POS_INDX);
     glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
-    glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, _stride, 0);
-    glVertexAttribPointer(VERTEX_NORMAL_INDX, VERTEX_NORMAL_SIZE, GL_FLOAT, GL_FALSE, _stride, (const void *)offset);
+    glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, openglObj.getStride(), 0);
+    glVertexAttribPointer(VERTEX_NORMAL_INDX, VERTEX_NORMAL_SIZE, GL_FLOAT, GL_FALSE, openglObj.getStride(), offset);
     
     //Load uniforms.
     glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, (GLfloat *)_mvpMatrix.m);
     glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, (GLfloat *)_normalMatrix.m);
     
     //Draw model.
-    glDrawArrays(GL_TRIANGLES, 0, ((int)vertexData.size() / (VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE)));
+    glDrawArrays(GL_TRIANGLES, 0, openglObj.getNumberOfVerticesToDraw());
     
     glDisableVertexAttribArray ( VERTEX_POS_INDX );
     glDisableVertexAttribArray ( VERTEX_NORMAL_INDX );
@@ -341,6 +256,9 @@
 - (void)tearDownGL {
     
     [EAGLContext setCurrentContext:self.context];
+    
+    glDeleteProgram(_programObject);
+    glDeleteBuffers(2, _vboIds);
 }
 
 - (void)didReceiveMemoryWarning {
