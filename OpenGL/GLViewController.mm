@@ -17,13 +17,23 @@
     
     NSString *_modelFilePath;
     
+    //Program.
     GLuint _programObject;
     GLuint _vboIds[2];
     
+    //Matrices.
     GLKMatrix4 _mvpMatrix;
     GLKMatrix4 _normalMatrix;
+    
+    //Uniforms.
     GLint _mvpLocation;
     GLint _normalLocation;
+    GLint _lightPosition;
+    GLint _lightColor;
+    GLint _materialAmbient;
+    GLint _materialDiffuse;
+    GLint _materialSpecular;
+    GLint _materialSpecularExponent;
     
     float _rotation;
 
@@ -130,6 +140,12 @@
     //Prepare uniform to be loaded.
     _mvpLocation = glGetUniformLocation(_programObject, "mvpMatrix");
     _normalLocation = glGetUniformLocation(_programObject, "normalMatrix");
+    _lightPosition = glGetUniformLocation(_programObject, "light.position");
+    _lightColor = glGetUniformLocation(_programObject, "light.color");
+    _materialAmbient = glGetUniformLocation(_programObject, "surfaceMaterial.ka");
+    _materialDiffuse = glGetUniformLocation(_programObject, "surfaceMaterial.kd");
+    _materialSpecular = glGetUniformLocation(_programObject, "surfaceMaterial.ks");
+    _materialSpecularExponent = glGetUniformLocation(_programObject, "surfaceMaterial.sh");
     
     // Free up no longer needed shader resources
     glDeleteShader(vertexShader);
@@ -191,6 +207,12 @@
     //Load uniforms.
     glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, (GLfloat *)_mvpMatrix.m);
     glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, (GLfloat *)_normalMatrix.m);
+    glUniform4f(_lightPosition, 0.0, 0.0, 1.0, 0.0);
+    glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
+    glUniform4f(_materialAmbient, 0.1745, 0.01175, 0.01175, 1.0);
+    glUniform4f(_materialDiffuse, 0.61424, 0.04136, 0.04136, 1.0);
+    glUniform4f(_materialSpecular, 0.727811, 0.626959, 0.626959, 1.0);
+    glUniform1f(_materialSpecularExponent, 76.0);
     
     //Draw model.
     glDrawArrays(GL_TRIANGLES, 0, openglObj.getNumberOfVerticesToDraw());
