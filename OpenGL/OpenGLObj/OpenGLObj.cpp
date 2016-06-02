@@ -89,7 +89,7 @@ bool OpenGLObj::parseObj(const char* filePath, std::string& error) {
             normalsIndices.push_back(normalIndex[2]);
             
             //Vertex data.
-            for (int i = 0 ; i < VERTEX_POS_SIZE; i++) {
+            for (int i = 0 ; i < 3; i++) {
                 
                 vector3 vertex = vertices[vertexIndex[i] - 1];
                 vector3 normal = normals[normalIndex[i] - 1];
@@ -97,6 +97,7 @@ bool OpenGLObj::parseObj(const char* filePath, std::string& error) {
                 verticesData.push_back(vertex.x);
                 verticesData.push_back(vertex.y);
                 verticesData.push_back(vertex.z);
+                
                 verticesData.push_back(normal.x);
                 verticesData.push_back(normal.y);
                 verticesData.push_back(normal.z);

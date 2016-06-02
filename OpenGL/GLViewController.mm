@@ -22,10 +22,12 @@
     GLuint _vboIds[2];
     
     //Matrices.
+    GLKMatrix4 _mvMatrix;
     GLKMatrix4 _mvpMatrix;
     GLKMatrix4 _normalMatrix;
     
     //Uniforms.
+    GLint _mvLocation;
     GLint _mvpLocation;
     GLint _normalLocation;
     GLint _lightPosition;
@@ -138,6 +140,7 @@
     }
     
     //Prepare uniform to be loaded.
+    _mvLocation = glGetUniformLocation(_programObject, "mvMatrix");
     _mvpLocation = glGetUniformLocation(_programObject, "mvpMatrix");
     _normalLocation = glGetUniformLocation(_programObject, "normalMatrix");
     _lightPosition = glGetUniformLocation(_programObject, "light.position");
@@ -173,14 +176,14 @@
     GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 10.0f);
     
     //Modelview matrix.
-    GLKMatrix4 modelViewMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
-    modelViewMatrix = GLKMatrix4Rotate(modelViewMatrix, _rotation, 0.0f, 1.0f, 0.0f);
+    _mvMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
+    _mvMatrix = GLKMatrix4Rotate(_mvMatrix, _rotation, 0.0f, 1.0f, 0.0f);
     
     //Set inverse transpose matrix for normal.
-    _normalMatrix = GLKMatrix4InvertAndTranspose(modelViewMatrix, NULL);
+    _normalMatrix = GLKMatrix4InvertAndTranspose(_mvMatrix, NULL);
 
     //Set uniform modelviewprojection matrix.
-    _mvpMatrix = GLKMatrix4Multiply(projectionMatrix, modelViewMatrix);
+    _mvpMatrix = GLKMatrix4Multiply(projectionMatrix, _mvMatrix);
     
     _rotation += self.timeSinceLastUpdate * 0.5f;
 }
@@ -205,14 +208,17 @@
     glVertexAttribPointer(VERTEX_NORMAL_INDX, VERTEX_NORMAL_SIZE, GL_FLOAT, GL_FALSE, openglObj.getStride(), offset);
     
     //Load uniforms.
+    glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, (GLfloat *)_mvMatrix.m);
     glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, (GLfloat *)_mvpMatrix.m);
     glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, (GLfloat *)_normalMatrix.m);
-    glUniform4f(_lightPosition, 0.0, 0.0, 1.0, 0.0);
+    
+    glUniform3f(_lightPosition, 1.0, 1.0, 1.0);
     glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
+    
     glUniform4f(_materialAmbient, 0.1745, 0.01175, 0.01175, 1.0);
     glUniform4f(_materialDiffuse, 0.61424, 0.04136, 0.04136, 1.0);
-    glUniform4f(_materialSpecular, 0.727811, 0.626959, 0.626959, 1.0);
-    glUniform1f(_materialSpecularExponent, 76.0);
+    glUniform4f(_materialSpecular, 1.0, 1.0, 1.0, 1.0);
+    glUniform1f(_materialSpecularExponent, 76);
     
     //Draw model.
     glDrawArrays(GL_TRIANGLES, 0, openglObj.getNumberOfVerticesToDraw());

@@ -11,6 +11,7 @@
 		5F1A13D51CFCDF4B00DF3498 /* bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F1A13D41CFCDF4B00DF3498 /* bunny.obj */; };
 		5F1A13D91CFCE13800DF3498 /* buddha.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F1A13D81CFCE13800DF3498 /* buddha.obj */; };
 		5F1A13E51CFCF10600DF3498 /* OpenGLObj.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F1A13E31CFCF10600DF3498 /* OpenGLObj.cpp */; };
+		5F77DF301CFFC78300E27767 /* sphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F77DF2F1CFFC78300E27767 /* sphere.obj */; };
 		5FA0EDE41CF9E5CB0097BF98 /* cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5FA0EDE31CF9E5CB0097BF98 /* cube.obj */; };
 		5FDAFADA1CFD089300053067 /* ObjListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDAFAD91CFD089300053067 /* ObjListViewController.m */; };
 		5FEF360A1CF7B3D7003DE7BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF36091CF7B3D7003DE7BC /* main.m */; };
@@ -30,6 +31,7 @@
 		5F1A13D81CFCE13800DF3498 /* buddha.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = buddha.obj; sourceTree = "<group>"; };
 		5F1A13E31CFCF10600DF3498 /* OpenGLObj.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLObj.cpp; sourceTree = "<group>"; };
 		5F1A13E41CFCF10600DF3498 /* OpenGLObj.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLObj.hpp; sourceTree = "<group>"; };
+		5F77DF2F1CFFC78300E27767 /* sphere.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sphere.obj; sourceTree = "<group>"; };
 		5FA0EDE31CF9E5CB0097BF98 /* cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
 		5FDAFAD81CFD089300053067 /* ObjListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjListViewController.h; sourceTree = "<group>"; };
 		5FDAFAD91CFD089300053067 /* ObjListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjListViewController.m; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 			children = (
 				5FEF36251CF7C00E003DE7BC /* vertex.vsh */,
 				5FEF36271CF7C023003DE7BC /* fragment.fsh */,
+				5F77DF2F1CFFC78300E27767 /* sphere.obj */,
 				5F1A13D41CFCDF4B00DF3498 /* bunny.obj */,
 				5FA0EDE31CF9E5CB0097BF98 /* cube.obj */,
 				5F1A13D21CFCD91F00DF3498 /* suzanne.obj */,
@@ -190,6 +193,7 @@
 				5FEF36261CF7C00E003DE7BC /* vertex.vsh in Resources */,
 				5FEF36181CF7B3D7003DE7BC /* LaunchScreen.storyboard in Resources */,
 				5FEF36151CF7B3D7003DE7BC /* Assets.xcassets in Resources */,
+				5F77DF301CFFC78300E27767 /* sphere.obj in Resources */,
 				5FA0EDE41CF9E5CB0097BF98 /* cube.obj in Resources */,
 				5FEF36131CF7B3D7003DE7BC /* Main.storyboard in Resources */,
 				5F1A13D91CFCE13800DF3498 /* buddha.obj in Resources */,

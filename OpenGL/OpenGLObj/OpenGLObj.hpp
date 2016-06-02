@@ -20,6 +20,7 @@ struct vector3 {
     float x;
     float y;
     float z;
+    float w;
 };
 
 class OpenGLObj {
