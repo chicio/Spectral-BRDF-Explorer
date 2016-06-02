@@ -25,11 +25,17 @@
     
     //Load material names and data.
     self.materialNameList = @[
-        @"Ruby"
+        @"Ruby",
+        @"Bronze",
+        @"Orange",
+        @"Matte"
     ];
 
     _materialList = {
-        Material::createRubyMaterial()
+        Material::createRubyMaterial(),
+        Material::createBronzeMaterial(),
+        Material::createOrangeMaterial(),
+        Material::createMatteMaterial()
     };
 }
 

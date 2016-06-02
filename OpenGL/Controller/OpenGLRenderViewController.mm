@@ -34,7 +34,7 @@
     [super viewDidLoad];
     
     //Set title.
-    self.navigationController.title = [NSString stringWithUTF8String:Scene::instance().model.getName().c_str()];
+    self.title = [NSString stringWithUTF8String:Scene::instance().model.getName().c_str()];
     
     //Create context.
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];

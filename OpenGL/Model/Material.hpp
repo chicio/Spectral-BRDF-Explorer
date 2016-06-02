@@ -56,6 +56,39 @@ struct Material {
         
         return material;
     };
+    
+    static Material createBronzeMaterial() {
+
+        Material material;
+        material.ka = RGBColor(0.2125f, 0.1275f, 0.054f, 1.0f);
+        material.kd = RGBColor(0.714f, 0.4284f, 0.18144f, 1.0f);
+        material.ks = RGBColor(0.393548, 0.271906, 0.166721, 1.0f);
+        material.sh = 25.6f;
+        
+        return material;
+    }
+    
+    static Material createOrangeMaterial() {
+        
+        Material material;
+        material.ka = RGBColor(0.0f, 0.0f, 0.0f, 1.0f);
+        material.kd = RGBColor(0.992157f, 0.513726f, 0.18144f, 1.0f);
+        material.ks = RGBColor(0.0225f, 0.0225f, 0.0225f, 1.0f);
+        material.sh = 12.8f;
+        
+        return material;
+    }
+    
+    static Material createMatteMaterial() {
+        
+        Material material;
+        material.ka = RGBColor(0.2f, 0.2f, 0.2f, 1.0f);
+        material.kd = RGBColor(0.8f, 0.8f, 0.8f, 1.0f);
+        material.ks = RGBColor(0.0f, 0.0f, 0.0f, 1.0f);
+        material.sh = 12.8f;
+        
+        return material;
+    }
 };
 
 #endif /* Material_h */
