@@ -89,6 +89,17 @@ struct Material {
         
         return material;
     }
+    
+    static Material createJadeMaterial() {
+        
+        Material material;
+        material.ka = RGBColor(0.135f, 0.2225f, 0.1575f, 1.0f);
+        material.kd = RGBColor(0.54f, 0.89f, 0.63f, 1.0f);
+        material.ks = RGBColor(0.316228f, 0.316228f, 0.316228f, 1.0f);
+        material.sh = 99.0f;
+        
+        return material;
+    }
 };
 
 #endif /* Material_h */

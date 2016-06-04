@@ -23,8 +23,10 @@
         @"Cube",
         @"Sphere",
         @"Suzanne",
+        @"Dragon",
         @"Bunny",
-        @"Happy Buddha"
+        @"Happy Buddha",
+        @"Lucy"
     ];
 }
 

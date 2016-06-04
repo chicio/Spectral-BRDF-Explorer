@@ -27,6 +27,7 @@
     self.materialNameList = @[
         @"Ruby",
         @"Bronze",
+        @"Jade",
         @"Orange",
         @"Matte"
     ];
@@ -34,6 +35,7 @@
     _materialList = {
         Material::createRubyMaterial(),
         Material::createBronzeMaterial(),
+        Material::createJadeMaterial(),
         Material::createOrangeMaterial(),
         Material::createMatteMaterial()
     };
