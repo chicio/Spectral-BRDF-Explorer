@@ -10,7 +10,10 @@
 #define OpenGLRenderer_hpp
 
 #include <OpenGLES/ES3/gl.h>
-#include <GLKit/GLKit.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/matrix_inverse.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <stdio.h>
 #include <string>
 
@@ -33,9 +36,9 @@ private:
     GLuint _vboIds[2];
     
     //Matrices.
-    GLKMatrix4 _mvMatrix;
-    GLKMatrix4 _mvpMatrix;
-    GLKMatrix4 _normalMatrix;
+    glm::mat4 _mvMatrix;
+    glm::mat4 _mvpMatrix;
+    glm::mat4 _normalMatrix;
     
     //Uniforms.
     GLint _mvLocation;

@@ -56,17 +56,18 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
     
     //Projection matrix.
     float aspect = fabs(width / height);
-    GLKMatrix4 projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f), aspect, 0.1f, 10.0f);
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(65.0f), aspect, 0.1f, 10.0f);
     
     //Modelview matrix.
-    _mvMatrix = GLKMatrix4MakeTranslation(0.0f, 0.0f, -5.0f);
-    _mvMatrix = GLKMatrix4Rotate(_mvMatrix, _rotation, 0.0f, 1.0f, 0.0f);
+    _mvMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -10.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    _mvMatrix = glm::translate(_mvMatrix, glm::vec3(0.0f, 0.0f, -5.0f));
+    _mvMatrix = glm::rotate(_mvMatrix, _rotation, glm::vec3(0.0f, 1.0f, 0.0f));
     
     //Set inverse transpose matrix for normal.
-    _normalMatrix = GLKMatrix4InvertAndTranspose(_mvMatrix, NULL);
+    _normalMatrix = glm::inverseTranspose(_mvMatrix);
     
     //Set uniform modelviewprojection matrix.
-    _mvpMatrix = GLKMatrix4Multiply(projectionMatrix, _mvMatrix);
+    _mvpMatrix = projectionMatrix * _mvMatrix;
     
     _rotation += timeSinceLastUpdate * 0.5f;
 }
@@ -84,16 +85,16 @@ void OpenGLRenderer::draw() {
     glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);
     
     //Enable vertex attribute.
-    GLvoid *offset = (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat));
+    GLvoid* offset = (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat));
     glEnableVertexAttribArray(VERTEX_POS_INDX);
     glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
     glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, model.modelData().getStride(), 0);
     glVertexAttribPointer(VERTEX_NORMAL_INDX, VERTEX_NORMAL_SIZE, GL_FLOAT, GL_FALSE, model.modelData().getStride(), offset);
     
     //Load uniforms.
-    glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, (GLfloat *)_mvMatrix.m);
-    glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, (GLfloat *)_mvpMatrix.m);
-    glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, (GLfloat *)_normalMatrix.m);
+    glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, glm::value_ptr(_mvMatrix));
+    glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(_mvpMatrix));
+    glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, glm::value_ptr(_normalMatrix));
     
     glUniform3f(_lightPosition, 1.0, 1.0, 1.0);
     glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);

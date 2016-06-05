@@ -6,7 +6,6 @@
 //  Copyright © 2016 Fabrizio Duroni. All rights reserved.
 //
 
-#include <OpenGLES/ES3/gl.h>
 #include <vector>
 #include <iostream>
 
@@ -51,6 +50,8 @@
     }
     
     if([EAGLContext setCurrentContext:self.context]) {
+        
+        self.preferredFramesPerSecond = 60;
         
         GLKView *view = (GLKView *)self.view;
         view.context = self.context;
