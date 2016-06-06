@@ -46,6 +46,7 @@ void main() {
         
         //Reflection vector around normal
         vec3 reflectionDirection = reflect(-lightDirection, normalInterp);
+        
         diffuse = surfaceMaterial.kd * light.color * cosTheta;
         specular = surfaceMaterial.ks * light.color * pow(max(0.0, dot(reflectionDirection, normalInterp)), surfaceMaterial.sh);
     }

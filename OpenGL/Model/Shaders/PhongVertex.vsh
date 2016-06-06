@@ -21,8 +21,8 @@ void main(){
     
     gl_Position = mvpMatrix * vec4(inputPosition, 1.0);
     
-    vec4 vertPosHomogenous = mvMatrix * vec4(inputPosition, 1.0);
-    vertPos = vec3(vertPosHomogenous) / vertPosHomogenous.w;
+    vec4 vertPosWorldCoordinate = mvMatrix * vec4(inputPosition, 1.0);
+    vertPos = vec3(vertPosWorldCoordinate);
     
     normalInterp = vec3(normalMatrix * vec4(inputNormal, 0.0));
 }

@@ -12,7 +12,7 @@
 #include "OpenGLShader.hpp"
 #include "OpenGLProgram.hpp"
 #include "OpenGLObjParser.hpp"
-#include "OpenGLRenderer.h"
+#include "OpenGLRenderer.hpp"
 
 #import "OpenGLRenderViewController.h"
 

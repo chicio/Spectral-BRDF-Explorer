@@ -6,7 +6,7 @@
 //  Copyright © 2016 Fabrizio Duroni. All rights reserved.
 //
 
-#include "OpenGLRenderer.h"
+#include "OpenGLRenderer.hpp"
 
 bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
                                    const char* fragmentShaderSource,

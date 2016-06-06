@@ -133,7 +133,7 @@
 		5F64268F1D007B8800166E20 /* PhongFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F64268A1D007B8800166E20 /* PhongFragment.fsh */; };
 		5F6426901D007B8800166E20 /* PhongVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F64268B1D007B8800166E20 /* PhongVertex.vsh */; };
 		5F6426931D007C3300166E20 /* OpenGLProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F6426911D007C3300166E20 /* OpenGLProgram.cpp */; };
-		5F6426981D0090A600166E20 /* OpenGLRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F6426961D0090A600166E20 /* OpenGLRenderer.mm */; };
+		5F6426981D0090A600166E20 /* OpenGLRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F6426961D0090A600166E20 /* OpenGLRenderer.cpp */; };
 		5F64269B1D00BA1D00166E20 /* Model3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F6426991D00BA1D00166E20 /* Model3D.cpp */; };
 		5F6426A01D00CA1C00166E20 /* MaterialListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64269F1D00CA1C00166E20 /* MaterialListViewController.mm */; };
 		5F6426A31D00CBFA00166E20 /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F6426A11D00CBFA00166E20 /* Scene.cpp */; };
@@ -426,8 +426,8 @@
 		5F64268B1D007B8800166E20 /* PhongVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PhongVertex.vsh; sourceTree = "<group>"; };
 		5F6426911D007C3300166E20 /* OpenGLProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLProgram.cpp; sourceTree = "<group>"; };
 		5F6426921D007C3300166E20 /* OpenGLProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLProgram.hpp; sourceTree = "<group>"; };
-		5F6426961D0090A600166E20 /* OpenGLRenderer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLRenderer.mm; sourceTree = "<group>"; };
-		5F6426971D0090A600166E20 /* OpenGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLRenderer.h; sourceTree = "<group>"; };
+		5F6426961D0090A600166E20 /* OpenGLRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLRenderer.cpp; sourceTree = "<group>"; };
+		5F6426971D0090A600166E20 /* OpenGLRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRenderer.hpp; sourceTree = "<group>"; };
 		5F6426991D00BA1D00166E20 /* Model3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model3D.cpp; sourceTree = "<group>"; };
 		5F64269A1D00BA1D00166E20 /* Model3D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Model3D.hpp; sourceTree = "<group>"; };
 		5F64269D1D00BCFF00166E20 /* Material.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Material.hpp; sourceTree = "<group>"; };
@@ -784,8 +784,8 @@
 				5F6426921D007C3300166E20 /* OpenGLProgram.hpp */,
 				5F6426851D007B8800166E20 /* OpenGLShader.cpp */,
 				5F6426861D007B8800166E20 /* OpenGLShader.hpp */,
-				5F6426961D0090A600166E20 /* OpenGLRenderer.mm */,
-				5F6426971D0090A600166E20 /* OpenGLRenderer.h */,
+				5F6426961D0090A600166E20 /* OpenGLRenderer.cpp */,
+				5F6426971D0090A600166E20 /* OpenGLRenderer.hpp */,
 				5F6426991D00BA1D00166E20 /* Model3D.cpp */,
 				5F64269A1D00BA1D00166E20 /* Model3D.hpp */,
 				5F64269D1D00BCFF00166E20 /* Material.hpp */,
@@ -1078,7 +1078,7 @@
 				5F0E609B1D04AE5E007A11FB /* glm.cpp in Sources */,
 				5F6426A01D00CA1C00166E20 /* MaterialListViewController.mm in Sources */,
 				5F6426731D00720100166E20 /* OpenGLObjParser.cpp in Sources */,
-				5F6426981D0090A600166E20 /* OpenGLRenderer.mm in Sources */,
+				5F6426981D0090A600166E20 /* OpenGLRenderer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
