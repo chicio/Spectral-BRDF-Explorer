@@ -51,7 +51,7 @@
     
     if([EAGLContext setCurrentContext:self.context]) {
         
-        self.preferredFramesPerSecond = 60;
+        self.preferredFramesPerSecond = 30;
         
         GLKView *view = (GLKView *)self.view;
         view.context = self.context;
