@@ -1,4 +1,4 @@
-# SCLT: Spectral Clara Lux Tracer
+# Spectral BRDF Explorer
 
 WORK IN PROGRESS.
 
