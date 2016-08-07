@@ -19,10 +19,8 @@ private:
     
     /// Model name.
     std::string name;
-
     /// Model Material.
     Material material;
-    
     /// Obj parser that incapsulate model data about vertices and normal.
     OpenGLObjParser openglObj;
     

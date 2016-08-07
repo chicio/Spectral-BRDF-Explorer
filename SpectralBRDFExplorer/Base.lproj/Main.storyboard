@@ -108,7 +108,7 @@
                 </glkViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zMg-y8-T9v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3309" y="-459"/>
+            <point key="canvasLocation" x="3289" y="-459"/>
         </scene>
         <!--Lighting-->
         <scene sceneID="aN6-AA-X3g">

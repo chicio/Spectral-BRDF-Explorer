@@ -37,3 +37,12 @@ Material& Model3D::getMaterial() {
     
     return material;
 };
+
+/*!
+ Load texture from image.
+ 
+ @param filePath path of the image to be used as texture.
+ */
+void loadTexture(const char* filePath) {
+    
+}

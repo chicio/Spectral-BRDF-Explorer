@@ -57,7 +57,7 @@
     const char* modelFilePath = [[[NSBundle mainBundle] pathForResource:modelNameParsed
                                                                  ofType:@"obj"]
                                  cStringUsingEncoding:NSUTF8StringEncoding];
-
+    
     
     //Create model.
     Model3D model3D(modelFilePath, [modelName UTF8String]);

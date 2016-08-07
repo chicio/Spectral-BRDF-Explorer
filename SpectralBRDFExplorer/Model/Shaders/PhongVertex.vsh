@@ -9,6 +9,7 @@
 
 layout(location = 0) in vec3 inputPosition;
 layout(location = 1) in vec3 inputNormal;
+layout(location = 2) in vec2 inputTextureCoordinate;
 
 uniform mat4 mvMatrix;
 uniform mat4 mvpMatrix;
@@ -16,6 +17,7 @@ uniform mat4 normalMatrix;
 
 out vec3 normalInterp;
 out vec3 vertPos;
+out vec2 textureCoordinate;
 
 void main(){
     
@@ -25,4 +27,6 @@ void main(){
     vertPos = vec3(vertPosWorldCoordinate);
     
     normalInterp = vec3(normalMatrix * vec4(inputNormal, 0.0));
+    
+    textureCoordinate = inputTextureCoordinate;
 }

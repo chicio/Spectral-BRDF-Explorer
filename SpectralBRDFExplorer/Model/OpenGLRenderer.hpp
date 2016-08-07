@@ -22,8 +22,9 @@
 #include "OpenGLProgram.hpp"
 #include "OpenGLCamera.hpp"
 
-#define VERTEX_POS_INDX       0
-#define VERTEX_NORMAL_INDX    1
+#define VERTEX_POS_INDX             0
+#define VERTEX_NORMAL_INDX          1
+#define VERTEX_TEXCOORDINATE_INDX   2
 
 class OpenGLRenderer {
 private:
@@ -36,11 +37,13 @@ private:
     float nearPlane;
     /// Far Plane;
     float farPlane;
+    
     /// Center of models.
     glm::vec3 modelCenter;
-    
+
     //Program.
     GLuint _vboIds[2];
+    GLuint _textureId;
     
     //Matrices.
     glm::mat4 _mvMatrix;
@@ -57,6 +60,8 @@ private:
     GLint _materialDiffuse;
     GLint _materialSpecular;
     GLint _materialSpecularExponent;
+    GLint _textureSampler;
+    GLint _textureActive;
     
 public:
     

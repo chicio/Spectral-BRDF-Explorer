@@ -45,6 +45,7 @@ bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
     _materialDiffuse = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.kd");
     _materialSpecular = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.ks");
     _materialSpecularExponent = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.sh");
+    _textureActive = glGetUniformLocation(openGLProgram.program, "textureActive");
     
     return programLinked;
 }
@@ -53,7 +54,7 @@ void OpenGLRenderer::loadScene() {
     
     model = Scene::instance().model;
     
-    //Generate buffer objects: one for vertex data and one for vertex indices.
+    //Generate buffer.
     glGenBuffers(1, _vboIds);
     
     //Start buffer for vertex data.
@@ -62,6 +63,36 @@ void OpenGLRenderer::loadScene() {
                  model.modelData().getVerticesDataSize(),
                  model.modelData().getVerticesData().data(),
                  GL_STATIC_DRAW);
+    
+    
+    //Prepare texture.
+    if(model.modelData().hasTexture()) {
+        
+        //Get uniform sampler location.
+        //Done here because we don't know if the model has a texture.
+        _textureSampler = glGetUniformLocation(openGLProgram.program, "textureSampler");
+     
+        //Generate texture.
+        glGenTextures(1, &_textureId);
+        
+        //Bind texture.
+        glBindTexture(GL_TEXTURE_2D, _textureId);
+        
+        //Load texture pixels.
+        glTexImage2D(GL_TEXTURE_2D,
+                     0,
+                     GL_RGBA,
+                     model.modelData().getTextureWidth(),
+                     model.modelData().getTextureHeight(),
+                     0,
+                     GL_RGBA,
+                     GL_UNSIGNED_BYTE,
+                     model.modelData().getTexturePixels());
+        
+        //Set filtering.
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    }
 }
 
 void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdate) {
@@ -99,6 +130,13 @@ void OpenGLRenderer::draw() {
     glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
     glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, model.modelData().getStride(), 0);
     glVertexAttribPointer(VERTEX_NORMAL_INDX, VERTEX_NORMAL_SIZE, GL_FLOAT, GL_FALSE, model.modelData().getStride(), offset);
+
+    if(model.modelData().hasTexture()) {
+
+        offset = (GLvoid *)((VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) * sizeof(GLfloat));
+        glEnableVertexAttribArray(VERTEX_TEXCOORDINATE_INDX);
+        glVertexAttribPointer(VERTEX_TEXCOORDINATE_INDX, VERTEX_TEXCOORDINATE_SIZE, GL_FLOAT, GL_FALSE, model.modelData().getStride(), offset);
+    }
     
     //Load uniforms.
     glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, glm::value_ptr(_mvMatrix));
@@ -125,11 +163,26 @@ void OpenGLRenderer::draw() {
                 model.getMaterial().ks.alpha);
     glUniform1f(_materialSpecularExponent, model.getMaterial().sh);
     
+    if(model.modelData().hasTexture()) {
+        
+        //Set uniform flag for texture active to true.
+        glUniform1i(_textureActive, 1);
+    } else {
+        
+        //Set uniform flag for texture active to false.
+        glUniform1i(_textureActive, 0);
+    }
+    
     //Draw model.
     glDrawArrays(GL_TRIANGLES, 0, model.modelData().getNumberOfVerticesToDraw());
     
     glDisableVertexAttribArray(VERTEX_POS_INDX);
     glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
+    
+    if(model.modelData().hasTexture()) {
+        
+        glDisableVertexAttribArray(VERTEX_TEXCOORDINATE_INDX);
+    }
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

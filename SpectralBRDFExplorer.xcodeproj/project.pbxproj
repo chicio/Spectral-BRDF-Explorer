@@ -139,7 +139,10 @@
 		5F6426A71D00D32800166E20 /* LightingListViewcontroller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F6426A61D00D32800166E20 /* LightingListViewcontroller.mm */; };
 		5F6426AA1D00F06300166E20 /* Dragon.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F6426A91D00F06300166E20 /* Dragon.obj */; };
 		5F7531D01D53D4EA003F08CA /* OpenGLCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F7531CE1D53D4EA003F08CA /* OpenGLCamera.cpp */; };
+		5F9E6EC71D56306000CEAA08 /* lodepng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9E6EC51D56306000CEAA08 /* lodepng.cpp */; };
 		5FC6D0371D00FAEB00033D3C /* Lucy.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5FC6D0361D00FAEB00033D3C /* Lucy.obj */; };
+		5FD07D191D5769E300A3296C /* Lucy-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD07D181D5769E300A3296C /* Lucy-texture.png */; };
+		5FE3E05C1D57799C001D0FAB /* TextureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE3E05B1D57799C001D0FAB /* TextureViewController.m */; };
 		5FEF360A1CF7B3D7003DE7BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF36091CF7B3D7003DE7BC /* main.m */; };
 		5FEF360D1CF7B3D7003DE7BC /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF360C1CF7B3D7003DE7BC /* AppDelegate.mm */; };
 		5FEF36131CF7B3D7003DE7BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEF36111CF7B3D7003DE7BC /* Main.storyboard */; };
@@ -425,7 +428,7 @@
 		5F64268B1D007B8800166E20 /* PhongVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PhongVertex.vsh; sourceTree = "<group>"; };
 		5F6426911D007C3300166E20 /* OpenGLProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLProgram.cpp; sourceTree = "<group>"; };
 		5F6426921D007C3300166E20 /* OpenGLProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLProgram.hpp; sourceTree = "<group>"; };
-		5F6426961D0090A600166E20 /* OpenGLRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLRenderer.cpp; sourceTree = "<group>"; };
+		5F6426961D0090A600166E20 /* OpenGLRenderer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLRenderer.cpp; sourceTree = "<group>"; };
 		5F6426971D0090A600166E20 /* OpenGLRenderer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRenderer.hpp; sourceTree = "<group>"; };
 		5F6426991D00BA1D00166E20 /* Model3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Model3D.cpp; sourceTree = "<group>"; };
 		5F64269A1D00BA1D00166E20 /* Model3D.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Model3D.hpp; sourceTree = "<group>"; };
@@ -439,7 +442,12 @@
 		5F6426A91D00F06300166E20 /* Dragon.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dragon.obj; sourceTree = "<group>"; };
 		5F7531CE1D53D4EA003F08CA /* OpenGLCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLCamera.cpp; sourceTree = "<group>"; };
 		5F7531CF1D53D4EA003F08CA /* OpenGLCamera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLCamera.hpp; sourceTree = "<group>"; };
+		5F9E6EC51D56306000CEAA08 /* lodepng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lodepng.cpp; sourceTree = "<group>"; };
+		5F9E6EC61D56306000CEAA08 /* lodepng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lodepng.h; sourceTree = "<group>"; };
 		5FC6D0361D00FAEB00033D3C /* Lucy.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Lucy.obj; sourceTree = "<group>"; };
+		5FD07D181D5769E300A3296C /* Lucy-texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lucy-texture.png"; sourceTree = "<group>"; };
+		5FE3E05A1D57799C001D0FAB /* TextureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureViewController.h; sourceTree = "<group>"; };
+		5FE3E05B1D57799C001D0FAB /* TextureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureViewController.m; sourceTree = "<group>"; };
 		5FEF36051CF7B3D7003DE7BC /* SpectralBRDFExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpectralBRDFExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEF36091CF7B3D7003DE7BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5FEF360B1CF7B3D7003DE7BC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -764,6 +772,7 @@
 		5F64265A1D00710C00166E20 /* Objs */ = {
 			isa = PBXGroup;
 			children = (
+				5FD07D171D5769E300A3296C /* textures */,
 				5FC6D0361D00FAEB00033D3C /* Lucy.obj */,
 				5F64265B1D00710C00166E20 /* HappyBuddha.obj */,
 				5F6426A91D00F06300166E20 /* Dragon.obj */,
@@ -808,6 +817,8 @@
 				5F64269F1D00CA1C00166E20 /* MaterialListViewController.mm */,
 				5F6426A51D00D32800166E20 /* LightingListViewcontroller.h */,
 				5F6426A61D00D32800166E20 /* LightingListViewcontroller.mm */,
+				5FE3E05A1D57799C001D0FAB /* TextureViewController.h */,
+				5FE3E05B1D57799C001D0FAB /* TextureViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -821,6 +832,24 @@
 				5F64268B1D007B8800166E20 /* PhongVertex.vsh */,
 			);
 			path = Shaders;
+			sourceTree = "<group>";
+		};
+		5F9E6EC41D56306000CEAA08 /* lodepng */ = {
+			isa = PBXGroup;
+			children = (
+				5F9E6EC51D56306000CEAA08 /* lodepng.cpp */,
+				5F9E6EC61D56306000CEAA08 /* lodepng.h */,
+			);
+			name = lodepng;
+			path = glm/lodepng;
+			sourceTree = "<group>";
+		};
+		5FD07D171D5769E300A3296C /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				5FD07D181D5769E300A3296C /* Lucy-texture.png */,
+			);
+			path = textures;
 			sourceTree = "<group>";
 		};
 		5FEF35FC1CF7B3D7003DE7BC = {
@@ -846,6 +875,7 @@
 				5F6426651D00711C00166E20 /* Model */,
 				5F64265A1D00710C00166E20 /* Objs */,
 				5F0E5F801D04AE5E007A11FB /* glm */,
+				5F9E6EC41D56306000CEAA08 /* lodepng */,
 				5FEF360B1CF7B3D7003DE7BC /* AppDelegate.h */,
 				5FEF360C1CF7B3D7003DE7BC /* AppDelegate.mm */,
 				5FEF36111CF7B3D7003DE7BC /* Main.storyboard */,
@@ -957,6 +987,7 @@
 				5F0E60B61D04AE5E007A11FB /* matrix_transform.inl in Resources */,
 				5F0E60A71D04AE5E007A11FB /* type_mat4x4.inl in Resources */,
 				5F0E60DE1D04AE5E007A11FB /* matrix_transform_2d.inl in Resources */,
+				5FD07D191D5769E300A3296C /* Lucy-texture.png in Resources */,
 				5F0E60941D04AE5E007A11FB /* func_matrix_simd.inl in Resources */,
 				5F6426631D00710C00166E20 /* Sphere.obj in Resources */,
 				5F64268F1D007B8800166E20 /* PhongFragment.fsh in Resources */,
@@ -1069,6 +1100,7 @@
 			files = (
 				5FEF360D1CF7B3D7003DE7BC /* AppDelegate.mm in Sources */,
 				5F7531D01D53D4EA003F08CA /* OpenGLCamera.cpp in Sources */,
+				5FE3E05C1D57799C001D0FAB /* TextureViewController.m in Sources */,
 				5F64269B1D00BA1D00166E20 /* Model3D.cpp in Sources */,
 				5F64266F1D00717A00166E20 /* OpenGLRenderViewController.mm in Sources */,
 				5F6426701D00717A00166E20 /* Model3DListViewController.mm in Sources */,
@@ -1079,6 +1111,7 @@
 				5FEF360A1CF7B3D7003DE7BC /* main.m in Sources */,
 				5F0E609B1D04AE5E007A11FB /* glm.cpp in Sources */,
 				5F6426A01D00CA1C00166E20 /* MaterialListViewController.mm in Sources */,
+				5F9E6EC71D56306000CEAA08 /* lodepng.cpp in Sources */,
 				5F6426731D00720100166E20 /* OpenGLObjParser.cpp in Sources */,
 				5F6426981D0090A600166E20 /* OpenGLRenderer.cpp in Sources */,
 			);
@@ -1125,6 +1158,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1148,6 +1182,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRIP_PNG_TEXT = NO;
 			};
 			name = Debug;
 		};
@@ -1170,6 +1205,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1186,6 +1222,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				STRIP_PNG_TEXT = NO;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1194,6 +1231,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMPRESS_PNG_FILES = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/SpectralBRDFExplorer/glm";
 				INFOPLIST_FILE = SpectralBRDFExplorer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1207,6 +1245,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMPRESS_PNG_FILES = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/SpectralBRDFExplorer/glm";
 				INFOPLIST_FILE = SpectralBRDFExplorer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

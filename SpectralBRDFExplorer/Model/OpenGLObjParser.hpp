@@ -12,16 +12,12 @@
 #include <OpenGLES/ES3/gl.h>
 #include <iostream>
 #include <vector>
+#include <glm/glm.hpp>
+#include "lodepng.h"
 
-#define VERTEX_POS_SIZE       3
-#define VERTEX_NORMAL_SIZE    3
-
-struct openglVector3 {
-    float x;
-    float y;
-    float z;
-    float w;
-};
+#define VERTEX_POS_SIZE              3
+#define VERTEX_NORMAL_SIZE           3
+#define VERTEX_TEXCOORDINATE_SIZE    2
 
 class OpenGLObjParser {
 private:
@@ -30,10 +26,16 @@ private:
     std::vector<GLuint> verticesIndices;
     /// Vector of normal indices.
     std::vector<GLuint> normalsIndices;
+    /// Vector of texture indices.
+    std::vector<GLuint> textureCoordinatesIndices;
     /// Vector of vertices.
-    std::vector<openglVector3> vertices;
+    std::vector<glm::vec3> vertices;
     /// Vector of normals.
-    std::vector<openglVector3> normals;
+    std::vector<glm::vec3> normals;
+    /// Vector of texture coordinates.
+    std::vector<glm::vec2> textureCoordinates;
+    /// Vector of color pixel of texture image.
+    unsigned char* texturePixels;
 
     /// Contains sequential vertex data: good for glDrawArray calls.
     std::vector<GLfloat> verticesData;
@@ -43,6 +45,12 @@ private:
     int numberOfVerticesToDraw;
     /// Stride used in verticesDataArray.
     int stride;
+    /// Flag used to check if the model has a texture.
+    bool textureActive;
+    /// Texture width.
+    unsigned textureWidth;
+    //// Texture height.
+    unsigned textureHeight;
     
 public:
     
@@ -74,6 +82,41 @@ public:
     */
     int getNumberOfVerticesToDraw();
     
+    /*!
+     Get flag hasTexture, used to check if the model has a texture.
+
+     @returns true if the model has a texture, else false.
+     */
+    bool hasTexture();
+    
+    /*!
+     Get texture width.
+     
+     @returns texture width.
+     */
+    int getTextureWidth();
+    
+    /*!
+     Get texture height.
+     
+     @returns texture height.
+     */
+    int getTextureHeight();
+    
+    /*!
+     Get texture data.
+     
+     @returns pointer to texture data.
+     */
+    unsigned char* getTexturePixels();
+    
+    /*!
+     Load texture from image.
+     
+     @param filePath path of the image to be used as texture.
+     */
+    void loadTexture(const char* filePath);
+
     /*!
      Parse obj file and retrive data in vectors.
      Each of them could be accessed using the related method.
