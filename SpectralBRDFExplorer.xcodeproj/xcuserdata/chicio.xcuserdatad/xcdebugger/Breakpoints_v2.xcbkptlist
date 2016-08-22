@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpectralBRDFExplorer/Model/OpenGLRenderer.cpp"
-            timestampString = "492288240.291004"
+            timestampString = "493592592.410586"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "OpenGLRenderer::draw()"
             landmarkType = "5">
          </BreakpointContent>

@@ -167,6 +167,13 @@ void OpenGLRenderer::draw() {
         
         //Set uniform flag for texture active to true.
         glUniform1i(_textureActive, 1);
+        
+        // Bind the texture
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, _textureId);
+        
+        // Set the sampler texture unit to 0 (pag. 256)
+        glUniform1i(_textureSampler, TEXTURE_UNIT_ID_0_SAMPLER);
     } else {
         
         //Set uniform flag for texture active to false.

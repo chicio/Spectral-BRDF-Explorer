@@ -25,6 +25,7 @@
 #define VERTEX_POS_INDX             0
 #define VERTEX_NORMAL_INDX          1
 #define VERTEX_TEXCOORDINATE_INDX   2
+#define TEXTURE_UNIT_ID_0_SAMPLER   0
 
 class OpenGLRenderer {
 private:
