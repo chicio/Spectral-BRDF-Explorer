@@ -21,6 +21,8 @@ private:
     
 public:
     
+    /// Cornell Box model.
+    Model3D cornellBoxModel;
     /// Current model to be rendered.
     Model3D model;
     /// Current lighting method selected.

@@ -46,11 +46,9 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
+    //Model path.
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-
     NSString *modelName = [self.objNameList objectAtIndex:indexPath.row];
-    
-    //Parse model name.
     NSString *modelNameParsed = [modelName stringByReplacingOccurrencesOfString:@" "
                                                                      withString:@""];
     
@@ -58,12 +56,18 @@
                                                                  ofType:@"obj"]
                                  cStringUsingEncoding:NSUTF8StringEncoding];
     
+    ///Cornell box path.
+    const char* cornellBoxModelFilePath = [[[NSBundle mainBundle] pathForResource:@"CornellBox"
+                                                                           ofType:@"obj"]
+                                                             cStringUsingEncoding:NSUTF8StringEncoding];
     
-    //Create model.
+    //Create model and Cornell Box.
     Model3D model3D(modelFilePath, [modelName UTF8String]);
+    Model3D cornellBoxModel3D(cornellBoxModelFilePath, "Cornell Box");
     
     //Set model for the current scene.
     Scene::instance().model = model3D;
+    Scene::instance().cornellBoxModel = cornellBoxModel3D;
 }
 
 @end

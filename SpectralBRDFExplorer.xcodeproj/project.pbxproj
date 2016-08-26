@@ -119,6 +119,7 @@
 		5F0E60F81D04AE5E007A11FB /* vector_angle.inl in Resources */ = {isa = PBXBuildFile; fileRef = 5F0E60691D04AE5E007A11FB /* vector_angle.inl */; };
 		5F0E60F91D04AE5E007A11FB /* vector_query.inl in Resources */ = {isa = PBXBuildFile; fileRef = 5F0E606B1D04AE5E007A11FB /* vector_query.inl */; };
 		5F0E60FA1D04AE5E007A11FB /* wrap.inl in Resources */ = {isa = PBXBuildFile; fileRef = 5F0E606D1D04AE5E007A11FB /* wrap.inl */; };
+		5F40C0C11D70DDA60081988D /* CornellBox.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F40C0C01D70DDA60081988D /* CornellBox.obj */; };
 		5F6426601D00710C00166E20 /* HappyBuddha.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F64265B1D00710C00166E20 /* HappyBuddha.obj */; };
 		5F6426611D00710C00166E20 /* Bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F64265C1D00710C00166E20 /* Bunny.obj */; };
 		5F6426621D00710C00166E20 /* Cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F64265D1D00710C00166E20 /* Cube.obj */; };
@@ -410,6 +411,7 @@
 		5F0E60861D04AE5E007A11FB /* vec3.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vec3.hpp; sourceTree = "<group>"; };
 		5F0E60871D04AE5E007A11FB /* vec4.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vec4.hpp; sourceTree = "<group>"; };
 		5F0E60881D04AE5E007A11FB /* vector_relational.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = vector_relational.hpp; sourceTree = "<group>"; };
+		5F40C0C01D70DDA60081988D /* CornellBox.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CornellBox.obj; sourceTree = "<group>"; };
 		5F64265B1D00710C00166E20 /* HappyBuddha.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HappyBuddha.obj; sourceTree = "<group>"; };
 		5F64265C1D00710C00166E20 /* Bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Bunny.obj; sourceTree = "<group>"; };
 		5F64265D1D00710C00166E20 /* Cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cube.obj; sourceTree = "<group>"; };
@@ -773,6 +775,7 @@
 			isa = PBXGroup;
 			children = (
 				5FD07D171D5769E300A3296C /* textures */,
+				5F40C0C01D70DDA60081988D /* CornellBox.obj */,
 				5FC6D0361D00FAEB00033D3C /* Lucy.obj */,
 				5F64265B1D00710C00166E20 /* HappyBuddha.obj */,
 				5F6426A91D00F06300166E20 /* Dragon.obj */,
@@ -984,6 +987,7 @@
 				5F0E60B31D04AE5E007A11FB /* integer.inl in Resources */,
 				5F0E60B11D04AE5E007A11FB /* constants.inl in Resources */,
 				5F0E60D61D04AE5E007A11FB /* io.inl in Resources */,
+				5F40C0C11D70DDA60081988D /* CornellBox.obj in Resources */,
 				5F0E60B61D04AE5E007A11FB /* matrix_transform.inl in Resources */,
 				5F0E60A71D04AE5E007A11FB /* type_mat4x4.inl in Resources */,
 				5F0E60DE1D04AE5E007A11FB /* matrix_transform_2d.inl in Resources */,

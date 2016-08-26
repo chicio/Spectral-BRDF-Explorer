@@ -28,8 +28,8 @@ bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
     //Set model data
     //TODO: parametrical or calculated.
     nearPlane = 0.1f;
-    farPlane = 20.0f;
-    modelCenter = glm::vec3(0.0, 0.0f, -5.0f);
+    farPlane = 100.0f;
+    modelCenter = glm::vec3(0.0, 0.0f, -12.0f);
     
     //Setup camera.
     openGLCamera = camera;
@@ -53,17 +53,23 @@ bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
 void OpenGLRenderer::loadScene() {
     
     model = Scene::instance().model;
+    cornellBoxModel = Scene::instance().cornellBoxModel;
     
-    //Generate buffer.
-    glGenBuffers(1, _vboIds);
-    
-    //Start buffer for vertex data.
+    //CORNELL BOX 3D.
+    glGenBuffers(1, &_vboIds[0]);
     glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);
+    glBufferData(GL_ARRAY_BUFFER,
+                 cornellBoxModel.modelData().getVerticesDataSize(),
+                 cornellBoxModel.modelData().getVerticesData().data(),
+                 GL_STATIC_DRAW);
+    
+    //MODEL 3D.
+    glGenBuffers(1, &_vboIds[1]);
+    glBindBuffer(GL_ARRAY_BUFFER, _vboIds[1]);
     glBufferData(GL_ARRAY_BUFFER,
                  model.modelData().getVerticesDataSize(),
                  model.modelData().getVerticesData().data(),
                  GL_STATIC_DRAW);
-    
     
     //Prepare texture.
     if(model.modelData().hasTexture()) {
@@ -101,51 +107,106 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
     float aspect = fabs(width / height);
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(65.0f), aspect, nearPlane, farPlane);
     
+    //MODEL.
     //Modelview matrix.
     _mvMatrix = openGLCamera.lookAtMatrix();
     _mvMatrix = glm::translate(_mvMatrix, modelCenter);
-    
     //Set inverse transpose matrix for normal.
     _normalMatrix = glm::inverseTranspose(_mvMatrix);
     
+    //CORNELL BOX.
+    //Modelview matrix.
+    _mvCornellBoxMatrix = openGLCamera.lookAtMatrix();
+    _mvCornellBoxMatrix = glm::translate(_mvCornellBoxMatrix, modelCenter);
+    //Set inverse transpose matrix for normal.
+    _normalCornellBoxMatrix = glm::inverseTranspose(_mvCornellBoxMatrix);
+    
     //Set uniform modelviewprojection matrix.
     _mvpMatrix = projectionMatrix * _mvMatrix;
+    _mvpCornellBoxMatrix = projectionMatrix * _mvCornellBoxMatrix;
 }
 
 void OpenGLRenderer::draw() {
     
     //Set states.
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     //Install program.
     glUseProgram(openGLProgram.program);
     
-    //Bind buffers.
-    glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);
+    /********* CORNELL BOX **********/
+    glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);  //Bind buffers.
+    glEnableVertexAttribArray(VERTEX_POS_INDX); //Enable vertex attribute.
+    glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
+    glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, cornellBoxModel.modelData().getStride(), 0);    
+    glVertexAttribPointer(VERTEX_NORMAL_INDX,
+                          VERTEX_NORMAL_SIZE,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          cornellBoxModel.modelData().getStride(),
+                          (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat)));
     
-    //Enable vertex attribute.
-    GLvoid* offset = (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat));
-    glEnableVertexAttribArray(VERTEX_POS_INDX);
+    //Load uniforms.
+    glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, glm::value_ptr(_mvCornellBoxMatrix));
+    glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(_mvpCornellBoxMatrix));
+    glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, glm::value_ptr(_normalCornellBoxMatrix));
+    glUniform3f(_lightPosition, 1.0, 1.0, 1.0);
+    glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
+    glUniform1i(_textureActive, 0);
+    glUniform4f(_materialAmbient,
+                cornellBoxModel.getMaterial().ka.red,
+                cornellBoxModel.getMaterial().ka.green,
+                cornellBoxModel.getMaterial().ka.blue,
+                cornellBoxModel.getMaterial().ka.alpha);
+    glUniform4f(_materialDiffuse,
+                cornellBoxModel.getMaterial().kd.red,
+                cornellBoxModel.getMaterial().kd.green,
+                cornellBoxModel.getMaterial().kd.blue,
+                cornellBoxModel.getMaterial().kd.alpha);
+    glUniform4f(_materialSpecular,
+                cornellBoxModel.getMaterial().ks.red,
+                cornellBoxModel.getMaterial().ks.green,
+                cornellBoxModel.getMaterial().ks.blue,
+                cornellBoxModel.getMaterial().ks.alpha);
+    glUniform1f(_materialSpecularExponent, cornellBoxModel.getMaterial().sh);
+    
+    //Draw model.
+    glDrawArrays(GL_TRIANGLES, 0, cornellBoxModel.modelData().getNumberOfVerticesToDraw());
+    glDisableVertexAttribArray(VERTEX_POS_INDX);
+    glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    /********************************/
+    
+    /********* MODEL 3D ********/
+    glBindBuffer(GL_ARRAY_BUFFER, _vboIds[1]);  //Bind buffers.
+    glEnableVertexAttribArray(VERTEX_POS_INDX); //Enable vertex attribute.
     glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
     glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, model.modelData().getStride(), 0);
-    glVertexAttribPointer(VERTEX_NORMAL_INDX, VERTEX_NORMAL_SIZE, GL_FLOAT, GL_FALSE, model.modelData().getStride(), offset);
+    glVertexAttribPointer(VERTEX_NORMAL_INDX,
+                          VERTEX_NORMAL_SIZE,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          model.modelData().getStride(),
+                          (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat)));
 
     if(model.modelData().hasTexture()) {
 
-        offset = (GLvoid *)((VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) * sizeof(GLfloat));
         glEnableVertexAttribArray(VERTEX_TEXCOORDINATE_INDX);
-        glVertexAttribPointer(VERTEX_TEXCOORDINATE_INDX, VERTEX_TEXCOORDINATE_SIZE, GL_FLOAT, GL_FALSE, model.modelData().getStride(), offset);
+        glVertexAttribPointer(VERTEX_TEXCOORDINATE_INDX,
+                              VERTEX_TEXCOORDINATE_SIZE,
+                              GL_FLOAT,
+                              GL_FALSE,
+                              model.modelData().getStride(),
+                              (GLvoid *)((VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) * sizeof(GLfloat)));
     }
     
     //Load uniforms.
     glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, glm::value_ptr(_mvMatrix));
     glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(_mvpMatrix));
     glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, glm::value_ptr(_normalMatrix));
-    
     glUniform3f(_lightPosition, 1.0, 1.0, 1.0);
     glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
-    
     glUniform4f(_materialAmbient,
                 model.getMaterial().ka.red,
                 model.getMaterial().ka.green,
@@ -192,6 +253,7 @@ void OpenGLRenderer::draw() {
     }
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    /********************************/
 }
 
 void OpenGLRenderer::shutdown() {
@@ -199,5 +261,5 @@ void OpenGLRenderer::shutdown() {
     openGLProgram.deleteProgram();
     
     //Clear vertex buffer objects.
-    glDeleteBuffers(sizeof(_vboIds)/sizeof(_vboIds[0]), _vboIds);
+    glDeleteBuffers(sizeof(_vboIds)/sizeof(_vboIds[1]), _vboIds);
 }

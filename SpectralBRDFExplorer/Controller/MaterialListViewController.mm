@@ -60,8 +60,9 @@
     
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     
-    //Set model for the current scene.
+    //Set materials for the current scene model and cornell box.
     Scene::instance().model.setMaterial(_materialList[indexPath.row]);
+    Scene::instance().cornellBoxModel.setMaterial(_materialList[4]);
 }
 
 @end

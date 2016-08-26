@@ -32,8 +32,11 @@ private:
     
     /// OpenGL ES program.
     OpenGLProgram openGLProgram;
-    /// Model 3D.
+    
+    /// Models 3D.
     Model3D model;
+    Model3D cornellBoxModel;
+    
     /// Near plane.
     float nearPlane;
     /// Far Plane;
@@ -50,6 +53,10 @@ private:
     glm::mat4 _mvMatrix;
     glm::mat4 _mvpMatrix;
     glm::mat4 _normalMatrix;
+    
+    glm::mat4 _mvCornellBoxMatrix;
+    glm::mat4 _mvpCornellBoxMatrix;
+    glm::mat4 _normalCornellBoxMatrix;
     
     //Uniforms.
     GLint _mvLocation;
