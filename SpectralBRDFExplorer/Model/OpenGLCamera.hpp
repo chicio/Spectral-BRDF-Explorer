@@ -19,10 +19,6 @@ private:
     
     /// Camera position.
     glm::vec3 eye;
-    /// Camera look at point.
-    glm::vec3 center;
-    /// Camera up orientation.
-    glm::vec3 up;
     /// Near plane.
     float nearPlane;
     /// Far plane.
@@ -49,6 +45,11 @@ private:
     glm::vec3 sceneCenter;
     
 public:
+    
+    /// Camera up orientation.
+    glm::vec3 up;    
+    /// Camera look at point.
+    glm::vec3 center;
     
     /*!
      Default constructor.

@@ -26,12 +26,16 @@
 #define VERTEX_NORMAL_INDX          1
 #define VERTEX_TEXCOORDINATE_INDX   2
 #define TEXTURE_UNIT_ID_0_SAMPLER   0
+#define TEXTURE_UNIT_ID_1_SAMPLER   1
 
 class OpenGLRenderer {
 private:
     
     /// OpenGL ES program.
     OpenGLProgram openGLProgram;
+    
+    /// Light position.
+    glm::vec3 lightPosition;
     
     /// Models 3D.
     Model3D model;
@@ -52,15 +56,18 @@ private:
     //Matrices.
     glm::mat4 _mvMatrix;
     glm::mat4 _mvpMatrix;
+    glm::mat4 _mvpLightMatrix;
     glm::mat4 _normalMatrix;
     
     glm::mat4 _mvCornellBoxMatrix;
     glm::mat4 _mvpCornellBoxMatrix;
+    glm::mat4 _mvpCornellBoxLightMatrix;
     glm::mat4 _normalCornellBoxMatrix;
     
     //Uniforms.
     GLint _mvLocation;
     GLint _mvpLocation;
+    GLint _mvpLightLocation; //Shadow map...
     GLint _normalLocation;
     GLint _lightPosition;
     GLint _lightColor;
@@ -70,6 +77,20 @@ private:
     GLint _materialSpecularExponent;
     GLint _textureSampler;
     GLint _textureActive;
+    
+    //Shadow map.
+    OpenGLProgram openGLShadowProgram;
+    
+    float shadowMapTextureWidth;
+    float shadowMapTextureHeight;
+    GLuint shadowMapTextureId;
+    GLuint shadowMapBufferId;
+    
+    GLint _shadowMapMvpLoc;
+    GLint _shadowMapMvpLightLoc;
+    GLint _shadowMapSamplerLoc;
+    
+    void drawScene();
     
 public:
     
@@ -87,6 +108,8 @@ public:
      */
     bool startRenderer(const char* vertexShaderSource,
                        const char* fragmentShaderSource,
+                       const char* shadowMappingVertexShaderSource,
+                       const char* shadowMappingFragmentShaderSource,
                        const OpenGLCamera& openGLCamera,
                        std::string& error);
     

@@ -140,6 +140,8 @@
 		5F6426A71D00D32800166E20 /* LightingListViewcontroller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F6426A61D00D32800166E20 /* LightingListViewcontroller.mm */; };
 		5F6426AA1D00F06300166E20 /* Dragon.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F6426A91D00F06300166E20 /* Dragon.obj */; };
 		5F7531D01D53D4EA003F08CA /* OpenGLCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F7531CE1D53D4EA003F08CA /* OpenGLCamera.cpp */; };
+		5F9C66AE1D74D54A00EB22B7 /* ShadowMapVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F9C66AD1D74D54A00EB22B7 /* ShadowMapVertex.vsh */; };
+		5F9C66B01D74D55100EB22B7 /* ShadowMapFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F9C66AF1D74D55100EB22B7 /* ShadowMapFragment.fsh */; };
 		5F9E6EC71D56306000CEAA08 /* lodepng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9E6EC51D56306000CEAA08 /* lodepng.cpp */; };
 		5FC6D0371D00FAEB00033D3C /* Lucy.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5FC6D0361D00FAEB00033D3C /* Lucy.obj */; };
 		5FD07D191D5769E300A3296C /* Lucy-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD07D181D5769E300A3296C /* Lucy-texture.png */; };
@@ -444,6 +446,8 @@
 		5F6426A91D00F06300166E20 /* Dragon.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dragon.obj; sourceTree = "<group>"; };
 		5F7531CE1D53D4EA003F08CA /* OpenGLCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLCamera.cpp; sourceTree = "<group>"; };
 		5F7531CF1D53D4EA003F08CA /* OpenGLCamera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLCamera.hpp; sourceTree = "<group>"; };
+		5F9C66AD1D74D54A00EB22B7 /* ShadowMapVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShadowMapVertex.vsh; sourceTree = "<group>"; };
+		5F9C66AF1D74D55100EB22B7 /* ShadowMapFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShadowMapFragment.fsh; sourceTree = "<group>"; };
 		5F9E6EC51D56306000CEAA08 /* lodepng.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lodepng.cpp; sourceTree = "<group>"; };
 		5F9E6EC61D56306000CEAA08 /* lodepng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lodepng.h; sourceTree = "<group>"; };
 		5FC6D0361D00FAEB00033D3C /* Lucy.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Lucy.obj; sourceTree = "<group>"; };
@@ -833,6 +837,8 @@
 				5F6426891D007B8800166E20 /* BlinnPhongVertex.vsh */,
 				5F64268A1D007B8800166E20 /* PhongFragment.fsh */,
 				5F64268B1D007B8800166E20 /* PhongVertex.vsh */,
+				5F9C66AF1D74D55100EB22B7 /* ShadowMapFragment.fsh */,
+				5F9C66AD1D74D54A00EB22B7 /* ShadowMapVertex.vsh */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -1034,6 +1040,7 @@
 				5F0E60C51D04AE5E007A11FB /* color_space_YCoCg.inl in Resources */,
 				5FEF36151CF7B3D7003DE7BC /* Assets.xcassets in Resources */,
 				5F6426AA1D00F06300166E20 /* Dragon.obj in Resources */,
+				5F9C66B01D74D55100EB22B7 /* ShadowMapFragment.fsh in Resources */,
 				5F0E60E21D04AE5E007A11FB /* normalize_dot.inl in Resources */,
 				5F0E608D1D04AE5E007A11FB /* func_exponential.inl in Resources */,
 				5F0E60F11D04AE5E007A11FB /* spline.inl in Resources */,
@@ -1082,6 +1089,7 @@
 				5F0E60DD1D04AE5E007A11FB /* matrix_query.inl in Resources */,
 				5F0E60EA1D04AE5E007A11FB /* raw_data.inl in Resources */,
 				5F6426601D00710C00166E20 /* HappyBuddha.obj in Resources */,
+				5F9C66AE1D74D54A00EB22B7 /* ShadowMapVertex.vsh in Resources */,
 				5F0E60CD1D04AE5E007A11FB /* fast_exponential.inl in Resources */,
 				5F0E60B01D04AE5E007A11FB /* color_space.inl in Resources */,
 				5F0E60D41D04AE5E007A11FB /* integer.inl in Resources */,

@@ -13,13 +13,15 @@ layout(location = 2) in vec2 inputTextureCoordinate;
 
 uniform mat4 mvMatrix;
 uniform mat4 mvpMatrix;
+uniform mat4 mvpLightMatrix;
 uniform mat4 normalMatrix;
 
 out vec3 normalInterp;
 out vec3 vertPos;
 out vec2 textureCoordinate;
+out vec4 shadowCoord;
 
-void main(){
+void main() {
     
     gl_Position = mvpMatrix * vec4(inputPosition, 1.0);
     
@@ -27,6 +29,8 @@ void main(){
     vertPos = vec3(vertPosWorldCoordinate);
     
     normalInterp = vec3(normalMatrix * vec4(inputNormal, 0.0));
+    
+    shadowCoord = mvpLightMatrix * vec4(inputPosition, 1.0);
     
     textureCoordinate = inputTextureCoordinate;
 }

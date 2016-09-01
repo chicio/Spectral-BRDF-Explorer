@@ -69,14 +69,18 @@
         NSString* fragmentShaderName = [NSString stringWithFormat:@"%@Fragment", currentLighting];
         const char* vertexShaderSource = [self shaderSource:vertexShaderName andExtension:@"vsh"];
         const char* fragmentShaderSource = [self shaderSource:fragmentShaderName andExtension:@"fsh"];
+        const char* shadowMappingVertexShaderSource = [self shaderSource:@"ShadowMapVertex" andExtension:@"vsh"];
+        const char* shadowMappingFragmentShaderSource = [self shaderSource:@"ShadowMapFragment" andExtension:@"fsh"];
         
         std::string error;
         
         //Start renderer.
         bool rendererStarted = openGLRenderer.startRenderer(vertexShaderSource,
                                                             fragmentShaderSource,
+                                                            shadowMappingVertexShaderSource,
+                                                            shadowMappingFragmentShaderSource,
                                                             OpenGLCamera(glm::vec3(0.0f, 0.0f, 0.0f),
-                                                                         glm::vec3(0.0f, 0.0f, -5.f),
+                                                                         glm::vec3(0.0f, 0.0f, -5.0f),
                                                                          glm::vec3(0.0f, 1.0f, 0.0f)),
                                                             error);
         

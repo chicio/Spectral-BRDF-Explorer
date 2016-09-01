@@ -11,11 +11,27 @@
 
 bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
                                    const char* fragmentShaderSource,
+                                   const char* shadowMappingVertexShaderSource,
+                                   const char* shadowMappingFragmentShaderSource,
                                    const OpenGLCamera& camera,
                                    std::string& error) {
     
     std::string errors;
-    bool programLinked = openGLProgram.loadProgram(vertexShaderSource, fragmentShaderSource, errors);
+    bool programLinked = openGLProgram.loadProgram(vertexShaderSource,
+                                                   fragmentShaderSource,
+                                                   errors);
+    
+    if(!programLinked) {
+        
+        //Return error from program loading.
+        error = errors;
+        
+        return programLinked;
+    }
+
+    programLinked = openGLShadowProgram.loadProgram(shadowMappingVertexShaderSource,
+                                                    shadowMappingFragmentShaderSource,
+                                                    errors);
     
     if(!programLinked) {
         
@@ -25,11 +41,12 @@ bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
         return programLinked;
     }
     
-    //Set model data
+    //Set data
     //TODO: parametrical or calculated.
     nearPlane = 0.1f;
     farPlane = 100.0f;
     modelCenter = glm::vec3(0.0, 0.0f, -12.0f);
+    lightPosition = glm::vec3(1.0, 1.0, 1.0);
     
     //Setup camera.
     openGLCamera = camera;
@@ -38,6 +55,7 @@ bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
     //Prepare uniform to be loaded in shaders.
     _mvLocation = glGetUniformLocation(openGLProgram.program, "mvMatrix");
     _mvpLocation = glGetUniformLocation(openGLProgram.program, "mvpMatrix");
+    _mvpLightLocation = glGetUniformLocation(openGLProgram.program, "mvpLightMatrix");
     _normalLocation = glGetUniformLocation(openGLProgram.program, "normalMatrix");
     _lightPosition = glGetUniformLocation(openGLProgram.program, "light.position");
     _lightColor = glGetUniformLocation(openGLProgram.program, "light.color");
@@ -99,10 +117,65 @@ void OpenGLRenderer::loadScene() {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     }
+    
+    //SHADOW MAP.
+    GLint m_viewport[4];
+    glGetIntegerv(GL_VIEWPORT, m_viewport);
+    shadowMapTextureWidth = 1024;
+    shadowMapTextureHeight = 1024;
+    
+    //Get uniform location.
+    _shadowMapMvpLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpMatrix");
+    _shadowMapMvpLightLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpLightMatrix");
+    _shadowMapSamplerLoc = glGetUniformLocation ( openGLShadowProgram.program, "shadowMapSampler" );
+    
+    //Setup texture
+    glGenTextures(1, &shadowMapTextureId);
+    glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+
+    //Load texture (no pixel because we will attach it to a framebuffer object).
+    glTexImage2D(GL_TEXTURE_2D,
+                 0,
+                 GL_DEPTH_COMPONENT24,
+                 shadowMapTextureWidth,
+                 shadowMapTextureHeight,
+                 0,
+                 GL_DEPTH_COMPONENT,
+                 GL_UNSIGNED_INT,
+                 NULL);
+    
+    //Bind default texture unit.
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
+    //Get default framebuffer handle.
+    GLint defaultFramebuffer = 0;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFramebuffer);
+    
+    //Setup FBO.
+    GLenum none = GL_NONE;
+    glGenFramebuffers(1, &shadowMapBufferId);
+    glBindFramebuffer(GL_FRAMEBUFFER, shadowMapBufferId);
+    glDrawBuffers(1, &none);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowMapTextureId, 0);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
+    
+    if(GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus(GL_FRAMEBUFFER)) {
+        
+        std::cout << "ERROR FRAMEBUFFER OBJECT " << glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    }
+    
+    glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
 }
 
 void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdate) {
-        
+    
     //Projection matrix.
     float aspect = fabs(width / height);
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(65.0f), aspect, nearPlane, farPlane);
@@ -111,29 +184,114 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
     //Modelview matrix.
     _mvMatrix = openGLCamera.lookAtMatrix();
     _mvMatrix = glm::translate(_mvMatrix, modelCenter);
-    //Set inverse transpose matrix for normal.
     _normalMatrix = glm::inverseTranspose(_mvMatrix);
-    
+    _mvpMatrix = projectionMatrix * _mvMatrix;
+
     //CORNELL BOX.
     //Modelview matrix.
     _mvCornellBoxMatrix = openGLCamera.lookAtMatrix();
     _mvCornellBoxMatrix = glm::translate(_mvCornellBoxMatrix, modelCenter);
-    //Set inverse transpose matrix for normal.
     _normalCornellBoxMatrix = glm::inverseTranspose(_mvCornellBoxMatrix);
-    
-    //Set uniform modelviewprojection matrix.
-    _mvpMatrix = projectionMatrix * _mvMatrix;
     _mvpCornellBoxMatrix = projectionMatrix * _mvCornellBoxMatrix;
+    
+    /******** SHADOW MAP. *********/
+    glm::mat4 biasMatrix(
+                         0.5, 0.0, 0.0, 0.0,
+                         0.0, 0.5, 0.0, 0.0,
+                         0.0, 0.0, 0.5, 0.0,
+                         0.5, 0.5, 0.5, 1.0
+                         );
+    
+    _mvpLightMatrix = glm::lookAt(lightPosition, openGLCamera.center, openGLCamera.up);
+    _mvpLightMatrix = glm::translate(_mvpLightMatrix, modelCenter);
+    _mvpLightMatrix = projectionMatrix * _mvpLightMatrix;
+    
+    
+    _mvpCornellBoxLightMatrix = glm::lookAt(lightPosition, openGLCamera.center, openGLCamera.up);
+    _mvpCornellBoxLightMatrix = glm::translate(_mvpCornellBoxLightMatrix, modelCenter);
+    _mvpCornellBoxLightMatrix = projectionMatrix * _mvpCornellBoxLightMatrix;
+}
+
+void OpenGLRenderer::drawScene() {
+    
 }
 
 void OpenGLRenderer::draw() {
     
-    //Set states.
+    GLint m_viewport[4];
+    glGetIntegerv(GL_VIEWPORT, m_viewport);
+    
+    GLint defaultFramebuffer = 0;
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFramebuffer);
+    
+    /**************************/
+    /********** SHADOW **********/
+    glBindFramebuffer(GL_FRAMEBUFFER, shadowMapBufferId);
+    glViewport(0, 0, shadowMapTextureWidth, shadowMapTextureHeight);
+    glClear(GL_DEPTH_BUFFER_BIT);
+    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);     // disable color rendering, only write to depth buffer
+    glEnable(GL_POLYGON_OFFSET_FILL);     // reduce shadow rendering artifact
+    glPolygonOffset( 5.0f, 100.0f);
+    glUseProgram(openGLShadowProgram.program);
+
+    /********* CORNELL BOX **********/
+    glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);  //Bind buffers.
+    glEnableVertexAttribArray(VERTEX_POS_INDX); //Enable vertex attribute.
+    glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
+    glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, cornellBoxModel.modelData().getStride(), 0);
+    glVertexAttribPointer(VERTEX_NORMAL_INDX,
+                          VERTEX_NORMAL_SIZE,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          cornellBoxModel.modelData().getStride(),
+                          (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat)));
+    
+    //Load uniforms.
+    glUniformMatrix4fv(_shadowMapMvpLightLoc, 1, GL_FALSE, glm::value_ptr(_mvpCornellBoxLightMatrix));
+    
+    //Draw model.
+    glDrawArrays(GL_TRIANGLES, 0, cornellBoxModel.modelData().getNumberOfVerticesToDraw());
+    glDisableVertexAttribArray(VERTEX_POS_INDX);
+    glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    /********************************/
+
+    /********* MODEL 3D ********/
+    glBindBuffer(GL_ARRAY_BUFFER, _vboIds[1]);  //Bind buffers.
+    glEnableVertexAttribArray(VERTEX_POS_INDX); //Enable vertex attribute.
+    glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
+    glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, model.modelData().getStride(), 0);
+    glVertexAttribPointer(VERTEX_NORMAL_INDX,
+                          VERTEX_NORMAL_SIZE,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          model.modelData().getStride(),
+                          (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat)));
+    
+    //Load uniforms.
+    glUniformMatrix4fv(_shadowMapMvpLightLoc, 1, GL_FALSE, glm::value_ptr(_mvpLightMatrix));
+
+    //Draw model.
+    glDrawArrays(GL_TRIANGLES, 0, model.modelData().getNumberOfVerticesToDraw());
+    glDisableVertexAttribArray(VERTEX_POS_INDX);
+    glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    
+    /**************************/
+    /********** DRAW **********/
+    glDisable( GL_POLYGON_OFFSET_FILL );
+    glBindFramebuffer ( GL_FRAMEBUFFER, defaultFramebuffer );
+    glColorMask ( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
+    glViewport(0, 0, m_viewport[2], m_viewport[3]);
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    //Install program.
     glUseProgram(openGLProgram.program);
+    
+    // Bind the shadow map texture
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
+    glUniform1i(_shadowMapSamplerLoc, TEXTURE_UNIT_ID_0_SAMPLER);
     
     /********* CORNELL BOX **********/
     glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);  //Bind buffers.
@@ -150,8 +308,9 @@ void OpenGLRenderer::draw() {
     //Load uniforms.
     glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, glm::value_ptr(_mvCornellBoxMatrix));
     glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(_mvpCornellBoxMatrix));
+    glUniformMatrix4fv(_mvpLightLocation, 1, GL_FALSE, glm::value_ptr(_mvpCornellBoxLightMatrix));
     glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, glm::value_ptr(_normalCornellBoxMatrix));
-    glUniform3f(_lightPosition, 1.0, 1.0, 1.0);
+    glUniform3f(_lightPosition, lightPosition.x, lightPosition.y, lightPosition.z);
     glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
     glUniform1i(_textureActive, 0);
     glUniform4f(_materialAmbient,
@@ -201,29 +360,6 @@ void OpenGLRenderer::draw() {
                               (GLvoid *)((VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) * sizeof(GLfloat)));
     }
     
-    //Load uniforms.
-    glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, glm::value_ptr(_mvMatrix));
-    glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(_mvpMatrix));
-    glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, glm::value_ptr(_normalMatrix));
-    glUniform3f(_lightPosition, 1.0, 1.0, 1.0);
-    glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
-    glUniform4f(_materialAmbient,
-                model.getMaterial().ka.red,
-                model.getMaterial().ka.green,
-                model.getMaterial().ka.blue,
-                model.getMaterial().ka.alpha);
-    glUniform4f(_materialDiffuse,
-                model.getMaterial().kd.red,
-                model.getMaterial().kd.green,
-                model.getMaterial().kd.blue,
-                model.getMaterial().kd.alpha);
-    glUniform4f(_materialSpecular,
-                model.getMaterial().ks.red,
-                model.getMaterial().ks.green,
-                model.getMaterial().ks.blue,
-                model.getMaterial().ks.alpha);
-    glUniform1f(_materialSpecularExponent, model.getMaterial().sh);
-    
     if(model.modelData().hasTexture()) {
         
         //Set uniform flag for texture active to true.
@@ -241,6 +377,31 @@ void OpenGLRenderer::draw() {
         glUniform1i(_textureActive, 0);
     }
     
+    //Load uniforms.
+    glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, glm::value_ptr(_mvMatrix));
+    glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(_mvpMatrix));
+    glUniformMatrix4fv(_mvpLightLocation, 1, GL_FALSE, glm::value_ptr(_mvpLightMatrix));
+    glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, glm::value_ptr(_normalMatrix));
+    glUniform3f(_lightPosition, lightPosition.x, lightPosition.y, lightPosition.z);
+    glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
+    glUniform4f(_materialAmbient,
+                model.getMaterial().ka.red,
+                model.getMaterial().ka.green,
+                model.getMaterial().ka.blue,
+                model.getMaterial().ka.alpha);
+    glUniform4f(_materialDiffuse,
+                model.getMaterial().kd.red,
+                model.getMaterial().kd.green,
+                model.getMaterial().kd.blue,
+                model.getMaterial().kd.alpha);
+    glUniform4f(_materialSpecular,
+                model.getMaterial().ks.red,
+                model.getMaterial().ks.green,
+                model.getMaterial().ks.blue,
+                model.getMaterial().ks.alpha);
+    glUniform1f(_materialSpecularExponent, model.getMaterial().sh);
+    /********************************/
+
     //Draw model.
     glDrawArrays(GL_TRIANGLES, 0, model.modelData().getNumberOfVerticesToDraw());
     
@@ -253,7 +414,6 @@ void OpenGLRenderer::draw() {
     }
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    /********************************/
 }
 
 void OpenGLRenderer::shutdown() {

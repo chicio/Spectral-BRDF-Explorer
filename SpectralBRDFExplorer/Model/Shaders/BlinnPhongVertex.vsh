@@ -19,7 +19,7 @@ out vec3 normalInterp;
 out vec3 vertPos;
 out vec2 textureCoordinate;
 
-void main(){
+void main() { 
 
     gl_Position = mvpMatrix * vec4(inputPosition, 1.0);
 
