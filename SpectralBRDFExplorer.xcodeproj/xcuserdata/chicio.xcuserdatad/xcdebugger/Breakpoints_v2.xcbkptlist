@@ -122,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpectralBRDFExplorer/Model/OpenGLRenderer.cpp"
-            timestampString = "494286895.484331"
+            timestampString = "494461015.148381"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
-            landmarkName = "OpenGLRenderer::update(float width, float height, double timeSinceLastUpdate)"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "OpenGLRenderer::draw()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,12 +138,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SpectralBRDFExplorer/Model/OpenGLRenderer.cpp"
-            timestampString = "494288208.204662"
+            timestampString = "494461015.148381"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
-            landmarkName = "OpenGLRenderer::draw()"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
+            landmarkName = "OpenGLRenderer::update(float width, float height, double timeSinceLastUpdate)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

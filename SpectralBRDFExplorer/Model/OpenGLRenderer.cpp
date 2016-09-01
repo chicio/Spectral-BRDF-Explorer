@@ -133,7 +133,7 @@ void OpenGLRenderer::loadScene() {
     glGenTextures(1, &shadowMapTextureId);
     glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
@@ -142,7 +142,7 @@ void OpenGLRenderer::loadScene() {
     //Load texture (no pixel because we will attach it to a framebuffer object).
     glTexImage2D(GL_TEXTURE_2D,
                  0,
-                 GL_DEPTH_COMPONENT24,
+                 GL_DEPTH_COMPONENT16,
                  shadowMapTextureWidth,
                  shadowMapTextureHeight,
                  0,
@@ -195,12 +195,7 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
     _mvpCornellBoxMatrix = projectionMatrix * _mvCornellBoxMatrix;
     
     /******** SHADOW MAP. *********/
-    glm::mat4 biasMatrix(
-                         0.5, 0.0, 0.0, 0.0,
-                         0.0, 0.5, 0.0, 0.0,
-                         0.0, 0.0, 0.5, 0.0,
-                         0.5, 0.5, 0.5, 1.0
-                         );
+    projectionMatrix = glm::ortho<float>(-10,10,-10,10,-10,20);
     
     _mvpLightMatrix = glm::lookAt(lightPosition, openGLCamera.center, openGLCamera.up);
     _mvpLightMatrix = glm::translate(_mvpLightMatrix, modelCenter);
