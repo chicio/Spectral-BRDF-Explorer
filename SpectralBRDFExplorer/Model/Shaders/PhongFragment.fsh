@@ -30,9 +30,9 @@ out vec4 o_fragColor;
 
 uniform pointLight light;
 uniform material surfaceMaterial;
-//uniform sampler2D textureSampler;
-uniform int textureActive;
 uniform lowp sampler2DShadow shadowMapSampler;
+uniform sampler2D textureSampler;
+uniform int textureActive;
 
 float shadow() {
     
@@ -86,13 +86,12 @@ void main() {
         } else {
             
             //Lighting using texture.
-            diffuse = surfaceMaterial.kd * cosTheta;
-//            diffuse = surfaceMaterial.kd * texture(textureSampler, textureCoordinate) * cosTheta;
+//            diffuse = surfaceMaterial.kd * cosTheta;
+            diffuse = surfaceMaterial.kd * texture(textureSampler, textureCoordinate) * cosTheta;
         }
         
         specular = surfaceMaterial.ks * light.color * pow(max(0.0, dot(reflectionDirection, normalInterp)), surfaceMaterial.sh);
     }
     
-    //o_fragColor = vec4(shadow, 0,0,1);
     o_fragColor = ambient + (diffuse + specular) * shadowPercentage;
 }

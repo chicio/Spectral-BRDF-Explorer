@@ -89,13 +89,13 @@ void OpenGLRenderer::loadScene() {
                  model.modelData().getVerticesData().data(),
                  GL_STATIC_DRAW);
     
+    //Get uniform sampler location.
+    //Done here because we don't know if the model has a texture.
+    _textureSampler = glGetUniformLocation(openGLProgram.program, "textureSampler");
+    
     //Prepare texture.
     if(model.modelData().hasTexture()) {
         
-        //Get uniform sampler location.
-        //Done here because we don't know if the model has a texture.
-        _textureSampler = glGetUniformLocation(openGLProgram.program, "textureSampler");
-     
         //Generate texture.
         glGenTextures(1, &_textureId);
         
@@ -127,7 +127,7 @@ void OpenGLRenderer::loadScene() {
     //Get uniform location.
     _shadowMapMvpLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpMatrix");
     _shadowMapMvpLightLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpLightMatrix");
-    _shadowMapSamplerLoc = glGetUniformLocation ( openGLShadowProgram.program, "shadowMapSampler" );
+    _shadowMapSamplerLoc = glGetUniformLocation (openGLProgram.program, "shadowMapSampler" );
     
     //Setup texture
     glGenTextures(1, &shadowMapTextureId);
@@ -151,7 +151,7 @@ void OpenGLRenderer::loadScene() {
                  NULL);
     
     //Bind default texture unit.
-    glBindTexture(GL_TEXTURE_2D, 0);
+    //glBindTexture(GL_TEXTURE_2D, 0);
     
     //Get default framebuffer handle.
     GLint defaultFramebuffer = 0;
@@ -205,10 +205,6 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
     _mvpCornellBoxLightMatrix = glm::lookAt(lightPosition, openGLCamera.center, openGLCamera.up);
     _mvpCornellBoxLightMatrix = glm::translate(_mvpCornellBoxLightMatrix, modelCenter);
     _mvpCornellBoxLightMatrix = projectionMatrix * _mvpCornellBoxLightMatrix;
-}
-
-void OpenGLRenderer::drawScene() {
-    
 }
 
 void OpenGLRenderer::draw() {
@@ -272,12 +268,11 @@ void OpenGLRenderer::draw() {
     glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
-    
     /**************************/
     /********** DRAW **********/
-    glDisable( GL_POLYGON_OFFSET_FILL );
-    glBindFramebuffer ( GL_FRAMEBUFFER, defaultFramebuffer );
-    glColorMask ( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     glViewport(0, 0, m_viewport[2], m_viewport[3]);
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -286,7 +281,10 @@ void OpenGLRenderer::draw() {
     // Bind the shadow map texture
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
+    
+    //Set texture unit for each sampler (even if not used).
     glUniform1i(_shadowMapSamplerLoc, TEXTURE_UNIT_ID_0_SAMPLER);
+    glUniform1i(_textureSampler, TEXTURE_UNIT_ID_1_SAMPLER);
     
     /********* CORNELL BOX **********/
     glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);  //Bind buffers.
@@ -361,11 +359,8 @@ void OpenGLRenderer::draw() {
         glUniform1i(_textureActive, 1);
         
         // Bind the texture
-        glActiveTexture(GL_TEXTURE0);
+        glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, _textureId);
-        
-        // Set the sampler texture unit to 0 (pag. 256)
-        glUniform1i(_textureSampler, TEXTURE_UNIT_ID_0_SAMPLER);
     } else {
         
         //Set uniform flag for texture active to false.
