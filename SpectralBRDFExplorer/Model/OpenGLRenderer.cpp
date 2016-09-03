@@ -64,6 +64,10 @@ bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
     _materialSpecular = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.ks");
     _materialSpecularExponent = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.sh");
     _textureActive = glGetUniformLocation(openGLProgram.program, "textureActive");
+    _textureSampler = glGetUniformLocation(openGLProgram.program, "textureSampler");
+    _shadowMapMvpLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpMatrix"); //shadow map
+    _shadowMapMvpLightLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpLightMatrix"); //shadow map
+    _shadowMapSamplerLoc = glGetUniformLocation(openGLProgram.program, "shadowMapSampler"); //shadow map
     
     return programLinked;
 }
@@ -91,7 +95,6 @@ void OpenGLRenderer::loadScene() {
     
     //Get uniform sampler location.
     //Done here because we don't know if the model has a texture.
-    _textureSampler = glGetUniformLocation(openGLProgram.program, "textureSampler");
     
     //Prepare texture.
     if(model.modelData().hasTexture()) {
@@ -123,11 +126,6 @@ void OpenGLRenderer::loadScene() {
     glGetIntegerv(GL_VIEWPORT, m_viewport);
     shadowMapTextureWidth = 1024;
     shadowMapTextureHeight = 1024;
-    
-    //Get uniform location.
-    _shadowMapMvpLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpMatrix");
-    _shadowMapMvpLightLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpLightMatrix");
-    _shadowMapSamplerLoc = glGetUniformLocation (openGLProgram.program, "shadowMapSampler" );
     
     //Setup texture
     glGenTextures(1, &shadowMapTextureId);
@@ -195,16 +193,15 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
     _mvpCornellBoxMatrix = projectionMatrix * _mvCornellBoxMatrix;
     
     /******** SHADOW MAP. *********/
-    projectionMatrix = glm::ortho<float>(-10,10,-10,10,-10,20);
+    glm::mat4 orthoMatrix = glm::ortho(-10.0f,10.0f,-10.0f,10.0f,-10.0f,20.0f);
     
     _mvpLightMatrix = glm::lookAt(lightPosition, openGLCamera.center, openGLCamera.up);
     _mvpLightMatrix = glm::translate(_mvpLightMatrix, modelCenter);
-    _mvpLightMatrix = projectionMatrix * _mvpLightMatrix;
-    
+    _mvpLightMatrix = orthoMatrix * _mvpLightMatrix;
     
     _mvpCornellBoxLightMatrix = glm::lookAt(lightPosition, openGLCamera.center, openGLCamera.up);
     _mvpCornellBoxLightMatrix = glm::translate(_mvpCornellBoxLightMatrix, modelCenter);
-    _mvpCornellBoxLightMatrix = projectionMatrix * _mvpCornellBoxLightMatrix;
+    _mvpCornellBoxLightMatrix = orthoMatrix * _mvpCornellBoxLightMatrix;
 }
 
 void OpenGLRenderer::draw() {
@@ -278,13 +275,13 @@ void OpenGLRenderer::draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glUseProgram(openGLProgram.program);
     
-    // Bind the shadow map texture
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
-    
     //Set texture unit for each sampler (even if not used).
     glUniform1i(_shadowMapSamplerLoc, TEXTURE_UNIT_ID_0_SAMPLER);
     glUniform1i(_textureSampler, TEXTURE_UNIT_ID_1_SAMPLER);
+
+    // Bind the shadow map texture
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
     
     /********* CORNELL BOX **********/
     glBindBuffer(GL_ARRAY_BUFFER, _vboIds[0]);  //Bind buffers.

@@ -58,9 +58,6 @@ float shadow() {
 }
 
 void main() {
-
-    // 3x3 kernel with 4 taps per sample, effectively 6x6 PCF
-    float shadowPercentage = shadow();
     
     //Calculate light direction and view direction.
     vec3 viewPosition = vec3(0.0, 0.0, 1.0);
@@ -86,12 +83,11 @@ void main() {
         } else {
             
             //Lighting using texture.
-//            diffuse = surfaceMaterial.kd * cosTheta;
             diffuse = surfaceMaterial.kd * texture(textureSampler, textureCoordinate) * cosTheta;
         }
         
         specular = surfaceMaterial.ks * light.color * pow(max(0.0, dot(reflectionDirection, normalInterp)), surfaceMaterial.sh);
     }
     
-    o_fragColor = ambient + (diffuse + specular) * shadowPercentage;
+    o_fragColor = ambient + (diffuse + specular) * shadow();
 }
