@@ -21,10 +21,14 @@ private:
     
 public:
     
+    /// Models contained in the scene.
+    std::vector<Model3D> models;
+    
     /// Cornell Box model.
     Model3D cornellBoxModel;
     /// Current model to be rendered.
     Model3D model;
+    
     /// Current lighting method selected.
     std::string lighting;
     

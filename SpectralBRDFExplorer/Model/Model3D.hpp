@@ -27,14 +27,15 @@ private:
     
 public:
     
-    glm::mat4 _mvMatrix;
-    glm::mat4 _mvpMatrix;
-    glm::mat4 _mvpLightMatrix;
+    GLuint _vboId;
+    
+    glm::mat4 _modelMatrix;
+    glm::mat4 _modelViewMatrix;
+    glm::mat4 _modelViewProjectionMatrix;
+    glm::mat4 _modelViewProjectionLightMatrix;
     glm::mat4 _normalMatrix;
     
     
-
-
     /*!
      Default constructor.
      */

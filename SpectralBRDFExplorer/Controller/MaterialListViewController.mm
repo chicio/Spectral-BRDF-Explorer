@@ -63,6 +63,9 @@
     //Set materials for the current scene model and cornell box.
     Scene::instance().model.setMaterial(_materialList[indexPath.row]);
     Scene::instance().cornellBoxModel.setMaterial(_materialList[4]);
+    
+    Scene::instance().models[0].setMaterial(_materialList[indexPath.row]);;
+    Scene::instance().models[1].setMaterial(_materialList[4]);;
 }
 
 @end

@@ -57,10 +57,10 @@
     //Set lighting.
     Scene::instance().lighting = [lightingName UTF8String];
     
-    if(Scene::instance().model.modelData().hasTexture()) {
+    if(Scene::instance().models[0].modelData().hasTexture()) {
         
         //Texture name.
-        NSString *textureName = [NSString stringWithFormat:@"%s-texture", Scene::instance().model.getName().c_str()];
+        NSString *textureName = [NSString stringWithFormat:@"%s-texture", Scene::instance().models[0].getName().c_str()];
         
         //Texture file path.
         const char* textureFilePath = [[[NSBundle mainBundle] pathForResource:textureName
@@ -68,7 +68,7 @@
                                      cStringUsingEncoding:NSUTF8StringEncoding];
 
         //Load texture.
-        Scene::instance().model.modelData().loadTexture(textureFilePath);
+        Scene::instance().models[0].modelData().loadTexture(textureFilePath);
     }
 }
 

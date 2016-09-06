@@ -6,8 +6,10 @@
 //  Copyright © 2016 Fabrizio Duroni. All rights reserved.
 //
 
-#import "Model3DListViewController.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
+#import "Model3DListViewController.h"
 #include "Scene.hpp"
 
 @interface Model3DListViewController ()
@@ -65,9 +67,11 @@
     Model3D model3D(modelFilePath, [modelName UTF8String]);
     Model3D cornellBoxModel3D(cornellBoxModelFilePath, "Cornell Box");
     
-    //Set model for the current scene.
-    Scene::instance().model = model3D;
-    Scene::instance().cornellBoxModel = cornellBoxModel3D;
+    model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -12.0f));
+    cornellBoxModel3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -12.0f));;
+    
+    Scene::instance().models.push_back(model3D);
+    Scene::instance().models.push_back(cornellBoxModel3D);    
 }
 
 @end

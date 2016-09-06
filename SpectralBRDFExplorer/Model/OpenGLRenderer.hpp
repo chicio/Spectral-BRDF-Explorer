@@ -36,33 +36,17 @@ private:
     
     /// Light direction.
     glm::vec3 lightDirection;
-    
-    /// Models 3D.
-    Model3D model;
-    Model3D cornellBoxModel;
-    
+        
     /// Near plane.
     float nearPlane;
     /// Far Plane;
     float farPlane;
     
     /// Center of models.
-    glm::vec3 modelCenter;
+    glm::vec3 sceneCenter;
 
     //Program.
-    GLuint _vboIds[2];
     GLuint _textureId;
-    
-    //Matrices.
-    glm::mat4 _mvMatrix;
-    glm::mat4 _mvpMatrix;
-    glm::mat4 _mvpLightMatrix;
-    glm::mat4 _normalMatrix;
-    
-    glm::mat4 _mvCornellBoxMatrix;
-    glm::mat4 _mvpCornellBoxMatrix;
-    glm::mat4 _mvpCornellBoxLightMatrix;
-    glm::mat4 _normalCornellBoxMatrix;
     
     //Uniforms.
     GLint _mvLocation;
