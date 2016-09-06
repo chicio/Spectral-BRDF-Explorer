@@ -10,6 +10,7 @@
 #define Obj3DModel_hpp
 
 #include <stdio.h>
+#include <glm/glm.hpp>
 
 #include "OpenGLObjParser.hpp"
 #include "Material.hpp"
@@ -25,6 +26,14 @@ private:
     OpenGLObjParser openglObj;
     
 public:
+    
+    glm::mat4 _mvMatrix;
+    glm::mat4 _mvpMatrix;
+    glm::mat4 _mvpLightMatrix;
+    glm::mat4 _normalMatrix;
+    
+    
+
 
     /*!
      Default constructor.

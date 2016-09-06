@@ -34,8 +34,8 @@ private:
     /// OpenGL ES program.
     OpenGLProgram openGLProgram;
     
-    /// Light position.
-    glm::vec3 lightPosition;
+    /// Light direction.
+    glm::vec3 lightDirection;
     
     /// Models 3D.
     Model3D model;
@@ -69,7 +69,7 @@ private:
     GLint _mvpLocation;
     GLint _mvpLightLocation; //Shadow map...
     GLint _normalLocation;
-    GLint _lightPosition;
+    GLint _lightDirection;
     GLint _lightColor;
     GLint _materialAmbient;
     GLint _materialDiffuse;

@@ -46,7 +46,7 @@ bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
     nearPlane = 0.1f;
     farPlane = 100.0f;
     modelCenter = glm::vec3(0.0, 0.0f, -12.0f);
-    lightPosition = glm::vec3(1.0, 1.0, 1.0);
+    lightDirection = glm::vec3(1.0, 1.0, 1.0);
     
     //Setup camera.
     openGLCamera = camera;
@@ -57,7 +57,7 @@ bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
     _mvpLocation = glGetUniformLocation(openGLProgram.program, "mvpMatrix");
     _mvpLightLocation = glGetUniformLocation(openGLProgram.program, "mvpLightMatrix");
     _normalLocation = glGetUniformLocation(openGLProgram.program, "normalMatrix");
-    _lightPosition = glGetUniformLocation(openGLProgram.program, "light.position");
+    _lightDirection = glGetUniformLocation(openGLProgram.program, "light.direction");
     _lightColor = glGetUniformLocation(openGLProgram.program, "light.color");
     _materialAmbient = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.ka");
     _materialDiffuse = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.kd");
@@ -195,11 +195,11 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
     /******** SHADOW MAP. *********/
     glm::mat4 orthoMatrix = glm::ortho(-10.0f,10.0f,-10.0f,10.0f,-10.0f,20.0f);
     
-    _mvpLightMatrix = glm::lookAt(lightPosition, openGLCamera.center, openGLCamera.up);
+    _mvpLightMatrix = glm::lookAt(lightDirection, openGLCamera.center, openGLCamera.up);
     _mvpLightMatrix = glm::translate(_mvpLightMatrix, modelCenter);
     _mvpLightMatrix = orthoMatrix * _mvpLightMatrix;
     
-    _mvpCornellBoxLightMatrix = glm::lookAt(lightPosition, openGLCamera.center, openGLCamera.up);
+    _mvpCornellBoxLightMatrix = glm::lookAt(lightDirection, openGLCamera.center, openGLCamera.up);
     _mvpCornellBoxLightMatrix = glm::translate(_mvpCornellBoxLightMatrix, modelCenter);
     _mvpCornellBoxLightMatrix = orthoMatrix * _mvpCornellBoxLightMatrix;
 }
@@ -300,7 +300,7 @@ void OpenGLRenderer::draw() {
     glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(_mvpCornellBoxMatrix));
     glUniformMatrix4fv(_mvpLightLocation, 1, GL_FALSE, glm::value_ptr(_mvpCornellBoxLightMatrix));
     glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, glm::value_ptr(_normalCornellBoxMatrix));
-    glUniform3f(_lightPosition, lightPosition.x, lightPosition.y, lightPosition.z);
+    glUniform3f(_lightDirection, lightDirection.x, lightDirection.y, lightDirection.z);
     glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
     glUniform1i(_textureActive, 0);
     glUniform4f(_materialAmbient,
@@ -369,7 +369,7 @@ void OpenGLRenderer::draw() {
     glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(_mvpMatrix));
     glUniformMatrix4fv(_mvpLightLocation, 1, GL_FALSE, glm::value_ptr(_mvpLightMatrix));
     glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, glm::value_ptr(_normalMatrix));
-    glUniform3f(_lightPosition, lightPosition.x, lightPosition.y, lightPosition.z);
+    glUniform3f(_lightDirection, lightDirection.x, lightDirection.y, lightDirection.z);
     glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
     glUniform4f(_materialAmbient,
                 model.getMaterial().ka.red,
