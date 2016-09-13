@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SpectralBRDFExplorer</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_a">a</string>
+</resources>
