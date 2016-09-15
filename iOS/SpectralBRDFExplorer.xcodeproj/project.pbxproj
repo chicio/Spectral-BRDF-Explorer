@@ -12,6 +12,8 @@
 		5F6426701D00717A00166E20 /* Model3DListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266E1D00717A00166E20 /* Model3DListViewController.mm */; };
 		5F6426A01D00CA1C00166E20 /* MaterialListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64269F1D00CA1C00166E20 /* MaterialListViewController.mm */; };
 		5F6426A71D00D32800166E20 /* LightingListViewcontroller.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F6426A61D00D32800166E20 /* LightingListViewcontroller.mm */; };
+		5F66F87E1D8B42D700595BB3 /* OrenNayarFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F66F87C1D8B42D700595BB3 /* OrenNayarFragment.fsh */; };
+		5F66F87F1D8B42D700595BB3 /* OrenNayarVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */; };
 		5F94F4F91D88928F005A657F /* Bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4E61D88928F005A657F /* Bunny.obj */; };
 		5F94F4FB1D88928F005A657F /* CornellBox.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4E81D88928F005A657F /* CornellBox.obj */; };
 		5F94F4FC1D88928F005A657F /* Cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4E91D88928F005A657F /* Cube.obj */; };
@@ -165,6 +167,8 @@
 		5F64269F1D00CA1C00166E20 /* MaterialListViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MaterialListViewController.mm; sourceTree = "<group>"; };
 		5F6426A51D00D32800166E20 /* LightingListViewcontroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LightingListViewcontroller.h; sourceTree = "<group>"; };
 		5F6426A61D00D32800166E20 /* LightingListViewcontroller.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LightingListViewcontroller.mm; sourceTree = "<group>"; };
+		5F66F87C1D8B42D700595BB3 /* OrenNayarFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OrenNayarFragment.fsh; sourceTree = "<group>"; };
+		5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OrenNayarVertex.vsh; sourceTree = "<group>"; };
 		5F94F4E61D88928F005A657F /* Bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Bunny.obj; sourceTree = "<group>"; };
 		5F94F4E81D88928F005A657F /* CornellBox.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CornellBox.obj; sourceTree = "<group>"; };
 		5F94F4E91D88928F005A657F /* Cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cube.obj; sourceTree = "<group>"; };
@@ -530,6 +534,8 @@
 		5F94F4F21D88928F005A657F /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				5F66F87C1D8B42D700595BB3 /* OrenNayarFragment.fsh */,
+				5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */,
 				5F94F4F31D88928F005A657F /* BlinnPhongFragment.fsh */,
 				5F94F4F41D88928F005A657F /* BlinnPhongVertex.vsh */,
 				5F94F4F51D88928F005A657F /* PhongFragment.fsh */,
@@ -1016,6 +1022,7 @@
 				5F94F64C1D8892A6005A657F /* bitfield.inl in Resources */,
 				5F94F6751D8892A6005A657F /* matrix_cross_product.inl in Resources */,
 				5F5F607F1D88AAC8007B3580 /* Plane.obj in Resources */,
+				5F66F87F1D8B42D700595BB3 /* OrenNayarVertex.vsh in Resources */,
 				5F94F66E1D8892A6005A657F /* gradient_paint.inl in Resources */,
 				5F94F6321D8892A6005A657F /* func_packing.inl in Resources */,
 				5F94F6901D8892A6005A657F /* string_cast.inl in Resources */,
@@ -1088,6 +1095,7 @@
 				5F94F5081D88928F005A657F /* ShadowMapFragment.fsh in Resources */,
 				5F94F6431D8892A6005A657F /* type_mat4x3.inl in Resources */,
 				5F94F5071D88928F005A657F /* PhongVertex.vsh in Resources */,
+				5F66F87E1D8B42D700595BB3 /* OrenNayarFragment.fsh in Resources */,
 				5F94F62B1D8892A6005A657F /* func_exponential_simd.inl in Resources */,
 				5F94F6811D8892A6005A657F /* optimum_pow.inl in Resources */,
 				5F94F63C1D8892A6005A657F /* type_mat2x2.inl in Resources */,

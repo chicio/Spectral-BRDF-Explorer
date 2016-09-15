@@ -22,7 +22,8 @@
     //Load material names and data.
     self.lightingList = @[
         @"Blinn-Phong",
-        @"Phong"
+        @"Phong",
+        @"Oren-Nayar"
     ];
 }
 
