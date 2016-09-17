@@ -64,22 +64,10 @@
         [self setupGestures];
         
         //Init opengl.
-        NSString* currentLighting = [NSString stringWithUTF8String:Scene::instance().lighting.c_str()];
-        NSString* vertexShaderName = [NSString stringWithFormat:@"%@Vertex", currentLighting];
-        NSString* fragmentShaderName = [NSString stringWithFormat:@"%@Fragment", currentLighting];
-        const char* vertexShaderSource = [self shaderSource:vertexShaderName andExtension:@"vsh"];
-        const char* fragmentShaderSource = [self shaderSource:fragmentShaderName andExtension:@"fsh"];
-        const char* shadowMappingVertexShaderSource = [self shaderSource:@"ShadowMapVertex" andExtension:@"vsh"];
-        const char* shadowMappingFragmentShaderSource = [self shaderSource:@"ShadowMapFragment" andExtension:@"fsh"];
-        
         std::string error;
         
         //Start renderer.
-        bool rendererStarted = openGLRenderer.startRenderer(vertexShaderSource,
-                                                            fragmentShaderSource,
-                                                            shadowMappingVertexShaderSource,
-                                                            shadowMappingFragmentShaderSource,
-                                                            OpenGLCamera(glm::vec3(0.0f, 1.0f, 1.0f),
+        bool rendererStarted = openGLRenderer.startRenderer(OpenGLCamera(glm::vec3(0.0f, 1.0f, 1.0f),
                                                                          glm::vec3(0.0f, 0.0f, -5.0f),
                                                                          glm::vec3(0.0f, 1.0f, 0.0f)),
                                                             error);
@@ -147,17 +135,6 @@
     
     //Draw current model using renderer created.
     openGLRenderer.draw();
-}
-
-#pragma mark Shader OpenGL
-
-- (const char *)shaderSource:(NSString *)shaderName andExtension:(NSString *)shaderExtension {
-    
-    NSString *shaderPath = [[NSBundle mainBundle] pathForResource:shaderName ofType:shaderExtension];
-    const char *shaderSource = [[NSString stringWithContentsOfFile:shaderPath
-                                                          encoding:NSUTF8StringEncoding
-                                                             error:nil] UTF8String];
-    return shaderSource;
 }
 
 #pragma mark Terminate OpenGL

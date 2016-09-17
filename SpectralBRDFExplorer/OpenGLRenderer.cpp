@@ -8,30 +8,51 @@
 
 #include <iostream>
 
+#include "Utils.hpp"
 #include "OpenGLRenderer.hpp"
 
-bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
-                                   const char* fragmentShaderSource,
-                                   const char* shadowMappingVertexShaderSource,
-                                   const char* shadowMappingFragmentShaderSource,
-                                   const OpenGLCamera& camera,
-                                   std::string& error) {
+bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& error) {
     
+    bool programLinked;
     std::string errors;
-    bool programLinked = openGLProgram.loadProgram(vertexShaderSource,
-                                                   fragmentShaderSource,
-                                                   errors);
     
-    if(!programLinked) {
+    //Load models programs.
+    for (auto& currentModel : Scene::instance().models) {
         
-        //Return error from program loading.
-        error = errors;
+        std::string vertexShader = getFileContents(currentModel.lighting + "Vertex.vsh");
+        std::string fragmentShader = getFileContents(currentModel.lighting + "Fragment.fsh");
         
-        return programLinked;
+        programLinked = currentModel.openGLModelProgram.loadProgram(vertexShader.c_str(), fragmentShader.c_str(), errors);
+        
+        if(!programLinked) {
+            
+            //Return error from program loading.
+            error = errors;
+            
+            return programLinked;
+        }
+        
+        //Prepare uniform to be loaded in shaders.
+        currentModel.openGLModelProgram._mvLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "mvMatrix");
+        currentModel.openGLModelProgram._mvpLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "mvpMatrix");
+        currentModel.openGLModelProgram._mvpLightLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "mvpLightMatrix");
+        currentModel.openGLModelProgram._normalLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "normalMatrix");
+        currentModel.openGLModelProgram._lightDirection = glGetUniformLocation(currentModel.openGLModelProgram.program, "light.direction");
+        currentModel.openGLModelProgram._lightColor = glGetUniformLocation(currentModel.openGLModelProgram.program, "light.color");
+        currentModel.openGLModelProgram._materialAmbient = glGetUniformLocation(currentModel.openGLModelProgram.program, "surfaceMaterial.ka");
+        currentModel.openGLModelProgram._materialDiffuse = glGetUniformLocation(currentModel.openGLModelProgram.program, "surfaceMaterial.kd");
+        currentModel.openGLModelProgram._materialSpecular = glGetUniformLocation(currentModel.openGLModelProgram.program, "surfaceMaterial.ks");
+        currentModel.openGLModelProgram._materialSpecularExponent = glGetUniformLocation(currentModel.openGLModelProgram.program, "surfaceMaterial.sh");
+        currentModel.openGLModelProgram._textureActive = glGetUniformLocation(currentModel.openGLModelProgram.program, "textureActive");
+        currentModel.openGLModelProgram._textureSampler = glGetUniformLocation(currentModel.openGLModelProgram.program, "textureSampler");
+        currentModel.openGLModelProgram._shadowMapSamplerLoc = glGetUniformLocation(currentModel.openGLModelProgram.program, "shadowMapSampler");
     }
-
-    programLinked = openGLShadowProgram.loadProgram(shadowMappingVertexShaderSource,
-                                                    shadowMappingFragmentShaderSource,
+    
+    //Load Shadow mapping programs.
+    std::string shadowMappingVertexShader = getFileContents("ShadowMapVertex.vsh");
+    std::string shadowMappingFragmentShader = getFileContents("ShadowMapFragment.fsh");
+    programLinked = openGLShadowProgram.loadProgram(shadowMappingVertexShader.c_str(),
+                                                    shadowMappingFragmentShader.c_str(),
                                                     errors);
     
     if(!programLinked) {
@@ -42,33 +63,20 @@ bool OpenGLRenderer::startRenderer(const char* vertexShaderSource,
         return programLinked;
     }
     
+    //Load shadow mapping uniform.
+    _shadowMapMvpLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpMatrix"); //shadow map
+    _shadowMapMvpLightLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpLightMatrix"); //shadow map
+    
     //Set data
     //TODO: parametrical or calculated.
     nearPlane = 0.1f;
     farPlane = 100.0f;
-    sceneCenter = glm::vec3(0.0, 0.0f, -12.0f);
-    lightDirection = glm::vec3(1.0, 1.0, 1.0);
+    sceneCenter = glm::vec3(0.0f, 0.0f, -12.0f);
+    lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
     
     //Setup camera.
     openGLCamera = camera;
     openGLCamera.setSceneCenter(sceneCenter);
-            
-    //Prepare uniform to be loaded in shaders.
-    _mvLocation = glGetUniformLocation(openGLProgram.program, "mvMatrix");
-    _mvpLocation = glGetUniformLocation(openGLProgram.program, "mvpMatrix");
-    _mvpLightLocation = glGetUniformLocation(openGLProgram.program, "mvpLightMatrix");
-    _normalLocation = glGetUniformLocation(openGLProgram.program, "normalMatrix");
-    _lightDirection = glGetUniformLocation(openGLProgram.program, "light.direction");
-    _lightColor = glGetUniformLocation(openGLProgram.program, "light.color");
-    _materialAmbient = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.ka");
-    _materialDiffuse = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.kd");
-    _materialSpecular = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.ks");
-    _materialSpecularExponent = glGetUniformLocation(openGLProgram.program, "surfaceMaterial.sh");
-    _textureActive = glGetUniformLocation(openGLProgram.program, "textureActive");
-    _textureSampler = glGetUniformLocation(openGLProgram.program, "textureSampler");
-    _shadowMapMvpLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpMatrix"); //shadow map
-    _shadowMapMvpLightLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpLightMatrix"); //shadow map
-    _shadowMapSamplerLoc = glGetUniformLocation(openGLProgram.program, "shadowMapSampler"); //shadow map
     
     return programLinked;
 }
@@ -88,10 +96,10 @@ void OpenGLRenderer::loadScene() {
         if(currentModel.modelData().hasTexture()) {
             
             //Generate texture.
-            glGenTextures(1, &_textureId);
+            glGenTextures(1, &(currentModel.openGLModelProgram._textureId));
             
             //Bind texture.
-            glBindTexture(GL_TEXTURE_2D, _textureId);
+            glBindTexture(GL_TEXTURE_2D, currentModel.openGLModelProgram._textureId);
             
             //Load texture pixels.
             glTexImage2D(GL_TEXTURE_2D,
@@ -125,7 +133,7 @@ void OpenGLRenderer::loadScene() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-
+    
     //Load texture (no pixel because we will attach it to a framebuffer object).
     glTexImage2D(GL_TEXTURE_2D,
                  0,
@@ -227,18 +235,19 @@ void OpenGLRenderer::draw() {
     glViewport(0, 0, m_viewport[2], m_viewport[3]);
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glUseProgram(openGLProgram.program);
-    
-    //Set texture unit for each sampler (even if not used).
-    glUniform1i(_shadowMapSamplerLoc, TEXTURE_UNIT_ID_0_SAMPLER);
-    glUniform1i(_textureSampler, TEXTURE_UNIT_ID_1_SAMPLER);
-
-    // Bind the shadow map texture
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
     
     for (auto& currentModel : Scene::instance().models) {
-
+        
+        glUseProgram(currentModel.openGLModelProgram.program);
+        
+        //Set texture unit for each sampler (even if not used).
+        glUniform1i(currentModel.openGLModelProgram._shadowMapSamplerLoc, TEXTURE_UNIT_ID_0_SAMPLER);
+        glUniform1i(currentModel.openGLModelProgram._textureSampler, TEXTURE_UNIT_ID_1_SAMPLER);
+        
+        // Bind the shadow map texture
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
+        
         glBindBuffer(GL_ARRAY_BUFFER, currentModel._vboId);
         glEnableVertexAttribArray(VERTEX_POS_INDX);
         glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
@@ -260,37 +269,37 @@ void OpenGLRenderer::draw() {
                                   currentModel.modelData().getStride(),
                                   (GLvoid *)((VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) * sizeof(GLfloat)));
             
-            glUniform1i(_textureActive, 1);
+            glUniform1i(currentModel.openGLModelProgram._textureActive, 1);
             glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, _textureId);
+            glBindTexture(GL_TEXTURE_2D, currentModel.openGLModelProgram._textureId);
         } else {
             
             //Set uniform flag for texture active to false.
-            glUniform1i(_textureActive, 0);
+            glUniform1i(currentModel.openGLModelProgram._textureActive, 0);
         }
         
-        glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewMatrix));
-        glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionMatrix));
-        glUniformMatrix4fv(_mvpLightLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionLightMatrix));
-        glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, glm::value_ptr(currentModel._normalMatrix));
-        glUniform3f(_lightDirection, lightDirection.x, lightDirection.y, lightDirection.z);
-        glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
-        glUniform4f(_materialAmbient,
+        glUniformMatrix4fv(currentModel.openGLModelProgram._mvLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewMatrix));
+        glUniformMatrix4fv(currentModel.openGLModelProgram._mvpLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionMatrix));
+        glUniformMatrix4fv(currentModel.openGLModelProgram._mvpLightLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionLightMatrix));
+        glUniformMatrix4fv(currentModel.openGLModelProgram._normalLocation, 1, GL_FALSE, glm::value_ptr(currentModel._normalMatrix));
+        glUniform3f(currentModel.openGLModelProgram._lightDirection, lightDirection.x, lightDirection.y, lightDirection.z);
+        glUniform4f(currentModel.openGLModelProgram._lightColor, 1.0, 1.0, 1.0, 1.0);
+        glUniform4f(currentModel.openGLModelProgram._materialAmbient,
                     currentModel.getMaterial().ka.red,
                     currentModel.getMaterial().ka.green,
                     currentModel.getMaterial().ka.blue,
                     currentModel.getMaterial().ka.alpha);
-        glUniform4f(_materialDiffuse,
+        glUniform4f(currentModel.openGLModelProgram._materialDiffuse,
                     currentModel.getMaterial().kd.red,
                     currentModel.getMaterial().kd.green,
                     currentModel.getMaterial().kd.blue,
                     currentModel.getMaterial().kd.alpha);
-        glUniform4f(_materialSpecular,
+        glUniform4f(currentModel.openGLModelProgram._materialSpecular,
                     currentModel.getMaterial().ks.red,
                     currentModel.getMaterial().ks.green,
                     currentModel.getMaterial().ks.blue,
                     currentModel.getMaterial().ks.alpha);
-        glUniform1f(_materialSpecularExponent, currentModel.getMaterial().sh);
+        glUniform1f(currentModel.openGLModelProgram._materialSpecularExponent, currentModel.getMaterial().sh);
         
         glDrawArrays(GL_TRIANGLES, 0, currentModel.modelData().getNumberOfVerticesToDraw());
         glDisableVertexAttribArray(VERTEX_POS_INDX);
@@ -307,7 +316,6 @@ void OpenGLRenderer::draw() {
 
 void OpenGLRenderer::shutdown() {
     
-    openGLProgram.deleteProgram();
     openGLShadowProgram.deleteProgram();
     
     //Clear vertex buffer objects.
@@ -317,6 +325,7 @@ void OpenGLRenderer::shutdown() {
     for (auto model : Scene::instance().models) {
         
         vbo[i++] = model._vboId;
+        model.openGLModelProgram.deleteProgram();
     }
     
     glDeleteBuffers((int)Scene::instance().models.size(), vbo);

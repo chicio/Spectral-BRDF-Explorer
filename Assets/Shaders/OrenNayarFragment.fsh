@@ -80,13 +80,12 @@ void main() {
     vec3 viewPosition = vec3(0.0, 0.0, 1.0);
     vec3 lightDirection = normalize(light.direction);
     vec3 viewDirection = normalize(viewPosition - vertPos);
-    
+        
     //Cosine theta diffuse lambertian component.
     float cosTheta = max(0.0, dot(normalInterp, normalize(lightDirection)));
     
     vec4 ambient = 0.2f * vec4(0.7f, 0.2f, 0.2f, 1.0f);
     vec4 diffuse = vec4(0.0, 0.0, 0.0, 1.0);
-    
     
     if(textureActive == 0) {
             
@@ -95,7 +94,7 @@ void main() {
     } else {
             
         //Lighting using texture.
-        diffuse = orenNayar(lightDirection, viewDirection, normalInterp) * texture(textureSampler, textureCoordinate);
+        diffuse = orenNayar(lightDirection, viewDirection, normalInterp) * texture(textureSampler, textureCoordinate) * cosTheta;
     }
     
     o_fragColor = ambient + diffuse * shadow();

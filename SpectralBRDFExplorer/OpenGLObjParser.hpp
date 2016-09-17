@@ -15,7 +15,6 @@
 #include <GLES3/gl3.h>
 #endif
 
-
 #include <iostream>
 #include <vector>
 #include <glm/glm.hpp>

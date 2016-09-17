@@ -15,6 +15,9 @@
 #include <GLES3/gl3.h>
 #endif
 
+#ifdef __APPLE__
+#include "iOSFileOpen.hpp"
+#endif
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -38,7 +41,7 @@ class OpenGLRenderer {
 private:
     
     /// OpenGL ES program.
-    OpenGLProgram openGLProgram;
+    OpenGLProgram openGLShadowProgram;
     
     /// Light direction.
     glm::vec3 lightDirection;
@@ -51,25 +54,6 @@ private:
     /// Center of models.
     glm::vec3 sceneCenter;
 
-    //Program.
-    GLuint _textureId;
-    
-    //Uniforms.
-    GLint _mvLocation;
-    GLint _mvpLocation;
-    GLint _mvpLightLocation; //Shadow map...
-    GLint _normalLocation;
-    GLint _lightDirection;
-    GLint _lightColor;
-    GLint _materialAmbient;
-    GLint _materialDiffuse;
-    GLint _materialSpecular;
-    GLint _materialSpecularExponent;
-    GLint _textureSampler;
-    GLint _textureActive;
-    
-    //Shadow map.
-    OpenGLProgram openGLShadowProgram;
     
     float shadowMapTextureWidth;
     float shadowMapTextureHeight;
@@ -78,17 +62,16 @@ private:
     
     GLint _shadowMapMvpLoc;
     GLint _shadowMapMvpLightLoc;
-    GLint _shadowMapSamplerLoc;
         
 public:
     
     /// OpenGL ES camera.
     OpenGLCamera openGLCamera;
 
-    static OpenGLRenderer * defaultStartRender(const char* vertexShaderSource,
-                                               const char* fragmentShaderSource,
-                                               const char* shadowMappingVertexShaderSource,
-                                               const char* shadowMappingFragmentShaderSource) {
+    static OpenGLRenderer* defaultStartRender(const char* vertexShaderSource,
+                                              const char* fragmentShaderSource,
+                                              const char* shadowMappingVertexShaderSource,
+                                              const char* shadowMappingFragmentShaderSource) {
 
 
         /***** MODELS ******/
@@ -111,33 +94,23 @@ public:
         /****** START *******/
         std::string error;
         OpenGLRenderer* openGLRenderer = new OpenGLRenderer();
-        bool rendererStarted = openGLRenderer->startRenderer(vertexShaderSource,
-                                                            fragmentShaderSource,
-                                                            shadowMappingVertexShaderSource,
-                                                            shadowMappingFragmentShaderSource,
-                                                            OpenGLCamera(glm::vec3(0.0f, 0.0f, 0.0f),
-                                                                         glm::vec3(0.0f, 0.0f, -5.0f),
-                                                                         glm::vec3(0.0f, 1.0f, 0.0f)),
-                                                            error);
+        openGLRenderer->startRenderer(OpenGLCamera(glm::vec3(0.0f, 0.0f, 0.0f),
+                                                   glm::vec3(0.0f, 0.0f, -5.0f),
+                                                   glm::vec3(0.0f, 1.0f, 0.0f)),
+                                      error);
 
         return openGLRenderer;
     }
     
     /*!
      Start OpenGL ES.
-     
-     @param vertexShaderSource source of the vertex shader.
-     @param fragmentShaderSource source of the fragment shader.
+
+     @param openGLCamera the start camera.
      @param error log from error generated during setup.
      
      @returns true if OpenGL ES could start, else false.
      */
-    bool startRenderer(const char* vertexShaderSource,
-                       const char* fragmentShaderSource,
-                       const char* shadowMappingVertexShaderSource,
-                       const char* shadowMappingFragmentShaderSource,
-                       const OpenGLCamera& openGLCamera,
-                       std::string& error);
+    bool startRenderer(const OpenGLCamera& openGLCamera, std::string& error);
     
     /*!
      Load current scene.

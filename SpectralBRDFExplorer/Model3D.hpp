@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <glm/glm.hpp>
 
+#include "OpenGLRGBProgram.hpp"
 #include "OpenGLObjParser.hpp"
 #include "Material.hpp"
 
@@ -28,6 +29,7 @@ private:
 public:
     
     GLuint _vboId;
+    OpenGLRGBProgram openGLModelProgram;
     
     glm::mat4 _modelMatrix;
     glm::mat4 _modelViewMatrix;
@@ -35,6 +37,7 @@ public:
     glm::mat4 _modelViewProjectionLightMatrix;
     glm::mat4 _normalMatrix;
     
+    std::string lighting;
     
     /*!
      Default constructor.

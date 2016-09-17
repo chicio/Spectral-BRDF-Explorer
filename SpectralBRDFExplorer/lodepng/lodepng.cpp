@@ -28,6 +28,14 @@ The manual and changelog are in the header file "lodepng.h"
 Rename this file to lodepng.cpp to use it for C++, or to lodepng.c to use it for C.
 */
 
+#ifdef __ANDROID__
+#include "android_fopen.h"
+#endif
+
+#ifdef __APPLE__
+#include "iOSFileOpen.hpp"
+#endif
+
 #include "lodepng.h"
 
 #include <limits.h>
@@ -346,7 +354,6 @@ static void lodepng_add32bitInt(ucvector* buffer, unsigned value)
 /* ////////////////////////////////////////////////////////////////////////// */
 
 #ifdef LODEPNG_COMPILE_DISK
-
 /* returns negative value on error. This should be pure C compatible, so no fstat. */
 static long lodepng_filesize(const char* filename)
 {

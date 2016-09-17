@@ -13,6 +13,10 @@
 #include "android_fopen.h"
 #endif
 
+#ifdef __APPLE__
+#include "iOSFileOpen.hpp"
+#endif
+
 const std::vector<float>& OpenGLObjParser::getVerticesData() {
     
     return verticesData;
@@ -196,6 +200,8 @@ bool OpenGLObjParser::parseObj(const char* filePath) {
             }
         }
     }
+    
+    fclose(file);
     
     if(textureCoordinates.size() > 0) {
         
