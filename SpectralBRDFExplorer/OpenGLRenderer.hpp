@@ -68,28 +68,20 @@ public:
     /// OpenGL ES camera.
     OpenGLCamera openGLCamera;
 
-    static OpenGLRenderer* defaultStartRender(const char* vertexShaderSource,
-                                              const char* fragmentShaderSource,
-                                              const char* shadowMappingVertexShaderSource,
-                                              const char* shadowMappingFragmentShaderSource) {
-
+    static OpenGLRenderer* defaultStartRender() {
 
         /***** MODELS ******/
         Model3D model3D("Objs/Dragon.obj", "Sphere");
-        Model3D cornellBoxModel3D("Objs/CornellBox.obj", "Cornell Box");
-
         model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -12.0f));
-        cornellBoxModel3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -12.0f));;
-
+        model3D.setMaterial(Material::createBronzeMaterial());
+        model3D.lighting = "BlinnPhong";
         Scene::instance().models.push_back(model3D);
+        
+        Model3D cornellBoxModel3D("Objs/CornellBox.obj", "Cornell Box");
+        cornellBoxModel3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -12.0f));;
+        cornellBoxModel3D.setMaterial(Material::createMatteMaterial());
+        cornellBoxModel3D.lighting = "Phong";
         Scene::instance().models.push_back(cornellBoxModel3D);
-
-        /****** MATERIALS *******/
-        Scene::instance().models[0].setMaterial(Material::createBronzeMaterial());
-        Scene::instance().models[1].setMaterial(Material::createMatteMaterial());
-
-        /****** LIGHITNG *******/
-        Scene::instance().lighting = "Phong";
 
         /****** START *******/
         std::string error;

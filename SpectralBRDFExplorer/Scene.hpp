@@ -23,20 +23,18 @@ public:
     
     /// Models contained in the scene.
     std::vector<Model3D> models;
-    
-    /// Cornell Box model.
-    Model3D cornellBoxModel;
-    /// Current model to be rendered.
-    Model3D model;
-    
-    /// Current lighting method selected.
-    std::string lighting;
-    
+        
     static Scene& instance() {
         
         static Scene scene;
         return scene;
     }
+    
+    /*!
+     Clear scene.
+     Remove all models and reset all setup.
+     */
+    void clearScene();
 };
 
 #endif /* Scene_hpp */

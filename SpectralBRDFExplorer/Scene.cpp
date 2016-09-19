@@ -7,3 +7,9 @@
 //
 
 #include "Scene.hpp"
+
+void Scene::clearScene() {
+ 
+    //Clear models addition.
+    models.clear();
+}
