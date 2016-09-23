@@ -24,12 +24,12 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
         
         programLinked = currentModel.openGLModelProgram.loadProgram(vertexShader.c_str(), fragmentShader.c_str(), errors);
         
-        if(!programLinked) {
+        if(!programLinked || !errors.empty()) {
             
             //Return error from program loading.
             error = errors;
             
-            return programLinked;
+            return false;
         }
         
         //Prepare uniform to be loaded in shaders.
@@ -60,7 +60,7 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
         //Return error from program loading.
         error = errors;
         
-        return programLinked;
+        return false;
     }
     
     //Load shadow mapping uniform.
@@ -71,7 +71,7 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     //TODO: parametrical or calculated.
     nearPlane = 0.1f;
     farPlane = 100.0f;
-    sceneCenter = glm::vec3(0.0f, 0.0f, -12.0f);
+    sceneCenter = glm::vec3(0.0f, 0.0f, -7.0f);
     lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
     
     //Setup camera.
@@ -201,7 +201,7 @@ void OpenGLRenderer::draw() {
     glClear(GL_DEPTH_BUFFER_BIT);
     glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);     // disable color rendering, only write to depth buffer
     glEnable(GL_POLYGON_OFFSET_FILL);     // reduce shadow rendering artifact
-    glPolygonOffset( 5.0f, 100.0f);
+    glPolygonOffset(5.0f, 100.0f);
     glUseProgram(openGLShadowProgram.program);
     
     for (auto& currentModel : Scene::instance().models) {

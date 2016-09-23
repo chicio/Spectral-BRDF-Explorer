@@ -17,7 +17,7 @@ bool OpenGLProgram::loadProgram(const char* vertexShaderSource, const char* frag
     
     vertexShader = shader.loadShader(GL_VERTEX_SHADER, vertexShaderSource, error);
     
-    if(vertexShader == OPENGL_SHADER_ERROR) {
+    if(vertexShader == OPENGL_SHADER_ERROR || !error.empty()) {
         
         errors = "Vertex Shader: " + error;
         
@@ -26,7 +26,7 @@ bool OpenGLProgram::loadProgram(const char* vertexShaderSource, const char* frag
     
     fragmentShader = shader.loadShader(GL_FRAGMENT_SHADER, fragmentShaderSource, error);
     
-    if(fragmentShader == OPENGL_SHADER_ERROR) {
+    if(fragmentShader == OPENGL_SHADER_ERROR || !error.empty()) {
         
         errors = "Fragment Shader: " + error;
         

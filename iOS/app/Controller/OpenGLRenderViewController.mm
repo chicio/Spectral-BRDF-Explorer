@@ -67,8 +67,8 @@
         std::string error;
         
         //Start renderer.
-        bool rendererStarted = openGLRenderer.startRenderer(OpenGLCamera(glm::vec3(0.0f, 1.0f, 1.0f),
-                                                                         glm::vec3(0.0f, 0.0f, -5.0f),
+        bool rendererStarted = openGLRenderer.startRenderer(OpenGLCamera(glm::vec3(0.0f, 6.0f, 0.0f),
+                                                                         glm::vec3(0.0f, 0.0f, -7.0f),
                                                                          glm::vec3(0.0f, 1.0f, 0.0f)),
                                                             error);
         
@@ -76,6 +76,9 @@
             
             openGLRenderer.loadScene();
         } else {
+            
+            //Shutdown OpenGL.
+            openGLRenderer.shutdown();
             
             //Failed to load OpenGL ES 3 context.
             UIAlertController* alert = [UIAlertController

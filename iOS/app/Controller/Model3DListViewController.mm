@@ -68,16 +68,14 @@
     
     Scene::instance().clearScene();
     
-    //Create model and Cornell Box.
     Model3D model3D("Sphere.obj", "Sphere");
     model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -7.0f));
     model3D.setMaterial(Material::createBronzeMaterial());
     model3D.lighting = "Phong";
     Scene::instance().models.push_back(model3D);
     
-    //Cornell Box.
     Model3D cornellBoxBottom3D("CornellBox.obj", "Cornell Box");
-    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -12.0f));
+    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -7.0f));
     cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
     cornellBoxBottom3D.lighting = "Lambertian";
     Scene::instance().models.push_back(cornellBoxBottom3D);
@@ -87,7 +85,6 @@
     
     Scene::instance().clearScene();
     
-    //Create model and Cornell Box.
     Model3D model3D("Lucy.obj", "Lucy");
     model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -7.0f));
     model3D.setMaterial(Material::createMatteMaterial());
@@ -100,9 +97,8 @@
     
     Scene::instance().models.push_back(model3D);
     
-    //Cornell Box.
     Model3D cornellBoxBottom3D("CornellBox.obj", "Cornell Box");
-    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -12.0f));
+    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -7.0f));
     cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
     cornellBoxBottom3D.lighting = "Lambertian";
     Scene::instance().models.push_back(cornellBoxBottom3D);
@@ -112,16 +108,14 @@
     
     Scene::instance().clearScene();
     
-    //Create model and Cornell Box.
     Model3D model3D("HappyBuddha.obj", "Happy Buddha");
     model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -7.0f));
     model3D.setMaterial(Material::createOrangeMaterial());
     model3D.lighting = "OrenNayar";
     Scene::instance().models.push_back(model3D);
     
-    //Cornell Box.
-    Model3D cornellBoxBottom3D("CornellBox.obj", "Cornell Box");
-    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -12.0f));
+    Model3D cornellBoxBottom3D("Floor.obj", "Cornell Box");
+    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -7.0f));
     cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
     cornellBoxBottom3D.lighting = "Lambertian";
     Scene::instance().models.push_back(cornellBoxBottom3D);
@@ -131,16 +125,14 @@
     
     Scene::instance().clearScene();
     
-    //Create model and Cornell Box.
     Model3D model3D("HappyBuddha.obj", "Happy Buddha");
     model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -7.0f));
-    model3D.setMaterial(Material::createBronzeMaterial());
+    model3D.setMaterial(Material::createMatteMaterial());
     model3D.lighting = "CookTorrance";
     Scene::instance().models.push_back(model3D);
     
-    //Cornell Box.
-    Model3D cornellBoxBottom3D("CornellBox.obj", "Cornell Box");
-    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -12.0f));
+    Model3D cornellBoxBottom3D("Floor.obj", "Cornell Box");
+    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -7.0f));
     cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
     cornellBoxBottom3D.lighting = "Lambertian";
     Scene::instance().models.push_back(cornellBoxBottom3D);
