@@ -21,10 +21,19 @@ private:
     
 public:
     
+    /// Light direction.
+    glm::vec3 lightDirection;
     /// Models contained in the scene.
     std::vector<Model3D> models;
+    /// Skybox, if there's one.
     Model3D skybox;
-        
+    /// Near plane.
+    float nearPlane;
+    /// Far Plane;
+    float farPlane;
+    /// Center of models.
+    glm::vec3 sceneCenter;
+    
     static Scene& instance() {
         
         static Scene scene;

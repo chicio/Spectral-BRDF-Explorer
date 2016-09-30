@@ -93,21 +93,15 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     _shadowMapMvpLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpMatrix"); //shadow map
     _shadowMapMvpLightLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpLightMatrix"); //shadow map
     
-    //Set data
-    //TODO: parametrical or calculated.
-    nearPlane = 0.1f;
-    farPlane = 100.0f;
-    sceneCenter = glm::vec3(0.0f, 0.0f, -7.0f);
-    lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
-    
     //Setup camera.
     openGLCamera = camera;
-    openGLCamera.setSceneCenter(sceneCenter);
     
     return programLinked;
 }
 
 void OpenGLRenderer::loadScene() {
+    
+    openGLCamera.setSceneCenter(Scene::instance().sceneCenter);
     
     for (auto& currentModel : Scene::instance().models) {
         
@@ -304,7 +298,11 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
     //Projection matrix.
     float aspect = fabs(width / height);
     
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(65.0f), aspect, nearPlane, farPlane);
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(65.0f),
+                                                  aspect,
+                                                  Scene::instance().nearPlane,
+                                                  Scene::instance().farPlane);
+    
     glm::mat4 orthoMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 20.0f);
     
     for (auto& currentModel : Scene::instance().models) {
@@ -315,7 +313,7 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
         currentModel._normalMatrix = glm::inverseTranspose(currentModel._modelViewMatrix);
         
         //Shadow map matrix.
-        currentModel._modelViewProjectionLightMatrix = orthoMatrix * glm::lookAt(lightDirection,
+        currentModel._modelViewProjectionLightMatrix = orthoMatrix * glm::lookAt(Scene::instance().lightDirection,
                                                                                  openGLCamera.center,
                                                                                  glm::vec3(0.0f, 1.0f, 0.0f)) * currentModel._modelMatrix;
     }
@@ -459,7 +457,10 @@ void OpenGLRenderer::draw() {
         glUniformMatrix4fv(currentModel.openGLModelProgram._mvpLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionMatrix));
         glUniformMatrix4fv(currentModel.openGLModelProgram._mvpLightLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionLightMatrix));
         glUniformMatrix4fv(currentModel.openGLModelProgram._normalLocation, 1, GL_FALSE, glm::value_ptr(currentModel._normalMatrix));
-        glUniform3f(currentModel.openGLModelProgram._lightDirection, lightDirection.x, lightDirection.y, lightDirection.z);
+        glUniform3f(currentModel.openGLModelProgram._lightDirection,
+                    Scene::instance().lightDirection.x,
+                    Scene::instance().lightDirection.y,
+                    Scene::instance().lightDirection.z);
         glUniform4f(currentModel.openGLModelProgram._lightColor, 1.0, 1.0, 1.0, 1.0);
         glUniform4f(currentModel.openGLModelProgram._materialAmbient,
                     currentModel.getMaterial().ka.red,

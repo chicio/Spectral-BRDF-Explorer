@@ -47,18 +47,7 @@ private:
     GLint _skyboxmvpLocation;
     GLuint _skyBoxTextureId;
     GLint _skyBoxTextureSampler;
-    
-    /// Light direction.
-    glm::vec3 lightDirection;
-        
-    /// Near plane.
-    float nearPlane;
-    /// Far Plane;
-    float farPlane;
-    
-    /// Center of models.
-    glm::vec3 sceneCenter;
-    
+                
     float shadowMapTextureWidth;
     float shadowMapTextureHeight;
     GLuint shadowMapTextureId;

@@ -79,6 +79,11 @@
     cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
     cornellBoxBottom3D.lighting = "Lambertian";
     Scene::instance().models.push_back(cornellBoxBottom3D);
+    
+    Scene::instance().nearPlane = 0.1f;
+    Scene::instance().farPlane = 100.0f;
+    Scene::instance().sceneCenter = glm::vec3(0.0f, 0.0f, -7.0f);
+    Scene::instance().lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
 - (void)scene2 {
@@ -102,6 +107,11 @@
     cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
     cornellBoxBottom3D.lighting = "Lambertian";
     Scene::instance().models.push_back(cornellBoxBottom3D);
+    
+    Scene::instance().nearPlane = 0.1f;
+    Scene::instance().farPlane = 100.0f;
+    Scene::instance().sceneCenter = glm::vec3(0.0f, 0.0f, -7.0f);
+    Scene::instance().lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
 }
     
 -(void)scene3 {
@@ -119,8 +129,13 @@
     cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
     cornellBoxBottom3D.lighting = "Lambertian";
     Scene::instance().models.push_back(cornellBoxBottom3D);
-}
     
+    Scene::instance().nearPlane = 0.1f;
+    Scene::instance().farPlane = 100.0f;
+    Scene::instance().sceneCenter = glm::vec3(0.0f, 0.0f, -7.0f);
+    Scene::instance().lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
+}
+
 -(void)scene4 {
     
     Scene::instance().clearScene();
@@ -136,6 +151,11 @@
     cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
     cornellBoxBottom3D.lighting = "Lambertian";
     Scene::instance().models.push_back(cornellBoxBottom3D);
+    
+    Scene::instance().nearPlane = 0.1f;
+    Scene::instance().farPlane = 100.0f;
+    Scene::instance().sceneCenter = glm::vec3(0.0f, 0.0f, -7.0f);
+    Scene::instance().lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
 @end
