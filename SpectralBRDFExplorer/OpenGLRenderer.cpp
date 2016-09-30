@@ -48,6 +48,32 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
         currentModel.openGLModelProgram._shadowMapSamplerLoc = glGetUniformLocation(currentModel.openGLModelProgram.program, "shadowMapSampler");
     }
     
+    /********/
+    //Load Skybox programs.
+    std::string skyboxVertexShader = getFileContents("SkyboxVertex.vsh");
+    std::string skyboxFragmentShader = getFileContents("SkyboxFragment.fsh");
+    programLinked = openGLSkyboxProgram.loadProgram(skyboxVertexShader.c_str(),
+                                                    skyboxFragmentShader.c_str(),
+                                                    errors);
+    
+    if (!programLinked) {
+        
+        //Return error from program loading.
+        error = errors;
+        
+        return false;
+    }
+    
+    Model3D model3D("Cube.obj", "Skybox");
+    model3D._modelMatrix = glm::mat4();
+    model3D.setMaterial(Material::createMatteMaterial());
+    model3D.lighting = "Phong";
+    Scene::instance().skybox = model3D;
+    
+    _skyboxmvpLocation = glGetUniformLocation(openGLSkyboxProgram.program, "mvpMatrix");
+    _skyBoxTextureSampler = glGetUniformLocation(openGLSkyboxProgram.program, "skyboxSampler");
+    /********/
+    
     //Load Shadow mapping programs.
     std::string shadowMappingVertexShader = getFileContents("ShadowMapVertex.vsh");
     std::string shadowMappingFragmentShader = getFileContents("ShadowMapFragment.fsh");
@@ -55,7 +81,7 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
                                                     shadowMappingFragmentShader.c_str(),
                                                     errors);
     
-    if(!programLinked) {
+    if (!programLinked) {
         
         //Return error from program loading.
         error = errors;
@@ -117,6 +143,113 @@ void OpenGLRenderer::loadScene() {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         }
     }
+    
+    /********/
+    //SKYBOX.
+    glGenBuffers(1, &(Scene::instance().skybox._vboId));
+    glBindBuffer(GL_ARRAY_BUFFER, Scene::instance().skybox._vboId);
+    glBufferData(GL_ARRAY_BUFFER,
+                 Scene::instance().skybox.modelData().getVerticesDataSize(),
+                 Scene::instance().skybox.modelData().getVerticesData().data(),
+                 GL_STATIC_DRAW);
+
+    // Generate a texture object
+    glGenTextures ( 1, &_skyBoxTextureId );
+    
+    // Bind the texture object
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _skyBoxTextureId);
+    
+    //positive y, negative y (for up and down),
+    //positive x, negative x (left, right),
+    //positive z, negative z (front, back)
+    unsigned error;
+    
+    unsigned char* texturePixels1;
+    unsigned textureWidth;
+    unsigned textureHeight;
+    error = lodepng_decode32_file(&texturePixels1, &textureWidth, &textureHeight, "left.png");
+
+    //Load the cube face - Positive X
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X,
+                 0,
+                 GL_RGBA,
+                 textureWidth,
+                 textureHeight,
+                 0,
+                 GL_RGBA,
+                 GL_UNSIGNED_BYTE,
+                 texturePixels1);
+
+    unsigned char* texturePixels2;
+    error = lodepng_decode32_file(&texturePixels2, &textureWidth, &textureHeight, "right.png");
+    
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+                 0,
+                 GL_RGBA,
+                 textureWidth,
+                 textureHeight,
+                 0,
+                 GL_RGBA,
+                 GL_UNSIGNED_BYTE,
+                 texturePixels2);
+    
+    unsigned char* texturePixels3;
+    error = lodepng_decode32_file(&texturePixels3, &textureWidth, &textureHeight, "up.png");
+    
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
+                 0,
+                 GL_RGBA,
+                 textureWidth,
+                 textureHeight,
+                 0,
+                 GL_RGBA,
+                 GL_UNSIGNED_BYTE,
+                 texturePixels3);
+    
+    unsigned char* texturePixels4;
+    error = lodepng_decode32_file(&texturePixels4, &textureWidth, &textureHeight, "down.png");
+    
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+                 0,
+                 GL_RGBA,
+                 textureWidth,
+                 textureHeight,
+                 0,
+                 GL_RGBA,
+                 GL_UNSIGNED_BYTE,
+                 texturePixels4);
+    
+    unsigned char* texturePixels5;
+    error = lodepng_decode32_file(&texturePixels5, &textureWidth, &textureHeight, "front.png");
+    
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
+                 0,
+                 GL_RGBA,
+                 textureWidth,
+                 textureHeight,
+                 0,
+                 GL_RGBA,
+                 GL_UNSIGNED_BYTE,
+                 texturePixels5);
+    
+    unsigned char* texturePixels6;
+    error = lodepng_decode32_file(&texturePixels6, &textureWidth, &textureHeight, "back.png");
+    
+    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
+                 0,
+                 GL_RGBA,
+                 textureWidth,
+                 textureHeight,
+                 0,
+                 GL_RGBA,
+                 GL_UNSIGNED_BYTE,
+                 texturePixels6);
+    
+    // Set the filtering mode
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    
+    /********/
     
     //SHADOW MAP.
     GLint m_viewport[4];
@@ -182,8 +315,13 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
         currentModel._normalMatrix = glm::inverseTranspose(currentModel._modelViewMatrix);
         
         //Shadow map matrix.
-        currentModel._modelViewProjectionLightMatrix = orthoMatrix * glm::lookAt(lightDirection, openGLCamera.center, glm::vec3(0.0f, 1.0f, 0.0f)) * currentModel._modelMatrix;
+        currentModel._modelViewProjectionLightMatrix = orthoMatrix * glm::lookAt(lightDirection,
+                                                                                 openGLCamera.center,
+                                                                                 glm::vec3(0.0f, 1.0f, 0.0f)) * currentModel._modelMatrix;
     }
+    
+    Scene::instance().skybox._modelMatrix = openGLCamera.lookAtMatrix() * glm::scale(glm::mat4(), glm::vec3(50.0, 50.0f, 50.0f));;
+    Scene::instance().skybox._modelViewProjectionMatrix = projectionMatrix * Scene::instance().skybox._modelMatrix;
 }
 
 void OpenGLRenderer::draw() {
@@ -236,6 +374,45 @@ void OpenGLRenderer::draw() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
+    /********/
+    glDepthMask(GL_FALSE);
+    glUseProgram(openGLSkyboxProgram.program);
+    glDisable(GL_CULL_FACE);
+    glDisable(GL_DEPTH_TEST);
+    glUniform1i(_skyBoxTextureSampler, TEXTURE_UNIT_ID_0_SAMPLER);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, _skyBoxTextureId);
+
+    glBindBuffer(GL_ARRAY_BUFFER, Scene::instance().skybox._vboId);
+    glEnableVertexAttribArray(VERTEX_POS_INDX);
+    glVertexAttribPointer(VERTEX_POS_INDX,
+                          VERTEX_POS_SIZE,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          Scene::instance().skybox.modelData().getStride(),
+                          0);
+    glVertexAttribPointer(VERTEX_NORMAL_INDX,
+                          VERTEX_NORMAL_SIZE,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          Scene::instance().skybox.modelData().getStride(),
+                          (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat)));
+    
+    glUniformMatrix4fv(_skyboxmvpLocation,
+                       1,
+                       GL_FALSE,
+                       glm::value_ptr(Scene::instance().skybox._modelViewProjectionMatrix));
+    
+    glDrawArrays(GL_TRIANGLES, 0, Scene::instance().skybox.modelData().getNumberOfVerticesToDraw());
+    glDisableVertexAttribArray(VERTEX_POS_INDX);
+    glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
+    /********/
+
     for (auto& currentModel : Scene::instance().models) {
         
         glUseProgram(currentModel.openGLModelProgram.program);

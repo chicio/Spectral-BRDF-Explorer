@@ -40,8 +40,13 @@
 class OpenGLRenderer {
 private:
     
-    /// OpenGL ES program.
+    /// OpenGL ES programs.
     OpenGLProgram openGLShadowProgram;
+    OpenGLProgram openGLSkyboxProgram;
+    
+    GLint _skyboxmvpLocation;
+    GLuint _skyBoxTextureId;
+    GLint _skyBoxTextureSampler;
     
     /// Light direction.
     glm::vec3 lightDirection;
@@ -53,7 +58,6 @@ private:
     
     /// Center of models.
     glm::vec3 sceneCenter;
-
     
     float shadowMapTextureWidth;
     float shadowMapTextureHeight;

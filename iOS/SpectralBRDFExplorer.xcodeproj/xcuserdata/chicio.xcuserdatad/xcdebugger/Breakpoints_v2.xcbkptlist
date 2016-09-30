@@ -137,13 +137,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "app/Controller/Model3DListViewController.mm"
-            timestampString = "496359212.682599"
+            filePath = "../SpectralBRDFExplorer/OpenGLRenderer.cpp"
+            timestampString = "496958469.13447"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "132"
-            endingLineNumber = "132"
-            landmarkName = "-scene4"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
+            landmarkName = "OpenGLRenderer::update(float width, float height, double timeSinceLastUpdate)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../SpectralBRDFExplorer/OpenGLRenderer.cpp"
+            timestampString = "496958469.13447"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
+            landmarkName = "OpenGLRenderer::draw()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../SpectralBRDFExplorer/OpenGLRenderer.cpp"
+            timestampString = "496958469.13447"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "OpenGLRenderer::loadScene()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

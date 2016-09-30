@@ -23,6 +23,7 @@ public:
     
     /// Models contained in the scene.
     std::vector<Model3D> models;
+    Model3D skybox;
         
     static Scene& instance() {
         

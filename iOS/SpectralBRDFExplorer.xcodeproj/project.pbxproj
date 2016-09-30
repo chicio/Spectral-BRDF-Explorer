@@ -12,6 +12,8 @@
 		5F6426701D00717A00166E20 /* Model3DListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266E1D00717A00166E20 /* Model3DListViewController.mm */; };
 		5F66F87E1D8B42D700595BB3 /* OrenNayarFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F66F87C1D8B42D700595BB3 /* OrenNayarFragment.fsh */; };
 		5F66F87F1D8B42D700595BB3 /* OrenNayarVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */; };
+		5F672F2B1D9B13C400F3C195 /* SkyboxVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */; };
+		5F672F2D1D9B13DD00F3C195 /* SkyboxFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F672F2C1D9B13DD00F3C195 /* SkyboxFragment.fsh */; };
 		5F8A6D791D8CB1630057E7C5 /* iOSFileOpen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D781D8CB1630057E7C5 /* iOSFileOpen.cpp */; };
 		5F8A6D7C1D8CC3200057E7C5 /* OpenGLRGBProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBProgram.cpp */; };
 		5F8A6D7F1D8CCA240057E7C5 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D7D1D8CCA240057E7C5 /* Utils.cpp */; };
@@ -150,6 +152,12 @@
 		5F94F69F1D8892A6005A657F /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F94F6241D8892A6005A657F /* Scene.cpp */; };
 		5F9BAA3F1D907AF9005D81A7 /* LambertianVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F9BAA3E1D907AF9005D81A7 /* LambertianVertex.vsh */; };
 		5F9BAA411D907B0C005D81A7 /* LambertianFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F9BAA401D907B0C005D81A7 /* LambertianFragment.fsh */; };
+		5FAA96D81D9DD45900F05A6A /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D21D9DD45900F05A6A /* back.png */; };
+		5FAA96D91D9DD45900F05A6A /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D31D9DD45900F05A6A /* down.png */; };
+		5FAA96DA1D9DD45900F05A6A /* front.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D41D9DD45900F05A6A /* front.png */; };
+		5FAA96DB1D9DD45900F05A6A /* left.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D51D9DD45900F05A6A /* left.png */; };
+		5FAA96DC1D9DD45900F05A6A /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D61D9DD45900F05A6A /* right.png */; };
+		5FAA96DD1D9DD45900F05A6A /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D71D9DD45900F05A6A /* up.png */; };
 		5FB2AFDB1D8D96270034009D /* CookTorranceVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FB2AFDA1D8D96270034009D /* CookTorranceVertex.vsh */; };
 		5FB2AFDD1D8D96390034009D /* CookTorranceFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FB2AFDC1D8D96390034009D /* CookTorranceFragment.fsh */; };
 		5FBDCB431D93273600CEFD83 /* Lucy-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4F11D88928F005A657F /* Lucy-texture.png */; };
@@ -171,6 +179,8 @@
 		5F64266E1D00717A00166E20 /* Model3DListViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Model3DListViewController.mm; sourceTree = "<group>"; };
 		5F66F87C1D8B42D700595BB3 /* OrenNayarFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OrenNayarFragment.fsh; sourceTree = "<group>"; };
 		5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OrenNayarVertex.vsh; sourceTree = "<group>"; };
+		5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SkyboxVertex.vsh; sourceTree = "<group>"; };
+		5F672F2C1D9B13DD00F3C195 /* SkyboxFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SkyboxFragment.fsh; sourceTree = "<group>"; };
 		5F8A6D781D8CB1630057E7C5 /* iOSFileOpen.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = iOSFileOpen.cpp; sourceTree = "<group>"; };
 		5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBProgram.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLRGBProgram.cpp; sourceTree = "<group>"; };
 		5F8A6D7B1D8CC3200057E7C5 /* OpenGLRGBProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRGBProgram.hpp; sourceTree = "<group>"; };
@@ -467,6 +477,12 @@
 		5F94F6251D8892A6005A657F /* Scene.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Scene.hpp; sourceTree = "<group>"; };
 		5F9BAA3E1D907AF9005D81A7 /* LambertianVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LambertianVertex.vsh; sourceTree = "<group>"; };
 		5F9BAA401D907B0C005D81A7 /* LambertianFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LambertianFragment.fsh; sourceTree = "<group>"; };
+		5FAA96D21D9DD45900F05A6A /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		5FAA96D31D9DD45900F05A6A /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
+		5FAA96D41D9DD45900F05A6A /* front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = front.png; sourceTree = "<group>"; };
+		5FAA96D51D9DD45900F05A6A /* left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left.png; sourceTree = "<group>"; };
+		5FAA96D61D9DD45900F05A6A /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
+		5FAA96D71D9DD45900F05A6A /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		5FB2AFDA1D8D96270034009D /* CookTorranceVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CookTorranceVertex.vsh; sourceTree = "<group>"; };
 		5FB2AFDC1D8D96390034009D /* CookTorranceFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CookTorranceFragment.fsh; sourceTree = "<group>"; };
 		5FBDCB441D932C2D00CEFD83 /* Floor.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Floor.obj; sourceTree = "<group>"; };
@@ -536,6 +552,12 @@
 		5F94F4F01D88928F005A657F /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				5FAA96D21D9DD45900F05A6A /* back.png */,
+				5FAA96D31D9DD45900F05A6A /* down.png */,
+				5FAA96D41D9DD45900F05A6A /* front.png */,
+				5FAA96D51D9DD45900F05A6A /* left.png */,
+				5FAA96D61D9DD45900F05A6A /* right.png */,
+				5FAA96D71D9DD45900F05A6A /* up.png */,
 				5F94F4F11D88928F005A657F /* Lucy-texture.png */,
 			);
 			path = textures;
@@ -556,6 +578,8 @@
 				5FB2AFDA1D8D96270034009D /* CookTorranceVertex.vsh */,
 				5F9BAA401D907B0C005D81A7 /* LambertianFragment.fsh */,
 				5F9BAA3E1D907AF9005D81A7 /* LambertianVertex.vsh */,
+				5F672F2C1D9B13DD00F3C195 /* SkyboxFragment.fsh */,
+				5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -1010,6 +1034,7 @@
 			files = (
 				5F94F6841D8892A6005A657F /* polar_coordinates.inl in Resources */,
 				5F94F66C1D8892A6005A657F /* fast_trigonometry.inl in Resources */,
+				5F672F2D1D9B13DD00F3C195 /* SkyboxFragment.fsh in Resources */,
 				5F94F64A1D8892A6005A657F /* type_vec4.inl in Resources */,
 				5F94F6761D8892A6005A657F /* matrix_decompose.inl in Resources */,
 				5F94F6281D8892A6005A657F /* func_common.inl in Resources */,
@@ -1052,6 +1077,7 @@
 				5FEF36151CF7B3D7003DE7BC /* Assets.xcassets in Resources */,
 				5F94F64F1D8892A6005A657F /* epsilon.inl in Resources */,
 				5F94F65B1D8892A6005A657F /* type_ptr.inl in Resources */,
+				5FAA96DA1D9DD45900F05A6A /* front.png in Resources */,
 				5F94F6891D8892A6005A657F /* rotate_vector.inl in Resources */,
 				5F94F6551D8892A6005A657F /* packing.inl in Resources */,
 				5F94F6541D8892A6005A657F /* noise.inl in Resources */,
@@ -1066,6 +1092,7 @@
 				5F94F6331D8892A6005A657F /* func_packing_simd.inl in Resources */,
 				5F94F6401D8892A6005A657F /* type_mat3x3.inl in Resources */,
 				5F94F6651D8892A6005A657F /* component_wise.inl in Resources */,
+				5FAA96D91D9DD45900F05A6A /* down.png in Resources */,
 				5F94F6581D8892A6005A657F /* reciprocal.inl in Resources */,
 				5F94F65C1D8892A6005A657F /* ulp.inl in Resources */,
 				5F94F5041D88928F005A657F /* BlinnPhongFragment.fsh in Resources */,
@@ -1078,6 +1105,7 @@
 				5F94F6781D8892A6005A657F /* matrix_major_storage.inl in Resources */,
 				5F94F66B1D8892A6005A657F /* fast_square_root.inl in Resources */,
 				5F94F6521D8892A6005A657F /* matrix_inverse.inl in Resources */,
+				5F672F2B1D9B13C400F3C195 /* SkyboxVertex.vsh in Resources */,
 				5F94F62D1D8892A6005A657F /* func_geometric_simd.inl in Resources */,
 				5F94F6961D8892A6005A657F /* vector_query.inl in Resources */,
 				5F94F6621D8892A6005A657F /* color_space_YCoCg.inl in Resources */,
@@ -1109,11 +1137,13 @@
 				5FB2AFDB1D8D96270034009D /* CookTorranceVertex.vsh in Resources */,
 				5F94F5021D88928F005A657F /* Sphere.obj in Resources */,
 				5F94F6851D8892A6005A657F /* projection.inl in Resources */,
+				5FAA96DD1D9DD45900F05A6A /* up.png in Resources */,
 				5F94F64E1D8892A6005A657F /* constants.inl in Resources */,
 				5F94F6361D8892A6005A657F /* func_vector_relational.inl in Resources */,
 				5F94F4F91D88928F005A657F /* Bunny.obj in Resources */,
 				5F94F6291D8892A6005A657F /* func_common_simd.inl in Resources */,
 				5F94F6671D8892A6005A657F /* euler_angles.inl in Resources */,
+				5FAA96DB1D9DD45900F05A6A /* left.png in Resources */,
 				5F94F6771D8892A6005A657F /* matrix_interpolation.inl in Resources */,
 				5F94F5081D88928F005A657F /* ShadowMapFragment.fsh in Resources */,
 				5F94F6431D8892A6005A657F /* type_mat4x3.inl in Resources */,
@@ -1122,6 +1152,7 @@
 				5F66F87E1D8B42D700595BB3 /* OrenNayarFragment.fsh in Resources */,
 				5F94F62B1D8892A6005A657F /* func_exponential_simd.inl in Resources */,
 				5F94F6811D8892A6005A657F /* optimum_pow.inl in Resources */,
+				5FAA96D81D9DD45900F05A6A /* back.png in Resources */,
 				5F94F63C1D8892A6005A657F /* type_mat2x2.inl in Resources */,
 				5F94F5091D88928F005A657F /* ShadowMapVertex.vsh in Resources */,
 				5F94F6831D8892A6005A657F /* perpendicular.inl in Resources */,
@@ -1140,6 +1171,7 @@
 				5F94F6681D8892A6005A657F /* extend.inl in Resources */,
 				5F94F6801D8892A6005A657F /* number_precision.inl in Resources */,
 				5F94F67C1D8892A6005A657F /* mixed_product.inl in Resources */,
+				5FAA96DC1D9DD45900F05A6A /* right.png in Resources */,
 				5F94F6911D8892A6005A657F /* transform.inl in Resources */,
 				5F94F62A1D8892A6005A657F /* func_exponential.inl in Resources */,
 				5F94F62C1D8892A6005A657F /* func_geometric.inl in Resources */,
