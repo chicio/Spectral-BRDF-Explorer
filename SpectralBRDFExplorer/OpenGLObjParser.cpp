@@ -42,32 +42,32 @@ bool OpenGLObjParser::hasTexture() {
     return textureActive;
 }
 
-int OpenGLObjParser::getTextureWidth() {
-
-    return textureWidth;
-}
-
-int OpenGLObjParser::getTextureHeight() {
-    
-    return textureHeight;
-}
-
-unsigned char* OpenGLObjParser::getTexturePixels() {
-    
-    return texturePixels;
-}
-
-void OpenGLObjParser::loadTexture(const char* filePath) {
-
-    unsigned error;
-    
-    error = lodepng_decode32_file(&texturePixels, &textureWidth, &textureHeight, filePath);
-    
-    if(error) {
-        
-        printf("error %u: %s\n", error, lodepng_error_text(error));
-    }
-}
+//int OpenGLObjParser::getTextureWidth() {
+//
+//    return textureWidth;
+//}
+//
+//int OpenGLObjParser::getTextureHeight() {
+//    
+//    return textureHeight;
+//}
+//
+//unsigned char* OpenGLObjParser::getTexturePixels() {
+//    
+//    return texturePixels;
+//}
+//
+//void OpenGLObjParser::loadTexture(const char* filePath) {
+//
+//    unsigned error;
+//    
+//    error = lodepng_decode32_file(&texturePixels, &textureWidth, &textureHeight, filePath);
+//    
+//    if(error) {
+//        
+//        printf("error %u: %s\n", error, lodepng_error_text(error));
+//    }
+//}
 
 bool OpenGLObjParser::parseObj(const char* filePath) {
     

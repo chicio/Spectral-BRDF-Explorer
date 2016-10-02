@@ -13,6 +13,7 @@
 #include <glm/glm.hpp>
 
 #include "OpenGLRGBProgram.hpp"
+#include "OpenGLTexture.hpp"
 #include "OpenGLObjParser.hpp"
 #include "Material.hpp"
 
@@ -30,12 +31,16 @@ public:
     
     GLuint _vboId;
     OpenGLRGBProgram openGLModelProgram;
+    OpenGLTexture openGLTexture;
     
     glm::mat4 _modelMatrix;
     glm::mat4 _modelViewMatrix;
     glm::mat4 _modelViewProjectionMatrix;
     glm::mat4 _modelViewProjectionLightMatrix;
     glm::mat4 _normalMatrix;
+    
+    std::string textureName;
+    std::vector<std::string> textureNames;
     
     std::string lighting;
     
@@ -81,6 +86,16 @@ public:
      @returns model material
      */
     Material& getMaterial();
+        
+    void loadTexture() {
+        
+        openGLTexture.loadTexture(textureName);
+    }
+    
+    void setTextureName(std::string name) {
+        
+        textureName = name;
+    }
 };
 
 #endif /* Obj3DModel_hpp */

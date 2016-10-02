@@ -29,6 +29,7 @@
 #include "Scene.hpp"
 #include "OpenGLObjParser.hpp"
 #include "OpenGLProgram.hpp"
+#include "OpenGLTexture.hpp"
 #include "OpenGLCamera.hpp"
 
 #define VERTEX_POS_INDX             0
@@ -40,12 +41,13 @@
 class OpenGLRenderer {
 private:
     
-    /// OpenGL ES programs.
+    /// Shadow.
     OpenGLProgram openGLShadowProgram;
-    OpenGLProgram openGLSkyboxProgram;
     
+    /// Skybox.
+    OpenGLProgram openGLSkyboxProgram;
+    OpenGLTexture skyboxTexture;
     GLint _skyboxmvpLocation;
-    GLuint _skyBoxTextureId;
     GLint _skyBoxTextureSampler;
                 
     float shadowMapTextureWidth;

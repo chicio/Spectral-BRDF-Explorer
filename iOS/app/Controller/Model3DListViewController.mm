@@ -97,7 +97,7 @@
     
     if(model3D.modelData().hasTexture()) {
         
-        model3D.modelData().loadTexture("Lucy-texture.png");
+        model3D.setTextureName("Lucy-texture.png");
     }
     
     Scene::instance().models.push_back(model3D);

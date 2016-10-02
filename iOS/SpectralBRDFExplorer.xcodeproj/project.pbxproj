@@ -152,6 +152,7 @@
 		5F94F69F1D8892A6005A657F /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F94F6241D8892A6005A657F /* Scene.cpp */; };
 		5F9BAA3F1D907AF9005D81A7 /* LambertianVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F9BAA3E1D907AF9005D81A7 /* LambertianVertex.vsh */; };
 		5F9BAA411D907B0C005D81A7 /* LambertianFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F9BAA401D907B0C005D81A7 /* LambertianFragment.fsh */; };
+		5F9D61631DA13A6D00B87028 /* OpenGLTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D61611DA13A6D00B87028 /* OpenGLTexture.cpp */; };
 		5FAA96D81D9DD45900F05A6A /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D21D9DD45900F05A6A /* back.png */; };
 		5FAA96D91D9DD45900F05A6A /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D31D9DD45900F05A6A /* down.png */; };
 		5FAA96DA1D9DD45900F05A6A /* front.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D41D9DD45900F05A6A /* front.png */; };
@@ -477,6 +478,8 @@
 		5F94F6251D8892A6005A657F /* Scene.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Scene.hpp; sourceTree = "<group>"; };
 		5F9BAA3E1D907AF9005D81A7 /* LambertianVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LambertianVertex.vsh; sourceTree = "<group>"; };
 		5F9BAA401D907B0C005D81A7 /* LambertianFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LambertianFragment.fsh; sourceTree = "<group>"; };
+		5F9D61611DA13A6D00B87028 /* OpenGLTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLTexture.cpp; sourceTree = "<group>"; };
+		5F9D61621DA13A6D00B87028 /* OpenGLTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLTexture.hpp; sourceTree = "<group>"; };
 		5FAA96D21D9DD45900F05A6A /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		5FAA96D31D9DD45900F05A6A /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
 		5FAA96D41D9DD45900F05A6A /* front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = front.png; sourceTree = "<group>"; };
@@ -608,6 +611,8 @@
 				5F94F6251D8892A6005A657F /* Scene.hpp */,
 				5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBProgram.cpp */,
 				5F8A6D7B1D8CC3200057E7C5 /* OpenGLRGBProgram.hpp */,
+				5F9D61611DA13A6D00B87028 /* OpenGLTexture.cpp */,
+				5F9D61621DA13A6D00B87028 /* OpenGLTexture.hpp */,
 			);
 			name = SpectralBRDFExplorer;
 			path = ../SpectralBRDFExplorer;
@@ -1191,6 +1196,7 @@
 				5FEF360D1CF7B3D7003DE7BC /* AppDelegate.mm in Sources */,
 				5F94F69E1D8892A6005A657F /* OpenGLShader.cpp in Sources */,
 				5F94F69A1D8892A6005A657F /* OpenGLCamera.cpp in Sources */,
+				5F9D61631DA13A6D00B87028 /* OpenGLTexture.cpp in Sources */,
 				5F94F69C1D8892A6005A657F /* OpenGLProgram.cpp in Sources */,
 				5F64266F1D00717A00166E20 /* OpenGLRenderViewController.mm in Sources */,
 				5F94F69B1D8892A6005A657F /* OpenGLObjParser.cpp in Sources */,

@@ -115,26 +115,7 @@ void OpenGLRenderer::loadScene() {
         //Prepare texture.
         if(currentModel.modelData().hasTexture()) {
             
-            //Generate texture.
-            glGenTextures(1, &(currentModel.openGLModelProgram._textureId));
-            
-            //Bind texture.
-            glBindTexture(GL_TEXTURE_2D, currentModel.openGLModelProgram._textureId);
-            
-            //Load texture pixels.
-            glTexImage2D(GL_TEXTURE_2D,
-                         0,
-                         GL_RGBA,
-                         currentModel.modelData().getTextureWidth(),
-                         currentModel.modelData().getTextureHeight(),
-                         0,
-                         GL_RGBA,
-                         GL_UNSIGNED_BYTE,
-                         currentModel.modelData().getTexturePixels());
-            
-            //Set filtering.
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            currentModel.loadTexture();
         }
     }
     
@@ -147,104 +128,14 @@ void OpenGLRenderer::loadScene() {
                  Scene::instance().skybox.modelData().getVerticesData().data(),
                  GL_STATIC_DRAW);
 
-    // Generate a texture object
-    glGenTextures ( 1, &_skyBoxTextureId );
     
-    // Bind the texture object
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _skyBoxTextureId);
-    
-    //positive y, negative y (for up and down),
-    //positive x, negative x (left, right),
-    //positive z, negative z (front, back)
-    unsigned error;
-    
-    unsigned char* texturePixels1;
-    unsigned textureWidth;
-    unsigned textureHeight;
-    error = lodepng_decode32_file(&texturePixels1, &textureWidth, &textureHeight, "left.png");
-
-    //Load the cube face - Positive X
-    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X,
-                 0,
-                 GL_RGBA,
-                 textureWidth,
-                 textureHeight,
-                 0,
-                 GL_RGBA,
-                 GL_UNSIGNED_BYTE,
-                 texturePixels1);
-
-    unsigned char* texturePixels2;
-    error = lodepng_decode32_file(&texturePixels2, &textureWidth, &textureHeight, "right.png");
-    
-    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
-                 0,
-                 GL_RGBA,
-                 textureWidth,
-                 textureHeight,
-                 0,
-                 GL_RGBA,
-                 GL_UNSIGNED_BYTE,
-                 texturePixels2);
-    
-    unsigned char* texturePixels3;
-    error = lodepng_decode32_file(&texturePixels3, &textureWidth, &textureHeight, "up.png");
-    
-    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
-                 0,
-                 GL_RGBA,
-                 textureWidth,
-                 textureHeight,
-                 0,
-                 GL_RGBA,
-                 GL_UNSIGNED_BYTE,
-                 texturePixels3);
-    
-    unsigned char* texturePixels4;
-    error = lodepng_decode32_file(&texturePixels4, &textureWidth, &textureHeight, "down.png");
-    
-    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
-                 0,
-                 GL_RGBA,
-                 textureWidth,
-                 textureHeight,
-                 0,
-                 GL_RGBA,
-                 GL_UNSIGNED_BYTE,
-                 texturePixels4);
-    
-    unsigned char* texturePixels5;
-    error = lodepng_decode32_file(&texturePixels5, &textureWidth, &textureHeight, "front.png");
-    
-    glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
-                 0,
-                 GL_RGBA,
-                 textureWidth,
-                 textureHeight,
-                 0,
-                 GL_RGBA,
-                 GL_UNSIGNED_BYTE,
-                 texturePixels5);
-    
-    unsigned char* texturePixels6;
-    error = lodepng_decode32_file(&texturePixels6, &textureWidth, &textureHeight, "back.png");
-    
-    glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
-                 0,
-                 GL_RGBA,
-                 textureWidth,
-                 textureHeight,
-                 0,
-                 GL_RGBA,
-                 GL_UNSIGNED_BYTE,
-                 texturePixels6);
-    
-    // Set the filtering mode
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    
-    /********/
-    
+    skyboxTexture.loadCubeMapTexture("left.png",
+                                     "right.png",
+                                     "up.png",
+                                     "down.png",
+                                     "front.png",
+                                     "back.png");
+        
     //SHADOW MAP.
     GLint m_viewport[4];
     glGetIntegerv(GL_VIEWPORT, m_viewport);
@@ -379,7 +270,7 @@ void OpenGLRenderer::draw() {
     glDisable(GL_DEPTH_TEST);
     glUniform1i(_skyBoxTextureSampler, TEXTURE_UNIT_ID_0_SAMPLER);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, _skyBoxTextureId);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture._textureId);
 
     glBindBuffer(GL_ARRAY_BUFFER, Scene::instance().skybox._vboId);
     glEnableVertexAttribArray(VERTEX_POS_INDX);
@@ -446,7 +337,7 @@ void OpenGLRenderer::draw() {
             
             glUniform1i(currentModel.openGLModelProgram._textureActive, 1);
             glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, currentModel.openGLModelProgram._textureId);
+            glBindTexture(GL_TEXTURE_2D, currentModel.openGLTexture._textureId);
         } else {
             
             //Set uniform flag for texture active to false.

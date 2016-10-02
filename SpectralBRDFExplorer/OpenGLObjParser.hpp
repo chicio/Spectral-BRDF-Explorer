@@ -40,7 +40,7 @@ private:
     /// Vector of texture coordinates.
     std::vector<glm::vec2> textureCoordinates;
     /// Vector of color pixel of texture image.
-    unsigned char* texturePixels;
+    //unsigned char* texturePixels;
 
     /// Contains sequential vertex data: good for glDrawArray calls.
     std::vector<GLfloat> verticesData;
@@ -53,9 +53,9 @@ private:
     /// Flag used to check if the model has a texture.
     bool textureActive;
     /// Texture width.
-    unsigned textureWidth;
+    ///unsigned textureWidth;
     //// Texture height.
-    unsigned textureHeight;
+    //unsigned textureHeight;
     
 public:
     
@@ -94,33 +94,33 @@ public:
      */
     bool hasTexture();
     
-    /*!
-     Get texture width.
-     
-     @returns texture width.
-     */
-    int getTextureWidth();
-    
-    /*!
-     Get texture height.
-     
-     @returns texture height.
-     */
-    int getTextureHeight();
-    
-    /*!
-     Get texture data.
-     
-     @returns pointer to texture data.
-     */
-    unsigned char* getTexturePixels();
-    
-    /*!
-     Load texture from image.
-     
-     @param filePath path of the image to be used as texture.
-     */
-    void loadTexture(const char* filePath);
+//    /*!
+//     Get texture width.
+//     
+//     @returns texture width.
+//     */
+//    int getTextureWidth();
+//    
+//    /*!
+//     Get texture height.
+//     
+//     @returns texture height.
+//     */
+//    int getTextureHeight();
+//    
+//    /*!
+//     Get texture data.
+//     
+//     @returns pointer to texture data.
+//     */
+//    unsigned char* getTexturePixels();
+//    
+//    /*!
+//     Load texture from image.
+//     
+//     @param filePath path of the image to be used as texture.
+//     */
+//    void loadTexture(const char* filePath);
 
     /*!
      Parse obj file and retrive data in vectors.
