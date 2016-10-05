@@ -64,12 +64,6 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
         return false;
     }
     
-    Model3D model3D("Cube.obj", "Skybox");
-    model3D._modelMatrix = glm::mat4();
-    model3D.setMaterial(Material::createMatteMaterial());
-    model3D.lighting = "Phong";
-    Scene::instance().skybox = model3D;
-    
     _skyboxmvpLocation = glGetUniformLocation(openGLSkyboxProgram.program, "mvpMatrix");
     _skyBoxTextureSampler = glGetUniformLocation(openGLSkyboxProgram.program, "skyboxSampler");
     /********/
@@ -127,41 +121,31 @@ void OpenGLRenderer::loadScene() {
                  Scene::instance().skybox.modelData().getVerticesDataSize(),
                  Scene::instance().skybox.modelData().getVerticesData().data(),
                  GL_STATIC_DRAW);
-
     
     skyboxTexture.loadCubeMapTexture("left.png",
                                      "right.png",
                                      "up.png",
                                      "down.png",
                                      "front.png",
-                                     "back.png");
+                                     "back.png",
+                                     {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
+                                      OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
         
     //SHADOW MAP.
     GLint m_viewport[4];
     glGetIntegerv(GL_VIEWPORT, m_viewport);
-    shadowMapTextureWidth = 1024;
-    shadowMapTextureHeight = 1024;
     
     //Setup texture
-    glGenTextures(1, &shadowMapTextureId);
-    glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
-    
-    //Load texture (no pixel because we will attach it to a framebuffer object).
-    glTexImage2D(GL_TEXTURE_2D,
-                 0,
-                 GL_DEPTH_COMPONENT16,
-                 shadowMapTextureWidth,
-                 shadowMapTextureHeight,
-                 0,
-                 GL_DEPTH_COMPONENT,
-                 GL_UNSIGNED_INT,
-                 NULL);
+    shadowTexture.textureWidth = 1024;
+    shadowTexture.textureHeight = 1024;
+    shadowTexture.createTexture({
+        OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
+        OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST}),
+        OpenGLTextureParameter(GL_TEXTURE_WRAP_S, Int, {.intValue = GL_CLAMP_TO_EDGE}),
+        OpenGLTextureParameter(GL_TEXTURE_WRAP_T, Int, {.intValue = GL_CLAMP_TO_EDGE}),
+        OpenGLTextureParameter(GL_TEXTURE_COMPARE_MODE, Int, {.intValue = GL_COMPARE_REF_TO_TEXTURE}),
+        OpenGLTextureParameter(GL_TEXTURE_COMPARE_FUNC, Int, {.intValue = GL_LEQUAL}),
+    }, GL_DEPTH_COMPONENT16, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT);
     
     //Get default framebuffer handle.
     GLint defaultFramebuffer = 0;
@@ -172,9 +156,9 @@ void OpenGLRenderer::loadScene() {
     glGenFramebuffers(1, &shadowMapBufferId);
     glBindFramebuffer(GL_FRAMEBUFFER, shadowMapBufferId);
     glDrawBuffers(1, &none);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowMapTextureId, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowTexture._textureId, 0);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
+    glBindTexture(GL_TEXTURE_2D, shadowTexture._textureId);
     
     if(GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus(GL_FRAMEBUFFER)) {
         
@@ -224,7 +208,7 @@ void OpenGLRenderer::draw() {
     /**************************/
     /********** SHADOW **********/
     glBindFramebuffer(GL_FRAMEBUFFER, shadowMapBufferId);
-    glViewport(0, 0, shadowMapTextureWidth, shadowMapTextureHeight);
+    glViewport(0, 0, shadowTexture.textureWidth, shadowTexture.textureHeight);
     glClear(GL_DEPTH_BUFFER_BIT);
     glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);     // disable color rendering, only write to depth buffer
     glEnable(GL_POLYGON_OFFSET_FILL);     // reduce shadow rendering artifact
@@ -312,7 +296,7 @@ void OpenGLRenderer::draw() {
         
         // Bind the shadow map texture
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, shadowMapTextureId);
+        glBindTexture(GL_TEXTURE_2D, shadowTexture._textureId);
         
         glBindBuffer(GL_ARRAY_BUFFER, currentModel._vboId);
         glEnableVertexAttribArray(VERTEX_POS_INDX);

@@ -138,12 +138,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../SpectralBRDFExplorer/OpenGLRenderer.cpp"
-            timestampString = "497112881.023168"
+            timestampString = "497401072.53049"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
-            landmarkName = "OpenGLRenderer::update(float width, float height, double timeSinceLastUpdate)"
+            startingLineNumber = "294"
+            endingLineNumber = "294"
+            landmarkName = "OpenGLRenderer::draw()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -154,12 +154,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../SpectralBRDFExplorer/OpenGLRenderer.cpp"
-            timestampString = "497112881.023168"
+            timestampString = "497401072.53049"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
+            startingLineNumber = "354"
+            endingLineNumber = "354"
             landmarkName = "OpenGLRenderer::draw()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../SpectralBRDFExplorer/OpenGLTexture.cpp"
+            timestampString = "497396637.295523"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "OpenGLTexture::setTextureParameters(GLenum target, std::vector&lt;OpenGLTextureParameter&gt; parametersList)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

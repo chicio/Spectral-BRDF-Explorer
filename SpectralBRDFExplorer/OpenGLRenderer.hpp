@@ -43,21 +43,20 @@ private:
     
     /// Shadow.
     OpenGLProgram openGLShadowProgram;
+    OpenGLTexture shadowTexture;
+//    float shadowMapTextureWidth;
+//    float shadowMapTextureHeight;
+//    GLuint shadowMapTextureId;
+    GLuint shadowMapBufferId;
+    GLint _shadowMapMvpLoc;
+    GLint _shadowMapMvpLightLoc;
     
     /// Skybox.
     OpenGLProgram openGLSkyboxProgram;
     OpenGLTexture skyboxTexture;
     GLint _skyboxmvpLocation;
     GLint _skyBoxTextureSampler;
-                
-    float shadowMapTextureWidth;
-    float shadowMapTextureHeight;
-    GLuint shadowMapTextureId;
-    GLuint shadowMapBufferId;
     
-    GLint _shadowMapMvpLoc;
-    GLint _shadowMapMvpLightLoc;
-        
 public:
     
     /// OpenGL ES camera.

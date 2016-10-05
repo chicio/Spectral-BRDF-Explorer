@@ -89,7 +89,9 @@ public:
         
     void loadTexture() {
         
-        openGLTexture.loadTexture(textureName);
+        openGLTexture.loadTexture(textureName,
+                                  {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
+                                   OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
     }
     
     void setTextureName(std::string name) {

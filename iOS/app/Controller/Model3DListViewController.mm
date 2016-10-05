@@ -147,15 +147,22 @@
     Scene::instance().models.push_back(model3D);
     
     Model3D cornellBoxBottom3D("Floor.obj", "Cornell Box");
+    cornellBoxBottom3D._modelMatrix = glm::scale(cornellBoxBottom3D._modelMatrix, glm::vec3(1.25f, 1.25f, 1.25f));
     cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -7.0f));
     cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
     cornellBoxBottom3D.lighting = "Lambertian";
     Scene::instance().models.push_back(cornellBoxBottom3D);
     
+    Model3D skybox("Cube.obj", "Skybox");
+    skybox._modelMatrix = glm::mat4();
+    skybox.setMaterial(Material::createMatteMaterial());
+    skybox.lighting = "Phong";
+    Scene::instance().skybox = skybox;
+    
     Scene::instance().nearPlane = 0.1f;
     Scene::instance().farPlane = 100.0f;
     Scene::instance().sceneCenter = glm::vec3(0.0f, 0.0f, -7.0f);
-    Scene::instance().lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
+    Scene::instance().lightDirection = glm::vec3(3.0f, 2.0f, 3.0f);
 }
 
 @end

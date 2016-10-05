@@ -20,6 +20,31 @@
 
 #include "lodepng.h"
 
+/// Parameter value data type classification.
+enum ParameterDataType {
+
+    Float,
+    Int
+};
+
+/// Parameter texture data type.
+struct OpenGLTextureParameter {
+    
+    /// Parameter name.
+    GLenum parameterName;
+    /// Parameter value data type.
+    ParameterDataType parameterDataType;
+    /// Parameter value.
+    union ParameterValue {
+        GLfloat floatValue;
+        GLint intValue;
+    } parameterValue;
+    
+    OpenGLTextureParameter(GLenum name,
+                           ParameterDataType type,
+                           ParameterValue value) : parameterName{name}, parameterDataType{type}, parameterValue{value} {}
+};
+
 class OpenGLTexture {
 public:
     
@@ -30,149 +55,25 @@ public:
     //// Texture height.
     unsigned textureHeight;
     
-    void createTexture(GLenum target) {
-        
-        //Generate texture.
-        glGenTextures(1, &(_textureId));
-        
-        //Bind texture.
-        glBindTexture(target, _textureId);
-    }
+    void startTexture(GLenum target);
     
-    bool loadTexture(std::string textureFileName) {
-        
-        unsigned error;
-        unsigned char* texturePixels;
-        
-        error = lodepng_decode32_file(&texturePixels, &textureWidth, &textureHeight, textureFileName.c_str());
-        
-        if(error) {
-            
-            printf("error %u: %s\n", error, lodepng_error_text(error));
-            return error;
-        }
-        
-        //Create texture.
-        createTexture(GL_TEXTURE_2D);
-        
-        //Load texture pixels.
-        glTexImage2D(GL_TEXTURE_2D,
-                     0,
-                     GL_RGBA,
-                     textureWidth,
-                     textureHeight,
-                     0,
-                     GL_RGBA,
-                     GL_UNSIGNED_BYTE,
-                     texturePixels);
-        
-        //Set filtering.
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        
-        return true;
-    }
+    void createTexture(std::vector<OpenGLTextureParameter> parametersList,
+                       GLint internalformat,
+                       GLenum format,
+                       GLenum type,
+                       unsigned char* texturePixels = NULL);
+    
+    void setTextureParameters(GLenum target, std::vector<OpenGLTextureParameter> parametersList);
+    
+    bool loadTexture(std::string textureFileName, std::vector<OpenGLTextureParameter> parametersList);
     
     bool loadCubeMapTexture(std::string left,
                             std::string right,
                             std::string up,
                             std::string down,
                             std::string front,
-                            std::string back) {
-        
-        //Create cubemap texture.
-        createTexture(GL_TEXTURE_CUBE_MAP);
-        
-        unsigned error;
-        
-        unsigned char* texturePixels1;
-        unsigned textureWidth;
-        unsigned textureHeight;
-        error = lodepng_decode32_file(&texturePixels1, &textureWidth, &textureHeight, left.c_str());
-        
-        //Load the cube face - Positive X
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X,
-                     0,
-                     GL_RGBA,
-                     textureWidth,
-                     textureHeight,
-                     0,
-                     GL_RGBA,
-                     GL_UNSIGNED_BYTE,
-                     texturePixels1);
-        
-        unsigned char* texturePixels2;
-        error = lodepng_decode32_file(&texturePixels2, &textureWidth, &textureHeight, right.c_str());
-        
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
-                     0,
-                     GL_RGBA,
-                     textureWidth,
-                     textureHeight,
-                     0,
-                     GL_RGBA,
-                     GL_UNSIGNED_BYTE,
-                     texturePixels2);
-        
-        unsigned char* texturePixels3;
-        error = lodepng_decode32_file(&texturePixels3, &textureWidth, &textureHeight, up.c_str());
-        
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
-                     0,
-                     GL_RGBA,
-                     textureWidth,
-                     textureHeight,
-                     0,
-                     GL_RGBA,
-                     GL_UNSIGNED_BYTE,
-                     texturePixels3);
-        
-        unsigned char* texturePixels4;
-        error = lodepng_decode32_file(&texturePixels4, &textureWidth, &textureHeight, down.c_str());
-        
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
-                     0,
-                     GL_RGBA,
-                     textureWidth,
-                     textureHeight,
-                     0,
-                     GL_RGBA,
-                     GL_UNSIGNED_BYTE,
-                     texturePixels4);
-        
-        unsigned char* texturePixels5;
-        error = lodepng_decode32_file(&texturePixels5, &textureWidth, &textureHeight, front.c_str());
-        
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
-                     0,
-                     GL_RGBA,
-                     textureWidth,
-                     textureHeight,
-                     0,
-                     GL_RGBA,
-                     GL_UNSIGNED_BYTE,
-                     texturePixels5);
-        
-        unsigned char* texturePixels6;
-        error = lodepng_decode32_file(&texturePixels6, &textureWidth, &textureHeight, back.c_str());
-        
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
-                     0,
-                     GL_RGBA,
-                     textureWidth,
-                     textureHeight,
-                     0,
-                     GL_RGBA,
-                     GL_UNSIGNED_BYTE,
-                     texturePixels6);
-        
-        // Set the filtering mode
-        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-        return true;
-    }
+                            std::string back,
+                            std::vector<OpenGLTextureParameter> parametersList);
 };
-
 
 #endif /* OpenGLTexture_hpp */
