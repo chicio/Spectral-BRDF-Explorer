@@ -17,14 +17,10 @@
 class OpenGLCamera {
 private:
     
-    /// Camera position.
-    glm::vec3 eye;
     /// Near plane.
     float nearPlane;
     /// Far plane.
     float farPlane;
-    ///  Current eye offset.
-    glm::vec3 eyeOffset;
     /// Zoom factor.
     float zoomFactor;
     /// Old zoom factor;
@@ -46,6 +42,10 @@ private:
     
 public:
     
+    /// Current eye offset.
+    glm::vec3 eyeOffset;
+    /// Camera position.
+    glm::vec3 eye;
     /// Camera up orientation.
     glm::vec3 up;    
     /// Camera look at point.

@@ -13,6 +13,10 @@
 
 bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& error) {
     
+    //Setup camera.
+    openGLCamera = camera;
+    
+    
     bool programLinked;
     std::string errors;
     
@@ -37,6 +41,7 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
         currentModel.openGLModelProgram._mvpLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "mvpMatrix");
         currentModel.openGLModelProgram._mvpLightLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "mvpLightMatrix");
         currentModel.openGLModelProgram._normalLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "normalMatrix");
+        currentModel.openGLModelProgram._viewPositionLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "viewPosition");
         currentModel.openGLModelProgram._lightDirection = glGetUniformLocation(currentModel.openGLModelProgram.program, "light.direction");
         currentModel.openGLModelProgram._lightColor = glGetUniformLocation(currentModel.openGLModelProgram.program, "light.color");
         currentModel.openGLModelProgram._materialAmbient = glGetUniformLocation(currentModel.openGLModelProgram.program, "surfaceMaterial.ka");
@@ -86,9 +91,6 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     //Load shadow mapping uniform.
     _shadowMapMvpLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpMatrix"); //shadow map
     _shadowMapMvpLightLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpLightMatrix"); //shadow map
-    
-    //Setup camera.
-    openGLCamera = camera;
     
     return programLinked;
 }
@@ -332,6 +334,10 @@ void OpenGLRenderer::draw() {
         glUniformMatrix4fv(currentModel.openGLModelProgram._mvpLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionMatrix));
         glUniformMatrix4fv(currentModel.openGLModelProgram._mvpLightLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionLightMatrix));
         glUniformMatrix4fv(currentModel.openGLModelProgram._normalLocation, 1, GL_FALSE, glm::value_ptr(currentModel._normalMatrix));
+        glUniform3f(currentModel.openGLModelProgram._viewPositionLocation,
+                    openGLCamera.eye.x + openGLCamera.eyeOffset.x,
+                    openGLCamera.eye.y + openGLCamera.eyeOffset.y,
+                    openGLCamera.eye.z + openGLCamera.eyeOffset.z);
         glUniform3f(currentModel.openGLModelProgram._lightDirection,
                     Scene::instance().lightDirection.x,
                     Scene::instance().lightDirection.y,

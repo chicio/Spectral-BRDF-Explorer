@@ -40,7 +40,6 @@ public:
     glm::mat4 _normalMatrix;
     
     std::string textureName;
-    std::vector<std::string> textureNames;
     
     std::string lighting;
     

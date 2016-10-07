@@ -44,9 +44,6 @@ private:
     /// Shadow.
     OpenGLProgram openGLShadowProgram;
     OpenGLTexture shadowTexture;
-//    float shadowMapTextureWidth;
-//    float shadowMapTextureHeight;
-//    GLuint shadowMapTextureId;
     GLuint shadowMapBufferId;
     GLint _shadowMapMvpLoc;
     GLint _shadowMapMvpLightLoc;

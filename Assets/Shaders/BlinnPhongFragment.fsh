@@ -21,6 +21,7 @@ in vec4 shadowCoord;
 
 out vec4 o_fragColor;
 
+uniform vec3 viewPosition;
 uniform directionalLight light;
 uniform material surfaceMaterial;
 uniform lowp sampler2DShadow shadowMapSampler;
@@ -53,7 +54,6 @@ float shadow() {
 void main() {
 
     //Calculate light direction and view direction.
-    vec3 viewPosition = vec3(0.0, 0.0, 1.0);
     vec3 lightDirection = normalize(light.direction);
     vec3 viewDirection = normalize(viewPosition - vertPos);
     

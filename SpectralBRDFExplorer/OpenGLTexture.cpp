@@ -53,24 +53,7 @@ bool OpenGLTexture::loadTexture(std::string textureFileName, std::vector<OpenGLT
                   GL_RGBA,
                   GL_UNSIGNED_BYTE,
                   texturePixels);
-    
-    //    //Create texture.
-    //    startTexture(GL_TEXTURE_2D);
-    //
-    //    //Load texture pixels.
-    //    glTexImage2D(GL_TEXTURE_2D,
-    //                 0,
-    //                 GL_RGBA,
-    //                 textureWidth,
-    //                 textureHeight,
-    //                 0,
-    //                 GL_RGBA,
-    //                 GL_UNSIGNED_BYTE,
-    //                 texturePixels);
-    //
-    //    //Set parameters.
-    //    setTextureParameters(GL_TEXTURE_2D, parametersList);
-    //
+
     return true;
 }
 

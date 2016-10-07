@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../SpectralBRDFExplorer/OpenGLRenderer.cpp"
-            timestampString = "497401072.53049"
+            timestampString = "497478470.532095"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
+            startingLineNumber = "360"
+            endingLineNumber = "360"
             landmarkName = "OpenGLRenderer::draw()"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,28 +154,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../SpectralBRDFExplorer/OpenGLRenderer.cpp"
-            timestampString = "497401072.53049"
+            timestampString = "497478837.388206"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "354"
-            endingLineNumber = "354"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "OpenGLRenderer::draw()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../SpectralBRDFExplorer/OpenGLTexture.cpp"
-            timestampString = "497396637.295523"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "OpenGLTexture::setTextureParameters(GLenum target, std::vector&lt;OpenGLTextureParameter&gt; parametersList)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

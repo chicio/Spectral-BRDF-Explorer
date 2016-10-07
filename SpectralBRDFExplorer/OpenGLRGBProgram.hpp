@@ -25,6 +25,8 @@ public:
     GLint _mvpLightLocation;
     
     GLint _normalLocation;
+
+    GLint _viewPositionLocation;
     
     GLint _lightDirection;
     GLint _lightColor;

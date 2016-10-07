@@ -15,7 +15,6 @@
 #include <GLES3/gl3.h>
 #endif
 
-
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>

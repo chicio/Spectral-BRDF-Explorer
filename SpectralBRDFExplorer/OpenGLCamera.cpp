@@ -63,7 +63,7 @@ glm::mat4 OpenGLCamera::lookAtMatrix() {
         phi = phi + glm::radians(phiRotation);
         theta = theta + glm::radians(thetaRotation);
         
-        //Spherical coordinates (my loved Spectral Clara Lux Tracer, your always in my heart :)).
+        //Spherical coordinates (my loved Spectral Clara Lux Tracer, you are always in my heart :)).
         eyeOffset.x = sceneCenter.x + sin(phi) * sin(theta) * (sceneCenter.z * -1.0f);
         eyeOffset.y = sceneCenter.y + cos(theta) * (sceneCenter.z * -1.0f);
         eyeOffset.z = sceneCenter.z + cos(phi) * sin(theta) * (sceneCenter.z * -1.0f);
