@@ -22,10 +22,8 @@
     
     //Load obj names.
     self.objNameList = @[
-                         @"Phong",
-                         @"Blinn-Phong",
-                         @"Oren-Nayar",
-                         @"Cook-Torrance",
+                         @"RGB Scene",
+                         @"Spectral Scene"
                          ];
 }
 
@@ -52,91 +50,10 @@
         case 0:
             [self scene1];
             break;
-        case 1:
-            [self scene2];
-            break;
-        case 2:
-            [self scene3];
-            break;
-        case 3:
-            [self scene4];
-            break;
     }
 }
 
-- (void)scene1 {
-    
-    Scene::instance().clearScene();
-    
-    Model3D model3D("Sphere.obj", "Sphere");
-    model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -7.0f));
-    model3D.setMaterial(Material::createBronzeMaterial());
-    model3D.lighting = "Phong";
-    Scene::instance().models.push_back(model3D);
-    
-    Model3D cornellBoxBottom3D("Floor.obj", "Cornell Box");
-    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -7.0f));
-    cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
-    cornellBoxBottom3D.lighting = "Lambertian";
-    Scene::instance().models.push_back(cornellBoxBottom3D);
-    
-    Scene::instance().nearPlane = 0.1f;
-    Scene::instance().farPlane = 100.0f;
-    Scene::instance().sceneCenter = glm::vec3(0.0f, 0.0f, -7.0f);
-    Scene::instance().lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
-}
-
-- (void)scene2 {
-    
-    Scene::instance().clearScene();
-    
-    Model3D model3D("Lucy.obj", "Lucy");
-    model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -7.0f));
-    model3D.setMaterial(Material::createMatteMaterial());
-    model3D.lighting = "BlinnPhong";
-    
-    if(model3D.modelData().hasTexture()) {
-        
-        model3D.setTextureName("Lucy-texture.png");
-    }
-    
-    Scene::instance().models.push_back(model3D);
-    
-    Model3D cornellBoxBottom3D("Floor.obj", "Cornell Box");
-    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -7.0f));
-    cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
-    cornellBoxBottom3D.lighting = "Lambertian";
-    Scene::instance().models.push_back(cornellBoxBottom3D);
-    
-    Scene::instance().nearPlane = 0.1f;
-    Scene::instance().farPlane = 100.0f;
-    Scene::instance().sceneCenter = glm::vec3(0.0f, 0.0f, -7.0f);
-    Scene::instance().lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
-}
-    
--(void)scene3 {
-    
-    Scene::instance().clearScene();
-    
-    Model3D model3D("HappyBuddha.obj", "Happy Buddha");
-    model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -7.0f));
-    model3D.setMaterial(Material::createOrangeMaterial());
-    model3D.lighting = "OrenNayar";
-    Scene::instance().models.push_back(model3D);
-    
-    Model3D cornellBoxBottom3D("Floor.obj", "Cornell Box");
-    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -7.0f));
-    cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
-    cornellBoxBottom3D.lighting = "Lambertian";
-    Scene::instance().models.push_back(cornellBoxBottom3D);
-    
-    Scene::instance().nearPlane = 0.1f;
-    Scene::instance().farPlane = 100.0f;
-    Scene::instance().sceneCenter = glm::vec3(0.0f, 0.0f, -7.0f);
-    Scene::instance().lightDirection = glm::vec3(1.0f, 1.0f, 1.0f);
-}
-
--(void)scene4 {
+-(void)scene1 {
     
     Scene::instance().clearScene();
     
@@ -175,21 +92,21 @@
     
     Model3D cornellBoxBottom3D("Floor.obj", "Cornell Box");
     cornellBoxBottom3D._modelMatrix = glm::scale(cornellBoxBottom3D._modelMatrix, glm::vec3(2.0f, 2.0f, 2.0f));
-    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -8.0f));
+    cornellBoxBottom3D._modelMatrix = glm::translate(cornellBoxBottom3D._modelMatrix, glm::vec3(0.0, 0.0f, -6.0f));
     cornellBoxBottom3D.setMaterial(Material::createMatteMaterial());
     cornellBoxBottom3D.lighting = "Lambertian";
     Scene::instance().models.push_back(cornellBoxBottom3D);
     
     Model3D skybox("Cube.obj", "Skybox");
-    skybox._modelMatrix = glm::mat4();
+    skybox._modelMatrix = glm::scale(glm::mat4(), glm::vec3(60.0, 60.0f, 60.0f));;
     skybox.setMaterial(Material::createMatteMaterial());
     skybox.lighting = "Lambertian";
     Scene::instance().skybox = skybox;
     
     Scene::instance().nearPlane = 0.1f;
-    Scene::instance().farPlane = 100.0f;
-    Scene::instance().sceneCenter = glm::vec3(0.0f, 0.0f, -15.0f);
-    Scene::instance().lightDirection = glm::vec3(3.0f, 2.0f, 3.0f);
+    Scene::instance().farPlane = 200.0f;
+    Scene::instance().sceneCenter = glm::vec3(0.0f, 0.0f, -17.0f);
+    Scene::instance().lightDirection = glm::vec3(3.0f, 3.0f, 3.0f);
 }
 
 @end

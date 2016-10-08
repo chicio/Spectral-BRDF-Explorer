@@ -23,7 +23,7 @@ void main() {
     
     normalInterp = vec3(normalMatrix * vec4(inputNormal, 0.0));
     
-    shadowCoord = mvpLightMatrix * vec4(inputPosition, 1.0) + 0.001;
+    shadowCoord = mvpLightMatrix * vec4(inputPosition, 1.0);
     shadowCoord = shadowCoord * 0.5 + 0.5;
     
     textureCoordinate = inputTextureCoordinate;

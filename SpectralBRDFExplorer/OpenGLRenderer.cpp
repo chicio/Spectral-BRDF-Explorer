@@ -16,7 +16,6 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     //Setup camera.
     openGLCamera = camera;
     
-    
     bool programLinked;
     std::string errors;
     
@@ -147,7 +146,7 @@ void OpenGLRenderer::loadScene() {
         OpenGLTextureParameter(GL_TEXTURE_WRAP_T, Int, {.intValue = GL_CLAMP_TO_EDGE}),
         OpenGLTextureParameter(GL_TEXTURE_COMPARE_MODE, Int, {.intValue = GL_COMPARE_REF_TO_TEXTURE}),
         OpenGLTextureParameter(GL_TEXTURE_COMPARE_FUNC, Int, {.intValue = GL_LEQUAL}),
-    }, GL_DEPTH_COMPONENT16, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT);
+    }, GL_DEPTH_COMPONENT24, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT);
     
     //Get default framebuffer handle.
     GLint defaultFramebuffer = 0;
@@ -180,7 +179,7 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
                                                   Scene::instance().nearPlane,
                                                   Scene::instance().farPlane);
     
-    glm::mat4 orthoMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, -10.0f, 20.0f);
+    glm::mat4 orthoMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
     
     for (auto& currentModel : Scene::instance().models) {
         
@@ -195,8 +194,7 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
                                                                                  glm::vec3(0.0f, 1.0f, 0.0f)) * currentModel._modelMatrix;
     }
     
-    Scene::instance().skybox._modelMatrix = openGLCamera.lookAtMatrix() * glm::scale(glm::mat4(), glm::vec3(50.0, 50.0f, 50.0f));;
-    Scene::instance().skybox._modelViewProjectionMatrix = projectionMatrix * Scene::instance().skybox._modelMatrix;
+    Scene::instance().skybox._modelViewProjectionMatrix = projectionMatrix * openGLCamera.lookAtMatrix() * Scene::instance().skybox._modelMatrix;
 }
 
 void OpenGLRenderer::draw() {
