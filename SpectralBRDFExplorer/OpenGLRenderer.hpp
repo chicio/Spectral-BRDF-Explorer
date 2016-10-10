@@ -30,6 +30,7 @@
 #include "OpenGLObjParser.hpp"
 #include "OpenGLProgram.hpp"
 #include "OpenGLTexture.hpp"
+#include "OpenGLFramebufferObject.hpp"
 #include "OpenGLCamera.hpp"
 
 #define VERTEX_POS_INDX             0
@@ -44,6 +45,7 @@ private:
     /// Shadow.
     OpenGLProgram openGLShadowProgram;
     OpenGLTexture shadowTexture;
+    OpenGLFramebufferObject shadowDepthFramebufferObject;
     GLuint shadowMapBufferId;
     GLint _shadowMapMvpLoc;
     GLint _shadowMapMvpLightLoc;

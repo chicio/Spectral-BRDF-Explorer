@@ -133,10 +133,8 @@ void OpenGLRenderer::loadScene() {
                                       OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
         
     //SHADOW MAP.
-    GLint m_viewport[4];
-    glGetIntegerv(GL_VIEWPORT, m_viewport);
-    
-    //Setup texture
+
+    //Setup shadow texture.
     shadowTexture.textureWidth = 1024;
     shadowTexture.textureHeight = 1024;
     shadowTexture.createTexture({
@@ -147,26 +145,30 @@ void OpenGLRenderer::loadScene() {
         OpenGLTextureParameter(GL_TEXTURE_COMPARE_MODE, Int, {.intValue = GL_COMPARE_REF_TO_TEXTURE}),
         OpenGLTextureParameter(GL_TEXTURE_COMPARE_FUNC, Int, {.intValue = GL_LEQUAL}),
     }, GL_DEPTH_COMPONENT24, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT);
-    
-    //Get default framebuffer handle.
-    GLint defaultFramebuffer = 0;
-    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFramebuffer);
-    
-    //Setup FBO.
-    GLenum none = GL_NONE;
-    glGenFramebuffers(1, &shadowMapBufferId);
-    glBindFramebuffer(GL_FRAMEBUFFER, shadowMapBufferId);
-    glDrawBuffers(1, &none);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowTexture._textureId, 0);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, shadowTexture._textureId);
-    
-    if(GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus(GL_FRAMEBUFFER)) {
-        
-        std::cout << "ERROR FRAMEBUFFER OBJECT " << glCheckFramebufferStatus(GL_FRAMEBUFFER);
-    }
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
+
+    //Setup shadow depth framebuffer object.
+    shadowDepthFramebufferObject.attach2DTexture(shadowTexture._textureId, GL_DEPTH_ATTACHMENT);
+//    //Get default framebuffer handle.
+//    GLint defaultFramebuffer = 0;
+//    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFramebuffer);
+//    
+//    //Setup FBO.
+//    GLenum none = GL_NONE;
+//    glGenFramebuffers(1, &shadowMapBufferId);
+//    glBindFramebuffer(GL_FRAMEBUFFER, shadowMapBufferId);
+//    //No color buffer needed (only depth).
+//    glDrawBuffers(1, &none);
+//    //Set texture.
+//    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowTexture._textureId, 0);
+//    glActiveTexture(GL_TEXTURE0);
+//    glBindTexture(GL_TEXTURE_2D, shadowTexture._textureId);
+//    
+//    if(GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus(GL_FRAMEBUFFER)) {
+//        
+//        std::cout << "ERROR FRAMEBUFFER OBJECT " << glCheckFramebufferStatus(GL_FRAMEBUFFER);
+//    }
+//    
+//    glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
 }
 
 void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdate) {
@@ -207,7 +209,7 @@ void OpenGLRenderer::draw() {
     
     /**************************/
     /********** SHADOW **********/
-    glBindFramebuffer(GL_FRAMEBUFFER, shadowMapBufferId);
+    glBindFramebuffer(GL_FRAMEBUFFER, shadowDepthFramebufferObject.framebufferObjectId);
     glViewport(0, 0, shadowTexture.textureWidth, shadowTexture.textureHeight);
     glClear(GL_DEPTH_BUFFER_BIT);
     glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);     // disable color rendering, only write to depth buffer
