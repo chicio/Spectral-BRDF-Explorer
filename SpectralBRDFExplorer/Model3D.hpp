@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include <glm/glm.hpp>
 
-#include "OpenGLRGBModelProgram.hpp"
 #include "OpenGLTexture.hpp"
 #include "OpenGLObjParser.hpp"
 #include "Material.hpp"
@@ -30,7 +29,7 @@ private:
 public:
     
     GLuint _vboId;
-    OpenGLRGBModelProgram openGLModelProgram;
+
     OpenGLTexture openGLTexture;
     
     glm::mat4 _modelMatrix;

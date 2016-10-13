@@ -17,7 +17,7 @@ bool OpenGLProgram::loadProgram(const char* vertexShaderSource, const char* frag
     
     vertexShader = shader.loadShader(GL_VERTEX_SHADER, vertexShaderSource, error);
     
-    if(vertexShader == OPENGL_SHADER_ERROR || !error.empty()) {
+    if (vertexShader == OPENGL_SHADER_ERROR || !error.empty()) {
         
         errors = "Vertex Shader: " + error;
         
@@ -26,7 +26,7 @@ bool OpenGLProgram::loadProgram(const char* vertexShaderSource, const char* frag
     
     fragmentShader = shader.loadShader(GL_FRAGMENT_SHADER, fragmentShaderSource, error);
     
-    if(fragmentShader == OPENGL_SHADER_ERROR || !error.empty()) {
+    if (fragmentShader == OPENGL_SHADER_ERROR || !error.empty()) {
         
         errors = "Fragment Shader: " + error;
         
@@ -43,9 +43,6 @@ bool OpenGLProgram::loadProgram(const char* vertexShaderSource, const char* frag
     //Link the program.
     glLinkProgram(program);
     
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_DEPTH_TEST);
-    
     // Check the link status
     GLint linked;
     glGetProgramiv(program, GL_LINK_STATUS, &linked);
@@ -55,7 +52,7 @@ bool OpenGLProgram::loadProgram(const char* vertexShaderSource, const char* frag
         GLint infoLen = 0;
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLen);
         
-        if(infoLen > 1) {
+        if (infoLen > 1) {
             
             GLchar* programError = (GLchar *)malloc(sizeof(GLchar) * infoLen);
             glGetProgramInfoLog(program, infoLen, NULL, programError);

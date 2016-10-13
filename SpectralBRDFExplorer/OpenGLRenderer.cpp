@@ -23,12 +23,14 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     //Load models programs.
     for (auto& currentModel : Scene::instance().models) {
         
-        std::string vertexShader = getFileContents(currentModel.lighting + "Vertex.vsh");
-        std::string fragmentShader = getFileContents(currentModel.lighting + "Fragment.fsh");
+        //Create program for model.
+        OpenGLRGBModelProgram modelProgram;
+        modelProgram.model = &currentModel;
+        modelProgram.openGLCamera = &openGLCamera;
         
-        programLinked = currentModel.openGLModelProgram.loadProgram(vertexShader.c_str(), fragmentShader.c_str(), errors);
+        programLinked = modelProgram.startProgram(errors);
         
-        if(!programLinked || !errors.empty()) {
+        if (!programLinked || !errors.empty()) {
             
             //Return error from program loading.
             error = errors;
@@ -36,34 +38,8 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
             return false;
         }
         
-        //Prepare uniform to be loaded in shaders.
-        currentModel.openGLModelProgram._mvLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "mvMatrix");
-        currentModel.openGLModelProgram._mvpLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "mvpMatrix");
-        currentModel.openGLModelProgram._mvpLightLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "mvpLightMatrix");
-        currentModel.openGLModelProgram._normalLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "normalMatrix");
-        currentModel.openGLModelProgram._viewPositionLocation = glGetUniformLocation(currentModel.openGLModelProgram.program, "viewPosition");
-        currentModel.openGLModelProgram._lightDirection = glGetUniformLocation(currentModel.openGLModelProgram.program, "light.direction");
-        currentModel.openGLModelProgram._lightColor = glGetUniformLocation(currentModel.openGLModelProgram.program, "light.color");
-        currentModel.openGLModelProgram._materialAmbient = glGetUniformLocation(currentModel.openGLModelProgram.program, "surfaceMaterial.ka");
-        currentModel.openGLModelProgram._materialDiffuse = glGetUniformLocation(currentModel.openGLModelProgram.program, "surfaceMaterial.kd");
-        currentModel.openGLModelProgram._materialSpecular = glGetUniformLocation(currentModel.openGLModelProgram.program, "surfaceMaterial.ks");
-        currentModel.openGLModelProgram._materialSpecularExponent = glGetUniformLocation(currentModel.openGLModelProgram.program, "surfaceMaterial.sh");
-        currentModel.openGLModelProgram._textureActive = glGetUniformLocation(currentModel.openGLModelProgram.program, "textureActive");
-        currentModel.openGLModelProgram._textureSampler = glGetUniformLocation(currentModel.openGLModelProgram.program, "textureSampler");
-        currentModel.openGLModelProgram._shadowMapSamplerLoc = glGetUniformLocation(currentModel.openGLModelProgram.program, "shadowMapSampler");
-        
-        glGenBuffers(1, &(currentModel._vboId));
-        glBindBuffer(GL_ARRAY_BUFFER, currentModel._vboId);
-        glBufferData(GL_ARRAY_BUFFER,
-                     currentModel.modelData().getVerticesDataSize(),
-                     currentModel.modelData().getVerticesData().data(),
-                     GL_STATIC_DRAW);
-        
-        //Prepare texture.
-        if(currentModel.modelData().hasTexture()) {
-            
-            currentModel.loadTexture();
-        }
+        //Add program to vector of program execution.
+        openGLModelPrograms.push_back(modelProgram);
     }
     
     /********/
@@ -176,13 +152,18 @@ void OpenGLRenderer::draw() {
     
     /**************************/
     /********** SHADOW **********/
+    glUseProgram(openGLShadowProgram.program);
+
     glBindFramebuffer(GL_FRAMEBUFFER, shadowDepthFramebufferObject.framebufferObjectId);
     glViewport(0, 0, shadowTexture.textureWidth, shadowTexture.textureHeight);
+    
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_POLYGON_OFFSET_FILL);     // reduce shadow rendering artifact
+    
     glClear(GL_DEPTH_BUFFER_BIT);
     glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);     // disable color rendering, only write to depth buffer
-    glEnable(GL_POLYGON_OFFSET_FILL);     // reduce shadow rendering artifact
     glPolygonOffset(5.0f, 100.0f);
-    glUseProgram(openGLShadowProgram.program);
     
     for (auto& currentModel : Scene::instance().models) {
         
@@ -209,18 +190,20 @@ void OpenGLRenderer::draw() {
     
     /**************************/
     /********** DRAW **********/
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-    glViewport(0, 0, m_viewport[2], m_viewport[3]);
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
-    /********/
-    glDepthMask(GL_FALSE);
     glUseProgram(openGLSkyboxProgram.program);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
+    glViewport(0, 0, m_viewport[2], m_viewport[3]);
+
     glDisable(GL_CULL_FACE);
     glDisable(GL_DEPTH_TEST);
+    glDisable(GL_POLYGON_OFFSET_FILL);
+    
+    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glDepthMask(GL_FALSE);
+
     glUniform1i(_skyBoxTextureSampler, TEXTURE_UNIT_ID_0_SAMPLER);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture._textureId);
@@ -250,93 +233,15 @@ void OpenGLRenderer::draw() {
     glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_DEPTH_TEST);
-    glDepthMask(GL_TRUE);
-    /********/
+    
+    //Draw models.
+    for (auto& modelProgram : openGLModelPrograms) {
+        
+        //Set shadow texture.
+        modelProgram.shadowTexture = &shadowTexture;
 
-    for (auto& currentModel : Scene::instance().models) {
-        
-        glUseProgram(currentModel.openGLModelProgram.program);
-        
-        //Set texture unit for each sampler (even if not used).
-        glUniform1i(currentModel.openGLModelProgram._shadowMapSamplerLoc, TEXTURE_UNIT_ID_0_SAMPLER);
-        glUniform1i(currentModel.openGLModelProgram._textureSampler, TEXTURE_UNIT_ID_1_SAMPLER);
-        
-        // Bind the shadow map texture
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, shadowTexture._textureId);
-        
-        glBindBuffer(GL_ARRAY_BUFFER, currentModel._vboId);
-        glEnableVertexAttribArray(VERTEX_POS_INDX);
-        glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
-        glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, currentModel.modelData().getStride(), 0);
-        glVertexAttribPointer(VERTEX_NORMAL_INDX,
-                              VERTEX_NORMAL_SIZE,
-                              GL_FLOAT,
-                              GL_FALSE,
-                              currentModel.modelData().getStride(),
-                              (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat)));
-        
-        if (currentModel.modelData().hasTexture()) {
-            
-            glEnableVertexAttribArray(VERTEX_TEXCOORDINATE_INDX);
-            glVertexAttribPointer(VERTEX_TEXCOORDINATE_INDX,
-                                  VERTEX_TEXCOORDINATE_SIZE,
-                                  GL_FLOAT,
-                                  GL_FALSE,
-                                  currentModel.modelData().getStride(),
-                                  (GLvoid *)((VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) * sizeof(GLfloat)));
-            
-            glUniform1i(currentModel.openGLModelProgram._textureActive, 1);
-            glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, currentModel.openGLTexture._textureId);
-        } else {
-            
-            //Set uniform flag for texture active to false.
-            glUniform1i(currentModel.openGLModelProgram._textureActive, 0);
-        }
-        
-        glUniformMatrix4fv(currentModel.openGLModelProgram._mvLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewMatrix));
-        glUniformMatrix4fv(currentModel.openGLModelProgram._mvpLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionMatrix));
-        glUniformMatrix4fv(currentModel.openGLModelProgram._mvpLightLocation, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionLightMatrix));
-        glUniformMatrix4fv(currentModel.openGLModelProgram._normalLocation, 1, GL_FALSE, glm::value_ptr(currentModel._normalMatrix));
-        glUniform3f(currentModel.openGLModelProgram._viewPositionLocation,
-                    openGLCamera.eye.x + openGLCamera.eyeOffset.x,
-                    openGLCamera.eye.y + openGLCamera.eyeOffset.y,
-                    openGLCamera.eye.z + openGLCamera.eyeOffset.z);
-        glUniform3f(currentModel.openGLModelProgram._lightDirection,
-                    Scene::instance().lightDirection.x,
-                    Scene::instance().lightDirection.y,
-                    Scene::instance().lightDirection.z);
-        glUniform4f(currentModel.openGLModelProgram._lightColor, 1.0, 1.0, 1.0, 1.0);
-        glUniform4f(currentModel.openGLModelProgram._materialAmbient,
-                    currentModel.getMaterial().ka.red,
-                    currentModel.getMaterial().ka.green,
-                    currentModel.getMaterial().ka.blue,
-                    currentModel.getMaterial().ka.alpha);
-        glUniform4f(currentModel.openGLModelProgram._materialDiffuse,
-                    currentModel.getMaterial().kd.red,
-                    currentModel.getMaterial().kd.green,
-                    currentModel.getMaterial().kd.blue,
-                    currentModel.getMaterial().kd.alpha);
-        glUniform4f(currentModel.openGLModelProgram._materialSpecular,
-                    currentModel.getMaterial().ks.red,
-                    currentModel.getMaterial().ks.green,
-                    currentModel.getMaterial().ks.blue,
-                    currentModel.getMaterial().ks.alpha);
-        glUniform1f(currentModel.openGLModelProgram._materialSpecularExponent, currentModel.getMaterial().sh);
-        
-        glDrawArrays(GL_TRIANGLES, 0, currentModel.modelData().getNumberOfVerticesToDraw());
-        glDisableVertexAttribArray(VERTEX_POS_INDX);
-        glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
-        
-        if(currentModel.modelData().hasTexture()) {
-            
-            glDisableVertexAttribArray(VERTEX_TEXCOORDINATE_INDX);
-        }
-        
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        //Draw current model.
+        modelProgram.draw();
     }
 }
 
@@ -348,10 +253,10 @@ void OpenGLRenderer::shutdown() {
     GLuint vbo[Scene::instance().models.size()];
     int i = 0;
     
-    for (auto model : Scene::instance().models) {
+    for (auto& program : openGLModelPrograms) {
         
-        vbo[i++] = model._vboId;
-        model.openGLModelProgram.deleteProgram();
+        vbo[i++] = program.model->_vboId;
+        program.deleteProgram();
     }
     
     glDeleteBuffers((int)Scene::instance().models.size(), vbo);

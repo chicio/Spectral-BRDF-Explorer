@@ -32,15 +32,13 @@
 #include "OpenGLTexture.hpp"
 #include "OpenGLFramebufferObject.hpp"
 #include "OpenGLCamera.hpp"
-
-#define VERTEX_POS_INDX             0
-#define VERTEX_NORMAL_INDX          1
-#define VERTEX_TEXCOORDINATE_INDX   2
-#define TEXTURE_UNIT_ID_0_SAMPLER   0
-#define TEXTURE_UNIT_ID_1_SAMPLER   1
+#include "OpenGLRGBModelProgram.hpp"
 
 class OpenGLRenderer {
 private:
+    
+    /// Models.
+    std::vector<OpenGLRGBModelProgram> openGLModelPrograms;
     
     /// Shadow.
     OpenGLProgram openGLShadowProgram;

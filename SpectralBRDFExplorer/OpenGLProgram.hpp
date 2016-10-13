@@ -22,6 +22,13 @@
 
 #include "OpenGLShader.hpp"
 
+#define VERTEX_POS_INDX             0
+#define VERTEX_NORMAL_INDX          1
+#define VERTEX_TEXCOORDINATE_INDX   2
+
+#define TEXTURE_UNIT_ID_0_SAMPLER   0
+#define TEXTURE_UNIT_ID_1_SAMPLER   1
+
 class OpenGLProgram {
 public:
     
@@ -31,7 +38,7 @@ public:
     GLuint vertexShader;
     /// Fragment shader handle.
     GLuint fragmentShader;
-        
+            
     /*!
      Load a OpenGL ES program with its shaders and option.
      
@@ -44,10 +51,27 @@ public:
     bool loadProgram(const char* vertexShaderSource, const char* fragmentShaderSource, std::string& errors);
     
     /*!
+     Start a program.
+     Each subclass will implements this method with
+     the specific setup needed for what it must draw.
+     
+     @param error error message to be retur if the start fails.
+     
+     @returns true if the program starts correctly, else false.
+     */
+    virtual bool startProgram(std::string& error) { return false; };
+    
+    /*
+     Draw method.
+     Must contain all the opengl step need to draw with a program.
+     */
+    virtual void draw() {};
+    
+    /*!
      Delete OpenGL ES program.
      Clean any vertex or fragment shader created.
      */
-    void deleteProgram();
+    void deleteProgram();    
 };
 
 #endif /* OpenGLProgram_hpp */
