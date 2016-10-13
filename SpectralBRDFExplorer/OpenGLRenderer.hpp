@@ -98,11 +98,6 @@ public:
     bool startRenderer(const OpenGLCamera& openGLCamera, std::string& error);
     
     /*!
-     Load current scene.
-     */
-    void loadScene();
-    
-    /*!
      Update data for draw.
      
      @param width viewport dimension.

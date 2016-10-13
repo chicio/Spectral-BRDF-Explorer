@@ -15,6 +15,7 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     
     //Setup camera.
     openGLCamera = camera;
+    openGLCamera.setSceneCenter(Scene::instance().sceneCenter);
     
     bool programLinked;
     std::string errors;
@@ -50,6 +51,19 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
         currentModel.openGLModelProgram._textureActive = glGetUniformLocation(currentModel.openGLModelProgram.program, "textureActive");
         currentModel.openGLModelProgram._textureSampler = glGetUniformLocation(currentModel.openGLModelProgram.program, "textureSampler");
         currentModel.openGLModelProgram._shadowMapSamplerLoc = glGetUniformLocation(currentModel.openGLModelProgram.program, "shadowMapSampler");
+        
+        glGenBuffers(1, &(currentModel._vboId));
+        glBindBuffer(GL_ARRAY_BUFFER, currentModel._vboId);
+        glBufferData(GL_ARRAY_BUFFER,
+                     currentModel.modelData().getVerticesDataSize(),
+                     currentModel.modelData().getVerticesData().data(),
+                     GL_STATIC_DRAW);
+        
+        //Prepare texture.
+        if(currentModel.modelData().hasTexture()) {
+            
+            currentModel.loadTexture();
+        }
     }
     
     /********/
@@ -70,6 +84,22 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     
     _skyboxmvpLocation = glGetUniformLocation(openGLSkyboxProgram.program, "mvpMatrix");
     _skyBoxTextureSampler = glGetUniformLocation(openGLSkyboxProgram.program, "skyboxSampler");
+    
+    glGenBuffers(1, &(Scene::instance().skybox._vboId));
+    glBindBuffer(GL_ARRAY_BUFFER, Scene::instance().skybox._vboId);
+    glBufferData(GL_ARRAY_BUFFER,
+                 Scene::instance().skybox.modelData().getVerticesDataSize(),
+                 Scene::instance().skybox.modelData().getVerticesData().data(),
+                 GL_STATIC_DRAW);
+    
+    skyboxTexture.loadCubeMapTexture("left.png",
+                                     "right.png",
+                                     "up.png",
+                                     "down.png",
+                                     "front.png",
+                                     "back.png",
+                                     {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
+                                      OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
     /********/
     
     //Load Shadow mapping programs.
@@ -91,50 +121,6 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     _shadowMapMvpLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpMatrix"); //shadow map
     _shadowMapMvpLightLoc = glGetUniformLocation(openGLShadowProgram.program, "mvpLightMatrix"); //shadow map
     
-    return programLinked;
-}
-
-void OpenGLRenderer::loadScene() {
-    
-    openGLCamera.setSceneCenter(Scene::instance().sceneCenter);
-    
-    for (auto& currentModel : Scene::instance().models) {
-        
-        glGenBuffers(1, &(currentModel._vboId));
-        glBindBuffer(GL_ARRAY_BUFFER, currentModel._vboId);
-        glBufferData(GL_ARRAY_BUFFER,
-                     currentModel.modelData().getVerticesDataSize(),
-                     currentModel.modelData().getVerticesData().data(),
-                     GL_STATIC_DRAW);
-        
-        //Prepare texture.
-        if(currentModel.modelData().hasTexture()) {
-            
-            currentModel.loadTexture();
-        }
-    }
-    
-    /********/
-    //SKYBOX.
-    glGenBuffers(1, &(Scene::instance().skybox._vboId));
-    glBindBuffer(GL_ARRAY_BUFFER, Scene::instance().skybox._vboId);
-    glBufferData(GL_ARRAY_BUFFER,
-                 Scene::instance().skybox.modelData().getVerticesDataSize(),
-                 Scene::instance().skybox.modelData().getVerticesData().data(),
-                 GL_STATIC_DRAW);
-    
-    skyboxTexture.loadCubeMapTexture("left.png",
-                                     "right.png",
-                                     "up.png",
-                                     "down.png",
-                                     "front.png",
-                                     "back.png",
-                                     {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
-                                      OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
-        
-    //SHADOW MAP.
-
-    //Setup shadow texture.
     shadowTexture.textureWidth = 1024;
     shadowTexture.textureHeight = 1024;
     shadowTexture.createTexture({
@@ -145,30 +131,11 @@ void OpenGLRenderer::loadScene() {
         OpenGLTextureParameter(GL_TEXTURE_COMPARE_MODE, Int, {.intValue = GL_COMPARE_REF_TO_TEXTURE}),
         OpenGLTextureParameter(GL_TEXTURE_COMPARE_FUNC, Int, {.intValue = GL_LEQUAL}),
     }, GL_DEPTH_COMPONENT24, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT);
-
+    
     //Setup shadow depth framebuffer object.
     shadowDepthFramebufferObject.attach2DTexture(shadowTexture._textureId, GL_DEPTH_ATTACHMENT);
-//    //Get default framebuffer handle.
-//    GLint defaultFramebuffer = 0;
-//    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFramebuffer);
-//    
-//    //Setup FBO.
-//    GLenum none = GL_NONE;
-//    glGenFramebuffers(1, &shadowMapBufferId);
-//    glBindFramebuffer(GL_FRAMEBUFFER, shadowMapBufferId);
-//    //No color buffer needed (only depth).
-//    glDrawBuffers(1, &none);
-//    //Set texture.
-//    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadowTexture._textureId, 0);
-//    glActiveTexture(GL_TEXTURE0);
-//    glBindTexture(GL_TEXTURE_2D, shadowTexture._textureId);
-//    
-//    if(GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus(GL_FRAMEBUFFER)) {
-//        
-//        std::cout << "ERROR FRAMEBUFFER OBJECT " << glCheckFramebufferStatus(GL_FRAMEBUFFER);
-//    }
-//    
-//    glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
+    
+    return true;
 }
 
 void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdate) {
@@ -388,6 +355,4 @@ void OpenGLRenderer::shutdown() {
     }
     
     glDeleteBuffers((int)Scene::instance().models.size(), vbo);
-    
-    
 }

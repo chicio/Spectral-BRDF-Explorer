@@ -72,10 +72,7 @@
                                                                          glm::vec3(0.0f, 1.0f, 0.0f)),
                                                             error);
         
-        if(rendererStarted) {
-            
-            openGLRenderer.loadScene();
-        } else {
+        if(!rendererStarted) {
             
             //Shutdown OpenGL.
             openGLRenderer.shutdown();

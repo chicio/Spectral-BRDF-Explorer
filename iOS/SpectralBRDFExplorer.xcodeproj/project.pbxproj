@@ -15,7 +15,7 @@
 		5F672F2B1D9B13C400F3C195 /* SkyboxVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */; };
 		5F672F2D1D9B13DD00F3C195 /* SkyboxFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F672F2C1D9B13DD00F3C195 /* SkyboxFragment.fsh */; };
 		5F8A6D791D8CB1630057E7C5 /* iOSFileOpen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D781D8CB1630057E7C5 /* iOSFileOpen.cpp */; };
-		5F8A6D7C1D8CC3200057E7C5 /* OpenGLRGBProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBProgram.cpp */; };
+		5F8A6D7C1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp */; };
 		5F8A6D7F1D8CCA240057E7C5 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D7D1D8CCA240057E7C5 /* Utils.cpp */; };
 		5F94F4F91D88928F005A657F /* Bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4E61D88928F005A657F /* Bunny.obj */; };
 		5F94F4FC1D88928F005A657F /* Cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4E91D88928F005A657F /* Cube.obj */; };
@@ -183,8 +183,8 @@
 		5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SkyboxVertex.vsh; sourceTree = "<group>"; };
 		5F672F2C1D9B13DD00F3C195 /* SkyboxFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SkyboxFragment.fsh; sourceTree = "<group>"; };
 		5F8A6D781D8CB1630057E7C5 /* iOSFileOpen.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = iOSFileOpen.cpp; sourceTree = "<group>"; };
-		5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBProgram.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLRGBProgram.cpp; sourceTree = "<group>"; };
-		5F8A6D7B1D8CC3200057E7C5 /* OpenGLRGBProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRGBProgram.hpp; sourceTree = "<group>"; };
+		5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLRGBModelProgram.cpp; sourceTree = "<group>"; };
+		5F8A6D7B1D8CC3200057E7C5 /* OpenGLRGBModelProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRGBModelProgram.hpp; sourceTree = "<group>"; };
 		5F8A6D7D1D8CCA240057E7C5 /* Utils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Utils.cpp; sourceTree = "<group>"; };
 		5F8A6D7E1D8CCA240057E7C5 /* Utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Utils.hpp; sourceTree = "<group>"; };
 		5F94F4E61D88928F005A657F /* Bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Bunny.obj; sourceTree = "<group>"; };
@@ -609,8 +609,8 @@
 				5F94F6231D8892A6005A657F /* OpenGLShader.hpp */,
 				5F94F6241D8892A6005A657F /* Scene.cpp */,
 				5F94F6251D8892A6005A657F /* Scene.hpp */,
-				5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBProgram.cpp */,
-				5F8A6D7B1D8CC3200057E7C5 /* OpenGLRGBProgram.hpp */,
+				5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp */,
+				5F8A6D7B1D8CC3200057E7C5 /* OpenGLRGBModelProgram.hpp */,
 				5F9D61611DA13A6D00B87028 /* OpenGLTexture.cpp */,
 				5F9D61621DA13A6D00B87028 /* OpenGLTexture.hpp */,
 				5FC9CF7B1DAC408500C566E4 /* OpenGLFramebufferObject.cpp */,
@@ -1208,7 +1208,7 @@
 				5F94F69D1D8892A6005A657F /* OpenGLRenderer.cpp in Sources */,
 				5F8A6D7F1D8CCA240057E7C5 /* Utils.cpp in Sources */,
 				5F94F6981D8892A6005A657F /* lodepng.cpp in Sources */,
-				5F8A6D7C1D8CC3200057E7C5 /* OpenGLRGBProgram.cpp in Sources */,
+				5F8A6D7C1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp in Sources */,
 				5F8A6D791D8CB1630057E7C5 /* iOSFileOpen.cpp in Sources */,
 				5FEF360A1CF7B3D7003DE7BC /* main.m in Sources */,
 			);

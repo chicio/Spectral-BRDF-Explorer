@@ -1,5 +1,5 @@
 //
-//  OpenGLRGBProgram.hpp
+//  OpenGLRGBModelProgram.hpp
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 17/09/16.
@@ -17,7 +17,7 @@
 
 #include "OpenGLProgram.hpp"
 
-class OpenGLRGBProgram : public OpenGLProgram {
+class OpenGLRGBModelProgram : public OpenGLProgram {
 public:
     
     GLint _mvLocation;
