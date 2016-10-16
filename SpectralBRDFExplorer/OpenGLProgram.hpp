@@ -9,18 +9,14 @@
 #ifndef OpenGLProgram_hpp
 #define OpenGLProgram_hpp
 
-#ifdef __APPLE__
-#include <OpenGLES/ES3/gl.h>
-#else
-#include <GLES3/gl3.h>
-#endif
-
+#include <OpenGLESHeaders.h>
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>
 #include <string>
 
 #include "OpenGLShader.hpp"
+#include "Utils.hpp"
 
 #define VERTEX_POS_INDX             0
 #define VERTEX_NORMAL_INDX          1

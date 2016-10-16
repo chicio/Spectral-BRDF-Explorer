@@ -33,6 +33,7 @@
 #include "OpenGLFramebufferObject.hpp"
 #include "OpenGLCamera.hpp"
 #include "OpenGLRGBModelProgram.hpp"
+#include "OpenGLSkyboxProgram.hpp"
 
 class OpenGLRenderer {
 private:
@@ -49,10 +50,7 @@ private:
     GLint _shadowMapMvpLightLoc;
     
     /// Skybox.
-    OpenGLProgram openGLSkyboxProgram;
-    OpenGLTexture skyboxTexture;
-    GLint _skyboxmvpLocation;
-    GLint _skyBoxTextureSampler;
+    OpenGLSkyboxProgram openGLSkyboxProgram;
     
 public:
     

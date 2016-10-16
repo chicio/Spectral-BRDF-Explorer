@@ -14,6 +14,7 @@
 		5F66F87F1D8B42D700595BB3 /* OrenNayarVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */; };
 		5F672F2B1D9B13C400F3C195 /* SkyboxVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */; };
 		5F672F2D1D9B13DD00F3C195 /* SkyboxFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F672F2C1D9B13DD00F3C195 /* SkyboxFragment.fsh */; };
+		5F720D7D1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F720D7B1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp */; };
 		5F8A6D791D8CB1630057E7C5 /* iOSFileOpen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D781D8CB1630057E7C5 /* iOSFileOpen.cpp */; };
 		5F8A6D7C1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp */; };
 		5F8A6D7F1D8CCA240057E7C5 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D7D1D8CCA240057E7C5 /* Utils.cpp */; };
@@ -182,6 +183,10 @@
 		5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OrenNayarVertex.vsh; sourceTree = "<group>"; };
 		5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SkyboxVertex.vsh; sourceTree = "<group>"; };
 		5F672F2C1D9B13DD00F3C195 /* SkyboxFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SkyboxFragment.fsh; sourceTree = "<group>"; };
+		5F720D7B1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLSkyboxProgram.cpp; sourceTree = "<group>"; };
+		5F720D7C1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLSkyboxProgram.hpp; sourceTree = "<group>"; };
+		5F720D7E1DB3CA9500F29D74 /* OpenGLESHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLESHeaders.h; sourceTree = "<group>"; };
+		5F720D7F1DB3D69000F29D74 /* SceneLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneLoader.h; sourceTree = "<group>"; };
 		5F8A6D781D8CB1630057E7C5 /* iOSFileOpen.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = iOSFileOpen.cpp; sourceTree = "<group>"; };
 		5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLRGBModelProgram.cpp; sourceTree = "<group>"; };
 		5F8A6D7B1D8CC3200057E7C5 /* OpenGLRGBModelProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLRGBModelProgram.hpp; sourceTree = "<group>"; };
@@ -592,29 +597,33 @@
 			children = (
 				5F94F50B1D8892A6005A657F /* glm */,
 				5F94F6141D8892A6005A657F /* lodepng */,
-				5F8A6D7D1D8CCA240057E7C5 /* Utils.cpp */,
-				5F8A6D7E1D8CCA240057E7C5 /* Utils.hpp */,
 				5F94F6171D8892A6005A657F /* Material.hpp */,
-				5F94F6181D8892A6005A657F /* Model3D.cpp */,
 				5F94F6191D8892A6005A657F /* Model3D.hpp */,
-				5F94F61A1D8892A6005A657F /* OpenGLCamera.cpp */,
-				5F94F61B1D8892A6005A657F /* OpenGLCamera.hpp */,
-				5F94F61C1D8892A6005A657F /* OpenGLObjParser.cpp */,
-				5F94F61D1D8892A6005A657F /* OpenGLObjParser.hpp */,
-				5F94F6201D8892A6005A657F /* OpenGLRenderer.cpp */,
-				5F94F6211D8892A6005A657F /* OpenGLRenderer.hpp */,
-				5F94F6221D8892A6005A657F /* OpenGLShader.cpp */,
-				5F94F6231D8892A6005A657F /* OpenGLShader.hpp */,
-				5F94F6241D8892A6005A657F /* Scene.cpp */,
+				5F94F6181D8892A6005A657F /* Model3D.cpp */,
 				5F94F6251D8892A6005A657F /* Scene.hpp */,
-				5F94F61E1D8892A6005A657F /* OpenGLProgram.cpp */,
+				5F94F6241D8892A6005A657F /* Scene.cpp */,
+				5F720D7F1DB3D69000F29D74 /* SceneLoader.h */,
+				5F8A6D7E1D8CCA240057E7C5 /* Utils.hpp */,
+				5F8A6D7D1D8CCA240057E7C5 /* Utils.cpp */,
+				5F720D7E1DB3CA9500F29D74 /* OpenGLESHeaders.h */,
+				5F94F61B1D8892A6005A657F /* OpenGLCamera.hpp */,
+				5F94F61A1D8892A6005A657F /* OpenGLCamera.cpp */,
+				5F94F61D1D8892A6005A657F /* OpenGLObjParser.hpp */,
+				5F94F61C1D8892A6005A657F /* OpenGLObjParser.cpp */,
+				5F94F6211D8892A6005A657F /* OpenGLRenderer.hpp */,
+				5F94F6201D8892A6005A657F /* OpenGLRenderer.cpp */,
+				5F94F6231D8892A6005A657F /* OpenGLShader.hpp */,
+				5F94F6221D8892A6005A657F /* OpenGLShader.cpp */,
 				5F94F61F1D8892A6005A657F /* OpenGLProgram.hpp */,
-				5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp */,
+				5F94F61E1D8892A6005A657F /* OpenGLProgram.cpp */,
 				5F8A6D7B1D8CC3200057E7C5 /* OpenGLRGBModelProgram.hpp */,
-				5F9D61611DA13A6D00B87028 /* OpenGLTexture.cpp */,
+				5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp */,
+				5F720D7C1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.hpp */,
+				5F720D7B1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp */,
 				5F9D61621DA13A6D00B87028 /* OpenGLTexture.hpp */,
-				5FC9CF7B1DAC408500C566E4 /* OpenGLFramebufferObject.cpp */,
+				5F9D61611DA13A6D00B87028 /* OpenGLTexture.cpp */,
 				5FC9CF7C1DAC408500C566E4 /* OpenGLFramebufferObject.hpp */,
+				5FC9CF7B1DAC408500C566E4 /* OpenGLFramebufferObject.cpp */,
 			);
 			name = SpectralBRDFExplorer;
 			path = ../SpectralBRDFExplorer;
@@ -1193,6 +1202,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F720D7D1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp in Sources */,
 				5F94F6381D8892A6005A657F /* glm.cpp in Sources */,
 				5FEF360D1CF7B3D7003DE7BC /* AppDelegate.mm in Sources */,
 				5F94F69E1D8892A6005A657F /* OpenGLShader.cpp in Sources */,

@@ -42,13 +42,10 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
         openGLModelPrograms.push_back(modelProgram);
     }
     
-    /********/
-    //Load Skybox programs.
-    std::string skyboxVertexShader = getFileContents("SkyboxVertex.vsh");
-    std::string skyboxFragmentShader = getFileContents("SkyboxFragment.fsh");
-    programLinked = openGLSkyboxProgram.loadProgram(skyboxVertexShader.c_str(),
-                                                    skyboxFragmentShader.c_str(),
-                                                    errors);
+    //Skybox program.
+    openGLSkyboxProgram.skyboxModel = &Scene::instance().skybox;
+    
+    programLinked  = openGLSkyboxProgram.startProgram(errors);
     
     if (!programLinked) {
         
@@ -57,26 +54,6 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
         
         return false;
     }
-    
-    _skyboxmvpLocation = glGetUniformLocation(openGLSkyboxProgram.program, "mvpMatrix");
-    _skyBoxTextureSampler = glGetUniformLocation(openGLSkyboxProgram.program, "skyboxSampler");
-    
-    glGenBuffers(1, &(Scene::instance().skybox._vboId));
-    glBindBuffer(GL_ARRAY_BUFFER, Scene::instance().skybox._vboId);
-    glBufferData(GL_ARRAY_BUFFER,
-                 Scene::instance().skybox.modelData().getVerticesDataSize(),
-                 Scene::instance().skybox.modelData().getVerticesData().data(),
-                 GL_STATIC_DRAW);
-    
-    skyboxTexture.loadCubeMapTexture("left.png",
-                                     "right.png",
-                                     "up.png",
-                                     "down.png",
-                                     "front.png",
-                                     "back.png",
-                                     {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
-                                      OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
-    /********/
     
     //Load Shadow mapping programs.
     std::string shadowMappingVertexShader = getFileContents("ShadowMapVertex.vsh");
@@ -190,49 +167,12 @@ void OpenGLRenderer::draw() {
     
     /**************************/
     /********** DRAW **********/
-    glUseProgram(openGLSkyboxProgram.program);
 
     glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
     glViewport(0, 0, m_viewport[2], m_viewport[3]);
 
-    glDisable(GL_CULL_FACE);
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_POLYGON_OFFSET_FILL);
-    
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glDepthMask(GL_FALSE);
-
-    glUniform1i(_skyBoxTextureSampler, TEXTURE_UNIT_ID_0_SAMPLER);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture._textureId);
-
-    glBindBuffer(GL_ARRAY_BUFFER, Scene::instance().skybox._vboId);
-    glEnableVertexAttribArray(VERTEX_POS_INDX);
-    glVertexAttribPointer(VERTEX_POS_INDX,
-                          VERTEX_POS_SIZE,
-                          GL_FLOAT,
-                          GL_FALSE,
-                          Scene::instance().skybox.modelData().getStride(),
-                          0);
-    glVertexAttribPointer(VERTEX_NORMAL_INDX,
-                          VERTEX_NORMAL_SIZE,
-                          GL_FLOAT,
-                          GL_FALSE,
-                          Scene::instance().skybox.modelData().getStride(),
-                          (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat)));
-    
-    glUniformMatrix4fv(_skyboxmvpLocation,
-                       1,
-                       GL_FALSE,
-                       glm::value_ptr(Scene::instance().skybox._modelViewProjectionMatrix));
-    
-    glDrawArrays(GL_TRIANGLES, 0, Scene::instance().skybox.modelData().getNumberOfVerticesToDraw());
-    glDisableVertexAttribArray(VERTEX_POS_INDX);
-    glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+    //Draw skybox.
+    openGLSkyboxProgram.draw();
     
     //Draw models.
     for (auto& modelProgram : openGLModelPrograms) {

@@ -9,12 +9,6 @@
 #ifndef OpenGLRGBProgram_hpp
 #define OpenGLRGBProgram_hpp
 
-#ifdef __APPLE__
-#include <OpenGLES/ES3/gl.h>
-#else
-#include <GLES3/gl3.h>
-#endif
-
 #include <glm/gtc/type_ptr.hpp>
 
 #include "OpenGLProgram.hpp"
@@ -56,7 +50,8 @@ public:
     
     /*
      Draw method.
-     Contains all the opengl step need to draw a model.
+     Contains all the OpenGL ES step need to draw a model 
+     in the draw renderer method.
      */
     void draw();
 };

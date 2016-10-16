@@ -7,7 +7,6 @@
 //
 
 #include "OpenGLRGBModelProgram.hpp"
-#include "Utils.hpp"
 
 bool OpenGLRGBModelProgram::startProgram(std::string& error) {
     
