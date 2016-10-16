@@ -142,9 +142,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "383"
-            endingLineNumber = "383"
-            landmarkName = "OpenGLRenderer::shutdown()"
-            landmarkType = "7">
+            endingLineNumber = "383">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -61,7 +61,7 @@
     model3D0._modelMatrix = glm::scale(glm::mat4(), glm::vec3(1.10f, 1.10f, 1.10f));
     model3D0._modelMatrix = glm::translate(model3D0._modelMatrix, glm::vec3(-5.0, 0.0f, -8.0f));
     model3D0._modelMatrix = glm::rotate(model3D0._modelMatrix, glm::radians(30.0f), glm::vec3(0.0, 1.0f, 0.0f));
-    model3D0.setMaterial(Material::createOrangeMaterial());
+    model3D0.setMaterial(Material::createRubyMaterial());
     model3D0.lighting = "OrenNayar";
     Scene::instance().models.push_back(model3D0);
     

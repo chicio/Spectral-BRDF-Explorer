@@ -84,17 +84,17 @@ void main() {
     //Cosine theta diffuse lambertian component.
     float cosTheta = max(0.0, dot(normalInterp, normalize(lightDirection)));
     
-    vec4 ambient = 0.2f * vec4(0.7f, 0.2f, 0.2f, 1.0f);
+    vec4 ambient = surfaceMaterial.ka * light.color;
     vec4 diffuse = vec4(0.0, 0.0, 0.0, 1.0);
     
     if(textureActive == 0) {
             
         //No texture. Standard lighting.
-        diffuse = orenNayar(lightDirection, viewDirection, normalize(normalInterp)) * vec4(0.7f, 0.2f, 0.2f, 1.0f) * cosTheta;
+        diffuse =  surfaceMaterial.kd * light.color * orenNayar(lightDirection, viewDirection, normalize(normalInterp)) *  cosTheta;
     } else {
             
         //Lighting using texture.
-        diffuse = orenNayar(lightDirection, viewDirection, normalInterp) * texture(textureSampler, textureCoordinate) * cosTheta;
+        diffuse = surfaceMaterial.kd * texture(textureSampler, textureCoordinate) * orenNayar(lightDirection, viewDirection, normalInterp) * cosTheta;
     }
     
     o_fragColor = ambient + diffuse * shadow();
