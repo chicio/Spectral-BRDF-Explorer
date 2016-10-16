@@ -15,9 +15,14 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class OpenGLView extends GLSurfaceView {
 
+    /**
+     * Current OpenGL ES Viewport.
+     */
     private int currentWidth;
+    /**
+     * Current OpenGL ES Viewport.
+     */
     private int currentHeight;
-    private AssetManager assetMgr;
 
     public OpenGLView(Context context) {
 
@@ -35,14 +40,7 @@ public class OpenGLView extends GLSurfaceView {
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
-            String vertexShaderSource = getShaderSource(getContext(), "PhongVertex", "vsh");
-            String fragmentShaderSource = getShaderSource(getContext(), "PhongFragment", "fsh");
-            String shadowMappingVertexShaderSource = getShaderSource(getContext(), "ShadowMapVertex", "vsh");
-            String shadowMappingFragmentShaderSource = getShaderSource(getContext(), "ShadowMapFragment", "fsh");
-
-            assetMgr = getResources().getAssets();
-
-            LibOpenGL.defaultStartRender(assetMgr, vertexShaderSource, fragmentShaderSource, shadowMappingVertexShaderSource, shadowMappingFragmentShaderSource);
+            LibOpenGL.startOpenGLESRender(getResources().getAssets());
         }
 
         @Override
@@ -57,27 +55,6 @@ public class OpenGLView extends GLSurfaceView {
 
             LibOpenGL.update(currentWidth, currentHeight, 0);
             LibOpenGL.draw();
-        }
-
-        private String getShaderSource(Context context, String name, String extension) {
-
-            InputStream input;
-            String content = "";
-
-            try {
-                AssetManager assetManager = context.getAssets();
-                input = assetManager.open("Shaders/" + name + "." + extension);
-
-                int size = input.available();
-                byte[] buffer = new byte[size];
-                input.read(buffer);
-                input.close();
-                content = new String(buffer);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return content;
         }
     }
 }

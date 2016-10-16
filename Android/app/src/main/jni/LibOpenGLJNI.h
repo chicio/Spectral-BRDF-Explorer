@@ -5,13 +5,9 @@
 #include <jni.h>
 
 extern "C" {
-    JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_defaultStartRender(JNIEnv *env,
-                                                                                            jclass type,
-                                                                                            jobject assetMgr,
-                                                                                            jstring vertexShaderSource_,
-                                                                                            jstring fragmentShaderSource_,
-                                                                                            jstring shadowMappingVertexShaderSource_,
-                                                                                            jstring shadowMappingFragmentShaderSource_);
+    JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_startOpenGLESRender(JNIEnv *env,
+                                                                                             jclass type,
+                                                                                             jobject assetManager);
     JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_update(JNIEnv *env,
                                                                                 jclass type,
                                                                                 jint width,

@@ -9,7 +9,7 @@
         <!--3D Model List-->
         <scene sceneID="rV8-WI-iMr">
             <objects>
-                <tableViewController id="JKI-Jt-nFc" userLabel="3D Model List" customClass="Model3DListViewController" sceneMemberID="viewController">
+                <tableViewController id="JKI-Jt-nFc" userLabel="3D Model List" customClass="SceneListViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="y2S-Sx-BlK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

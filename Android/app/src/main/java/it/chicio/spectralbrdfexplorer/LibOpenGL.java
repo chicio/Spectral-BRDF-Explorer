@@ -11,11 +11,7 @@ public class LibOpenGL {
         System.loadLibrary("LibOpenGLJNI");
     }
 
-    public static native void defaultStartRender(AssetManager assetManager,
-                                                 String vertexShaderSource,
-                                                 String fragmentShaderSource,
-                                                 String shadowMappingVertexShaderSource,
-                                                 String shadowMappingFragmentShaderSource);
+    public static native void startOpenGLESRender(AssetManager assetManager);
     public static native void update(int width, int height, int timeSinceLastUpdate);
     public static native void draw();
 }

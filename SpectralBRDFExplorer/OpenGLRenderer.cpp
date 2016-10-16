@@ -164,10 +164,8 @@ void OpenGLRenderer::draw() {
         glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
-    
-    /**************************/
-    /********** DRAW **********/
-
+   
+    //Restore default viewport and start drawing.
     glBindFramebuffer(GL_FRAMEBUFFER, defaultFramebuffer);
     glViewport(0, 0, m_viewport[2], m_viewport[3]);
 

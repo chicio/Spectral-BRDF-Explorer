@@ -22,6 +22,6 @@ std::string getFileContents(std::string filename) {
         std::fclose(fp);
         return(contents);
     }
-    
-    throw(errno);
+
+    return "";
 }

@@ -1,5 +1,5 @@
 //
-//  ObjListViewController.m
+//  SceneListViewController.m
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 31/05/16.
@@ -7,13 +7,13 @@
 //
 
 #include "SceneLoader.h"
-#import "Model3DListViewController.h"
+#import "SceneListViewController.h"
 
-@interface Model3DListViewController ()
+@interface SceneListViewController ()
 @property (nonatomic, strong) NSArray *objNameList;
 @end
 
-@implementation Model3DListViewController
+@implementation SceneListViewController
 
 - (void)viewDidLoad {
     

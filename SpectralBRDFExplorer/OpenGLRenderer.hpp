@@ -15,10 +15,6 @@
 #include <GLES3/gl3.h>
 #endif
 
-#ifdef __APPLE__
-#include "iOSFileOpen.hpp"
-#endif
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
@@ -57,31 +53,31 @@ public:
     /// OpenGL ES camera.
     OpenGLCamera openGLCamera;
 
-    static OpenGLRenderer* defaultStartRender() {
-
-        /***** MODELS ******/
-        Model3D model3D("Objs/Dragon.obj", "Sphere");
-        model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -12.0f));
-        model3D.setMaterial(Material::createBronzeMaterial());
-        model3D.lighting = "BlinnPhong";
-        Scene::instance().models.push_back(model3D);
-        
-        Model3D cornellBoxModel3D("Objs/CornellBox.obj", "Cornell Box");
-        cornellBoxModel3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -12.0f));;
-        cornellBoxModel3D.setMaterial(Material::createMatteMaterial());
-        cornellBoxModel3D.lighting = "Phong";
-        Scene::instance().models.push_back(cornellBoxModel3D);
-
-        /****** START *******/
-        std::string error;
-        OpenGLRenderer* openGLRenderer = new OpenGLRenderer();
-        openGLRenderer->startRenderer(OpenGLCamera(glm::vec3(0.0f, 0.0f, 0.0f),
-                                                   glm::vec3(0.0f, 0.0f, -5.0f),
-                                                   glm::vec3(0.0f, 1.0f, 0.0f)),
-                                      error);
-
-        return openGLRenderer;
-    }
+//    static OpenGLRenderer* defaultStartRender() {
+//
+//        /***** MODELS ******/
+//        Model3D model3D("Objs/Dragon.obj", "Sphere");
+//        model3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -12.0f));
+//        model3D.setMaterial(Material::createBronzeMaterial());
+//        model3D.lighting = "BlinnPhong";
+//        Scene::instance().models.push_back(model3D);
+//        
+//        Model3D cornellBoxModel3D("Objs/CornellBox.obj", "Cornell Box");
+//        cornellBoxModel3D._modelMatrix = glm::translate(glm::mat4(), glm::vec3(0.0, 0.0f, -12.0f));;
+//        cornellBoxModel3D.setMaterial(Material::createMatteMaterial());
+//        cornellBoxModel3D.lighting = "Phong";
+//        Scene::instance().models.push_back(cornellBoxModel3D);
+//
+//        /****** START *******/
+//        std::string error;
+//        OpenGLRenderer* openGLRenderer = new OpenGLRenderer();
+//        openGLRenderer->startRenderer(OpenGLCamera(glm::vec3(0.0f, 0.0f, 0.0f),
+//                                                   glm::vec3(0.0f, 0.0f, -5.0f),
+//                                                   glm::vec3(0.0f, 1.0f, 0.0f)),
+//                                      error);
+//
+//        return openGLRenderer;
+//    }
     
     /*!
      Start OpenGL ES.

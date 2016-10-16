@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F02B4A71DA70ED4001B0715 /* ThaiStatue.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F02B4A61DA70ED4001B0715 /* ThaiStatue.obj */; };
 		5F64266F1D00717A00166E20 /* OpenGLRenderViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266C1D00717A00166E20 /* OpenGLRenderViewController.mm */; };
-		5F6426701D00717A00166E20 /* Model3DListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266E1D00717A00166E20 /* Model3DListViewController.mm */; };
+		5F6426701D00717A00166E20 /* SceneListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266E1D00717A00166E20 /* SceneListViewController.mm */; };
 		5F66F87E1D8B42D700595BB3 /* OrenNayarFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F66F87C1D8B42D700595BB3 /* OrenNayarFragment.fsh */; };
 		5F66F87F1D8B42D700595BB3 /* OrenNayarVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */; };
 		5F672F2B1D9B13C400F3C195 /* SkyboxVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */; };
@@ -177,8 +177,8 @@
 		5F02B4A61DA70ED4001B0715 /* ThaiStatue.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ThaiStatue.obj; sourceTree = "<group>"; };
 		5F64266B1D00717A00166E20 /* OpenGLRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLRenderViewController.h; sourceTree = "<group>"; };
 		5F64266C1D00717A00166E20 /* OpenGLRenderViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenGLRenderViewController.mm; sourceTree = "<group>"; };
-		5F64266D1D00717A00166E20 /* Model3DListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model3DListViewController.h; sourceTree = "<group>"; };
-		5F64266E1D00717A00166E20 /* Model3DListViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Model3DListViewController.mm; sourceTree = "<group>"; };
+		5F64266D1D00717A00166E20 /* SceneListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneListViewController.h; sourceTree = "<group>"; };
+		5F64266E1D00717A00166E20 /* SceneListViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SceneListViewController.mm; sourceTree = "<group>"; };
 		5F66F87C1D8B42D700595BB3 /* OrenNayarFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OrenNayarFragment.fsh; sourceTree = "<group>"; };
 		5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OrenNayarVertex.vsh; sourceTree = "<group>"; };
 		5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SkyboxVertex.vsh; sourceTree = "<group>"; };
@@ -525,8 +525,8 @@
 			children = (
 				5F64266B1D00717A00166E20 /* OpenGLRenderViewController.h */,
 				5F64266C1D00717A00166E20 /* OpenGLRenderViewController.mm */,
-				5F64266D1D00717A00166E20 /* Model3DListViewController.h */,
-				5F64266E1D00717A00166E20 /* Model3DListViewController.mm */,
+				5F64266D1D00717A00166E20 /* SceneListViewController.h */,
+				5F64266E1D00717A00166E20 /* SceneListViewController.mm */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1214,7 +1214,7 @@
 				5FC9CF7D1DAC408500C566E4 /* OpenGLFramebufferObject.cpp in Sources */,
 				5F94F69F1D8892A6005A657F /* Scene.cpp in Sources */,
 				5F94F6991D8892A6005A657F /* Model3D.cpp in Sources */,
-				5F6426701D00717A00166E20 /* Model3DListViewController.mm in Sources */,
+				5F6426701D00717A00166E20 /* SceneListViewController.mm in Sources */,
 				5F94F69D1D8892A6005A657F /* OpenGLRenderer.cpp in Sources */,
 				5F8A6D7F1D8CCA240057E7C5 /* Utils.cpp in Sources */,
 				5F94F6981D8892A6005A657F /* lodepng.cpp in Sources */,

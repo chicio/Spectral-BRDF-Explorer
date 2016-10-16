@@ -1,10 +1,12 @@
 #include <jni.h>
 #include <android/asset_manager_jni.h>
-#include <OpenGLRenderer.hpp>
+
+#include "OpenGLRenderer.hpp"
+#include "SceneLoader.h"
 #include "LibOpenGLJNI.h"
 #include "android_fopen.h"
 
-static OpenGLRenderer* renderer;
+static OpenGLRenderer* openGLRenderer;
 
 JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_update(JNIEnv *env,
                                                                             jclass type,
@@ -13,42 +15,31 @@ JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_update(JNIE
                                                                             jint timeSinceLastUpdate) {
 
     //Update.
-    renderer->update(width, height, timeSinceLastUpdate);
+    openGLRenderer->update(width, height, timeSinceLastUpdate);
 }
 
-JNIEXPORT void JNICALL
-Java_it_chicio_spectralbrdfexplorer_LibOpenGL_draw(JNIEnv *env, jclass type) {
+JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_draw(JNIEnv *env, jclass type) {
 
     //Draw
-    renderer->draw();
+    openGLRenderer->draw();
 }
 
-JNIEXPORT void JNICALL
-Java_it_chicio_spectralbrdfexplorer_LibOpenGL_defaultStartRender(JNIEnv *env,
-                                                                 jclass type,
-                                                                 jobject assetMgr,
-                                                                 jstring vertexShaderSource_,
-                                                                 jstring fragmentShaderSource_,
-                                                                 jstring shadowMappingVertexShaderSource_,
-                                                                 jstring shadowMappingFragmentShaderSource_) {
+JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_startOpenGLESRender(JNIEnv *env,
+                                                                                         jclass type,
+                                                                                         jobject assetManager) {
 
-    const char *vertexShaderSource = env->GetStringUTFChars(vertexShaderSource_, 0);
-    const char *fragmentShaderSource = env->GetStringUTFChars(fragmentShaderSource_, 0);
-    const char *shadowMappingVertexShaderSource = env->GetStringUTFChars(shadowMappingVertexShaderSource_, 0);
-    const char *shadowMappingFragmentShaderSource = env->GetStringUTFChars(shadowMappingFragmentShaderSource_, 0);
+    //Get asset manager native reference.
+    android_fopen_set_asset_manager(AAssetManager_fromJava(env, assetManager));
 
-    android_fopen_set_asset_manager(AAssetManager_fromJava(env, assetMgr));
+    //TODO: move outside (dynamic in listview).
+    //Load scene.
+    SceneLoader::loadRGBScene();
 
-    renderer = OpenGLRenderer::defaultStartRender(vertexShaderSource,
-                                                  fragmentShaderSource,
-                                                  shadowMappingVertexShaderSource,
-                                                  shadowMappingFragmentShaderSource);
-
-    renderer->loadScene();
-
-
-    env->ReleaseStringUTFChars(vertexShaderSource_, vertexShaderSource);
-    env->ReleaseStringUTFChars(fragmentShaderSource_, fragmentShaderSource);
-    env->ReleaseStringUTFChars(shadowMappingVertexShaderSource_, shadowMappingVertexShaderSource);
-    env->ReleaseStringUTFChars(shadowMappingFragmentShaderSource_, shadowMappingFragmentShaderSource);
+    //Start render.
+    std::string error;
+    openGLRenderer = new OpenGLRenderer();
+    openGLRenderer->startRenderer(OpenGLCamera(glm::vec3(0.0f, 0.0f, 0.0f),
+                                               glm::vec3(0.0f, 0.0f, -5.0f),
+                                               glm::vec3(0.0f, 1.0f, 0.0f)),
+                                  error);
 }
