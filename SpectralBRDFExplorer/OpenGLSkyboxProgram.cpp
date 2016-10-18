@@ -12,8 +12,15 @@ bool OpenGLSkyboxProgram::startProgram(std::string& error) {
     
     //Load Skybox programs.
     std::string errors;
+
+#ifdef __APPLE__
     std::string skyboxVertexShader = getFileContents("SkyboxVertex.vsh");
     std::string skyboxFragmentShader = getFileContents("SkyboxFragment.fsh");
+#else
+    std::string skyboxVertexShader = getFileContents("Shaders/SkyboxVertex.vsh");
+    std::string skyboxFragmentShader = getFileContents("Shaders/SkyboxFragment.fsh");
+#endif
+
     bool programLinked = loadProgram(skyboxVertexShader.c_str(), skyboxFragmentShader.c_str(), errors);
     
     if (!programLinked) {
@@ -33,7 +40,8 @@ bool OpenGLSkyboxProgram::startProgram(std::string& error) {
                  skyboxModel->modelData().getVerticesDataSize(),
                  skyboxModel->modelData().getVerticesData().data(),
                  GL_STATIC_DRAW);
-    
+
+#ifdef __APPLE__
     skyboxTexture.loadCubeMapTexture("left.png",
                                      "right.png",
                                      "up.png",
@@ -42,6 +50,16 @@ bool OpenGLSkyboxProgram::startProgram(std::string& error) {
                                      "back.png",
                                      {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
                                       OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
+#else
+    skyboxTexture.loadCubeMapTexture("Objs/textures/left.png",
+                                     "Objs/textures/right.png",
+                                     "Objs/textures/up.png",
+                                     "Objs/textures/down.png",
+                                     "Objs/textures/front.png",
+                                     "Objs/textures/back.png",
+                                     {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
+                                      OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
+#endif
 
     return true;
 }

@@ -56,8 +56,14 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     }
     
     //Load Shadow mapping programs.
+#ifdef __APPLE__
     std::string shadowMappingVertexShader = getFileContents("ShadowMapVertex.vsh");
     std::string shadowMappingFragmentShader = getFileContents("ShadowMapFragment.fsh");
+#else
+    std::string shadowMappingVertexShader = getFileContents("Shaders/ShadowMapVertex.vsh");
+    std::string shadowMappingFragmentShader = getFileContents("Shaders/ShadowMapFragment.fsh");
+#endif
+
     programLinked = openGLShadowProgram.loadProgram(shadowMappingVertexShader.c_str(),
                                                     shadowMappingFragmentShader.c_str(),
                                                     errors);

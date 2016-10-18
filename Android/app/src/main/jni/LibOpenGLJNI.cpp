@@ -33,7 +33,7 @@ JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_startOpenGL
 
     //TODO: move outside (dynamic in listview).
     //Load scene.
-    SceneLoader::loadRGBScene();
+    SceneLoader::loadRGBSceneAndroid();
 
     //Start render.
     std::string error;
