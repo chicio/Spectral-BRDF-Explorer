@@ -43,3 +43,10 @@ JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_startOpenGL
                                                glm::vec3(0.0f, 1.0f, 0.0f)),
                                   error);
 }
+
+JNIEXPORT void JNICALL
+Java_it_chicio_spectralbrdfexplorer_LibOpenGL_cameraRotation(JNIEnv *env, jclass type,
+                                                             jfloat rotationX, jfloat rotationY) {
+
+    openGLRenderer->openGLCamera.setRotationFactors(rotationX * -0.02, rotationY * 0.01);
+}

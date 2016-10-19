@@ -14,4 +14,8 @@ extern "C" {
                                                                                 jint height,
                                                                                 jint timeSinceLastUpdate);
     JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_draw(JNIEnv *env, jclass type);
+    JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_cameraRotation(JNIEnv *env,
+                                                                                        jclass type,
+                                                                                        jfloat rotationX,
+                                                                                        jfloat rotationY);
 }

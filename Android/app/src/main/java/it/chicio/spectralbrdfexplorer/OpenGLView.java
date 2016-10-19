@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,10 +21,16 @@ public class OpenGLView extends GLSurfaceView {
      * Current OpenGL ES Viewport.
      */
     private int currentWidth;
+
     /**
      * Current OpenGL ES Viewport.
      */
     private int currentHeight;
+
+    /**
+     * Gesture detector.
+     */
+    private GestureDetector gestureDetector;
 
     public OpenGLView(Context context) {
 
@@ -30,6 +38,9 @@ public class OpenGLView extends GLSurfaceView {
 
         setEGLConfigChooser(8, 8, 8, 0, 16, 0);
         setEGLContextClientVersion(3);
+
+        //Setup gesture detector.
+        gestureDetector = new GestureDetector(context, new OpenGLGestureListener());
 
         //Setup renderer.
         setRenderer(new OpenGLAndroidRenderer());
@@ -55,6 +66,29 @@ public class OpenGLView extends GLSurfaceView {
 
             LibOpenGL.update(currentWidth, currentHeight, 0);
             LibOpenGL.draw();
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        this.gestureDetector.onTouchEvent(event);
+
+        return true;
+    }
+
+    class OpenGLGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        private static final String DEBUG_TAG = "Gestures";
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+
+            Log.d(DEBUG_TAG, "onScroll: " + distanceX + " - " + distanceY);
+
+            LibOpenGL.cameraRotation(distanceX, distanceY);
+
+            return true;
         }
     }
 }

@@ -14,4 +14,5 @@ public class LibOpenGL {
     public static native void startOpenGLESRender(AssetManager assetManager);
     public static native void update(int width, int height, int timeSinceLastUpdate);
     public static native void draw();
+    public static native void cameraRotation(float rotationX, float rotationY);
 }

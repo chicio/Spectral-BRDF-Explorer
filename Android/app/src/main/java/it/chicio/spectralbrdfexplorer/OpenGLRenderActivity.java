@@ -3,6 +3,7 @@ package it.chicio.spectralbrdfexplorer;
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.MotionEvent;
 
 public class OpenGLRenderActivity extends Activity {
 
