@@ -11,8 +11,9 @@ public class LibOpenGL {
         System.loadLibrary("LibOpenGLJNI");
     }
 
-    public static native void startOpenGLESRender(AssetManager assetManager);
+    public static native void start(AssetManager assetManager);
     public static native void update(int width, int height, int timeSinceLastUpdate);
     public static native void draw();
     public static native void cameraRotation(float rotationX, float rotationY);
+    public static native void cameraZoom(float scale);
 }

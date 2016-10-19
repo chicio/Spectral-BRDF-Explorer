@@ -5,9 +5,9 @@
 #include <jni.h>
 
 extern "C" {
-    JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_startOpenGLESRender(JNIEnv *env,
-                                                                                             jclass type,
-                                                                                             jobject assetManager);
+    JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_start(JNIEnv *env,
+                                                                               jclass type,
+                                                                               jobject assetManager);
     JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_update(JNIEnv *env,
                                                                                 jclass type,
                                                                                 jint width,
@@ -18,4 +18,7 @@ extern "C" {
                                                                                         jclass type,
                                                                                         jfloat rotationX,
                                                                                         jfloat rotationY);
+    JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_cameraZoom(JNIEnv *env,
+                                                                                    jclass type,
+                                                                                    jfloat scale);
 }
