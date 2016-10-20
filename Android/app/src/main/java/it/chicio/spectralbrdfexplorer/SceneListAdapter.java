@@ -19,10 +19,12 @@ public class SceneListAdapter extends BaseAdapter {
      * Current context.
      */
     private Context context;
+
     /**
      * Layout inflater for the adapter.
      */
     private LayoutInflater inflater;
+
     /**
      * Data source with the list of available scenes.
      */

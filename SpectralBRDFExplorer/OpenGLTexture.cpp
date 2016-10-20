@@ -3,7 +3,7 @@
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 02/10/2016.
-//  Copyright © 2016 Fabrizio Duroni. All rights reserved.
+//  
 //
 
 #include "OpenGLTexture.hpp"
@@ -93,7 +93,6 @@ bool OpenGLTexture::loadCubeMapTexture(std::string left,
     startTexture(GL_TEXTURE_CUBE_MAP);
     
     unsigned error;
-    
     unsigned char* texturePixels1;
     unsigned textureWidth;
     unsigned textureHeight;

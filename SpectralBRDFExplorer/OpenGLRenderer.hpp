@@ -3,18 +3,13 @@
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 02/06/16.
-//  Copyright © 2016 Fabrizio Duroni. All rights reserved.
+//  
 //
 
 #ifndef OpenGLRenderer_hpp
 #define OpenGLRenderer_hpp
 
-#ifdef __APPLE__
-#include <OpenGLES/ES3/gl.h>
-#else
-#include <GLES3/gl3.h>
-#endif
-
+#include <OpenGLESHeaders.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/matrix_inverse.hpp>

@@ -3,29 +3,29 @@
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 10/10/2016.
-//  Copyright © 2016 Fabrizio Duroni. All rights reserved.
+//  
 //
 
 #include "OpenGLFramebufferObject.hpp"
 
-bool OpenGLFramebufferObject::attach2DTexture(GLuint _textureId, GLenum attachment) {
+bool OpenGLFramebufferObject::attach2DTexture(GLuint textureId, GLenum attachment, GLenum drawBuffers) {
     
     //Get default framebuffer handle.
     GLint defaultFramebuffer = 0;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFramebuffer);
     
     //Setup FBO.
-    GLenum none = GL_NONE;
+    //GLenum none = GL_NONE;
     glGenFramebuffers(1, &framebufferObjectId);
     glBindFramebuffer(GL_FRAMEBUFFER, framebufferObjectId);
     
     //No color buffer needed (only depth).
-    glDrawBuffers(1, &none);
+    glDrawBuffers(1, &drawBuffers);
+    
     //Set texture.
-    //glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _textureId, 0);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, _textureId, 0);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, textureId, 0);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _textureId);
+    glBindTexture(GL_TEXTURE_2D, textureId);
     
     if(GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus(GL_FRAMEBUFFER)) {
         

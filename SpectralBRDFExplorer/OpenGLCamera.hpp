@@ -3,7 +3,7 @@
 //  OpenGL
 //
 //  Created by Fabrizio Duroni on 04/08/16.
-//  Copyright © 2016 Fabrizio Duroni. All rights reserved.
+//  
 //
 
 #ifndef OpenGLCamera_hpp

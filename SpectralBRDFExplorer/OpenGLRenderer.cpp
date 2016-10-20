@@ -3,10 +3,8 @@
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 02/06/16.
-//  Copyright © 2016 Fabrizio Duroni. All rights reserved.
+//  
 //
-
-#include <iostream>
 
 #include "Utils.hpp"
 #include "OpenGLRenderer.hpp"
@@ -92,7 +90,7 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     }, GL_DEPTH_COMPONENT24, GL_DEPTH_COMPONENT, GL_UNSIGNED_INT);
     
     //Setup shadow depth framebuffer object.
-    shadowDepthFramebufferObject.attach2DTexture(shadowTexture._textureId, GL_DEPTH_ATTACHMENT);
+    shadowDepthFramebufferObject.attach2DTexture(shadowTexture._textureId, GL_DEPTH_ATTACHMENT, GL_NONE);
     
     return true;
 }

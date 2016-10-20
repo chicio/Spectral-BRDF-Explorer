@@ -3,21 +3,17 @@
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 30/05/16.
-//  Copyright © 2016 Fabrizio Duroni. All rights reserved.
+//  
 //
 
 #ifndef OpenGLObj_hpp
 #define OpenGLObj_hpp
 
-#ifdef __APPLE__
-#include <OpenGLES/ES3/gl.h>
-#else
-#include <GLES3/gl3.h>
-#endif
-
+#include <OpenGLESHeaders.h>
 #include <iostream>
 #include <vector>
 #include <glm/glm.hpp>
+
 #include "lodepng.h"
 
 #define VERTEX_POS_SIZE              3

@@ -3,18 +3,13 @@
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 02/10/2016.
-//  Copyright © 2016 Fabrizio Duroni. All rights reserved.
+//  
 //
 
 #ifndef OpenGLTexture_hpp
 #define OpenGLTexture_hpp
 
-#ifdef __APPLE__
-#include <OpenGLES/ES3/gl.h>
-#else
-#include <GLES3/gl3.h>
-#endif
-
+#include <OpenGLESHeaders.h>
 #include <string>
 #include <vector>
 
