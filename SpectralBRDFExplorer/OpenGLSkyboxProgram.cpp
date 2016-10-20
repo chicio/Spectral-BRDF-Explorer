@@ -13,13 +13,8 @@ bool OpenGLSkyboxProgram::startProgram(std::string& error) {
     //Load Skybox programs.
     std::string errors;
 
-#ifdef __APPLE__
-    std::string skyboxVertexShader = getFileContents("SkyboxVertex.vsh");
-    std::string skyboxFragmentShader = getFileContents("SkyboxFragment.fsh");
-#else
-    std::string skyboxVertexShader = getFileContents("Shaders/SkyboxVertex.vsh");
-    std::string skyboxFragmentShader = getFileContents("Shaders/SkyboxFragment.fsh");
-#endif
+    std::string skyboxVertexShader = getFileContents(shadersBasePath + "SkyboxVertex.vsh");
+    std::string skyboxFragmentShader = getFileContents(shadersBasePath + "SkyboxFragment.fsh");
 
     bool programLinked = loadProgram(skyboxVertexShader.c_str(), skyboxFragmentShader.c_str(), errors);
     
@@ -41,25 +36,14 @@ bool OpenGLSkyboxProgram::startProgram(std::string& error) {
                  skyboxModel->modelData().getVerticesData().data(),
                  GL_STATIC_DRAW);
 
-#ifdef __APPLE__
-    skyboxTexture.loadCubeMapTexture("left.png",
-                                     "right.png",
-                                     "up.png",
-                                     "down.png",
-                                     "front.png",
-                                     "back.png",
+    skyboxTexture.loadCubeMapTexture("Objs/Textures/left.png",
+                                     "Objs/Textures/right.png",
+                                     "Objs/Textures/up.png",
+                                     "Objs/Textures/down.png",
+                                     "Objs/Textures/front.png",
+                                     "Objs/Textures/back.png",
                                      {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
                                       OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
-#else
-    skyboxTexture.loadCubeMapTexture("Objs/textures/left.png",
-                                     "Objs/textures/right.png",
-                                     "Objs/textures/up.png",
-                                     "Objs/textures/down.png",
-                                     "Objs/textures/front.png",
-                                     "Objs/textures/back.png",
-                                     {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
-                                      OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
-#endif
 
     return true;
 }

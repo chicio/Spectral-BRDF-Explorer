@@ -48,10 +48,6 @@ private:
     int stride;
     /// Flag used to check if the model has a texture.
     bool textureActive;
-    /// Texture width.
-    ///unsigned textureWidth;
-    //// Texture height.
-    //unsigned textureHeight;
     
 public:
     
@@ -90,43 +86,16 @@ public:
      */
     bool hasTexture();
     
-//    /*!
-//     Get texture width.
-//     
-//     @returns texture width.
-//     */
-//    int getTextureWidth();
-//    
-//    /*!
-//     Get texture height.
-//     
-//     @returns texture height.
-//     */
-//    int getTextureHeight();
-//    
-//    /*!
-//     Get texture data.
-//     
-//     @returns pointer to texture data.
-//     */
-//    unsigned char* getTexturePixels();
-//    
-//    /*!
-//     Load texture from image.
-//     
-//     @param filePath path of the image to be used as texture.
-//     */
-//    void loadTexture(const char* filePath);
-
     /*!
      Parse obj file and retrive data in vectors.
      Each of them could be accessed using the related method.
      
-     @param filePath path of the obj file.
+     @param fileBasePath base path of the obj file.
+     @param fileName obj file name.
      
      @returns true if parsing is fine, else false.
      */
-    bool parseObj(const char* filePath);
+    bool parseObj(std::string fileBasePath, std::string fileName);
 };
 
 #endif /* OpenGLObjParser_hpp */

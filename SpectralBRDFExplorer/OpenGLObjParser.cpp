@@ -42,9 +42,13 @@ bool OpenGLObjParser::hasTexture() {
     return textureActive;
 }
 
-bool OpenGLObjParser::parseObj(const char* filePath) {
+bool OpenGLObjParser::parseObj(std::string fileBasePath, std::string fileName) {
     
-    FILE* file = fopen(filePath, "r");
+    //Compose file path.
+    std::string filePath = fileBasePath + fileName + ".obj";
+    
+    //Openg model file.
+    FILE* file = fopen(filePath.c_str(), "r");
     
     if(file == nullptr) {
         

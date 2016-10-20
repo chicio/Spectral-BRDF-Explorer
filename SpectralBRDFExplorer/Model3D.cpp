@@ -8,13 +8,13 @@
 
 #include "Model3D.hpp"
 
-Model3D::Model3D(const char* filePath, std::string modelName) {
+Model3D::Model3D(std::string fileBasePath, std::string modelFileName) {
     
     //Load model obj data.
-    openglObj.parseObj(filePath);
+    openglObj.parseObj(fileBasePath, modelFileName);
     
     //Set name.
-    name = modelName;
+    name = modelFileName;
 }
 
 std::string Model3D::getName() {

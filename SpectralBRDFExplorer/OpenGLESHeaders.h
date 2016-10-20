@@ -21,4 +21,10 @@
 #include <GLES3/gl3.h>
 #endif
 
+/*!
+ Include custom configuration header
+ with constant used in OpenGL ES code.
+ */
+#include <OpenGLESConfiguration.h>
+
 #endif

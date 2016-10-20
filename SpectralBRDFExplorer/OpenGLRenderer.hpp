@@ -49,14 +49,14 @@ public:
     OpenGLCamera openGLCamera;
 
     /*!
-     Start OpenGL ES.
+     Start OpenGL ES renderer.
 
      @param openGLCamera the start camera.
      @param error log from error generated during setup.
      
      @returns true if OpenGL ES could start, else false.
      */
-    bool startRenderer(const OpenGLCamera& openGLCamera, std::string& error);
+    bool start(const OpenGLCamera& openGLCamera, std::string& error);
     
     /*!
      Update data for draw.

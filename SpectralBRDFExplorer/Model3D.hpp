@@ -51,10 +51,10 @@ public:
      Constructor.
      Load the 3D Obj model and its material.
      
-     @param filePath path to the obj 3D model file.
-     @param modelName model name.
+     @param fileBasePath path to the 3D model file.
+     @param modelFileName model file name.
      */
-    Model3D(const char* filePath, std::string modelName);
+    Model3D(std::string fileBasePath, std::string modelFileName);
     
     /*!
      Get model name.

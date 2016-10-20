@@ -29,6 +29,10 @@ public:
     /// Skybox 3D model.
     Model3D* skyboxModel;
     
+    OpenGLSkyboxProgram() : OpenGLProgram() {}
+    
+    OpenGLSkyboxProgram(std::string aShadersBasePath) : OpenGLProgram(aShadersBasePath) {}
+    
     /*!
      Start a skybox program with its specific setup.
      

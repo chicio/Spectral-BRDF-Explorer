@@ -1,0 +1,24 @@
+//
+//  OpenGLESConfiguration.h
+//  SpectralBRDFExplorer
+//
+//  Created by Fabrizio Duroni on 20/10/2016.
+//  Copyright © 2016 Fabrizio Duroni. All rights reserved.
+//
+
+#ifndef OpenGLESConfiguration_h
+#define OpenGLESConfiguration_h
+
+#include <string>
+
+namespace OpenGLESConfiguration {
+    
+    /// Shaders base path.
+    const std::string shadersBasePath = "Shaders/";
+    /// Model data base path.
+    const std::string modelFileBasePath = "Objs/";
+    /// Texture base path.
+    const std::string textureFileBasePath = "Objs/Textures/";
+}
+
+#endif /* OpenGLESConfiguration_h */

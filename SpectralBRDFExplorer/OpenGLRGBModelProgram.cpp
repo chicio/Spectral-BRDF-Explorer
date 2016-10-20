@@ -11,8 +11,8 @@
 bool OpenGLRGBModelProgram::startProgram(std::string& error) {
     
     std::string errors;
-    std::string vertexShader = getFileContents(model->lighting + "Vertex.vsh");
-    std::string fragmentShader = getFileContents(model->lighting + "Fragment.fsh");
+    std::string vertexShader = getFileContents(shadersBasePath + model->lighting + "Vertex.vsh");
+    std::string fragmentShader = getFileContents(shadersBasePath + model->lighting + "Fragment.fsh");
     
     bool programLinked = loadProgram(vertexShader.c_str(), fragmentShader.c_str(), errors);
     

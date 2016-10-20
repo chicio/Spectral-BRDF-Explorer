@@ -9,7 +9,7 @@
 #include "Utils.hpp"
 #include "OpenGLRenderer.hpp"
 
-bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& error) {
+bool OpenGLRenderer::start(const OpenGLCamera& camera, std::string& error) {
     
     //Setup camera.
     openGLCamera = camera;
@@ -22,7 +22,7 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     for (auto& currentModel : Scene::instance().models) {
         
         //Create program for model.
-        OpenGLRGBModelProgram modelProgram;
+        OpenGLRGBModelProgram modelProgram(OpenGLESConfiguration::shadersBasePath);
         modelProgram.model = &currentModel;
         modelProgram.openGLCamera = &openGLCamera;
         
@@ -41,6 +41,7 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     }
     
     //Skybox program.
+    openGLSkyboxProgram = OpenGLSkyboxProgram(OpenGLESConfiguration::shadersBasePath);
     openGLSkyboxProgram.skyboxModel = &Scene::instance().skybox;
     
     programLinked  = openGLSkyboxProgram.startProgram(errors);
@@ -54,13 +55,8 @@ bool OpenGLRenderer::startRenderer(const OpenGLCamera& camera, std::string& erro
     }
     
     //Load Shadow mapping programs.
-#ifdef __APPLE__
-    std::string shadowMappingVertexShader = getFileContents("ShadowMapVertex.vsh");
-    std::string shadowMappingFragmentShader = getFileContents("ShadowMapFragment.fsh");
-#else
-    std::string shadowMappingVertexShader = getFileContents("Shaders/ShadowMapVertex.vsh");
-    std::string shadowMappingFragmentShader = getFileContents("Shaders/ShadowMapFragment.fsh");
-#endif
+    std::string shadowMappingVertexShader = getFileContents(OpenGLESConfiguration::shadersBasePath + "ShadowMapVertex.vsh");
+    std::string shadowMappingFragmentShader = getFileContents(OpenGLESConfiguration::shadersBasePath + "ShadowMapFragment.fsh");
 
     programLinked = openGLShadowProgram.loadProgram(shadowMappingVertexShader.c_str(),
                                                     shadowMappingFragmentShader.c_str(),

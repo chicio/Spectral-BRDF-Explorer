@@ -7,29 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5F02B4A71DA70ED4001B0715 /* ThaiStatue.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F02B4A61DA70ED4001B0715 /* ThaiStatue.obj */; };
 		5F64266F1D00717A00166E20 /* OpenGLRenderViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266C1D00717A00166E20 /* OpenGLRenderViewController.mm */; };
 		5F6426701D00717A00166E20 /* SceneListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266E1D00717A00166E20 /* SceneListViewController.mm */; };
-		5F66F87E1D8B42D700595BB3 /* OrenNayarFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F66F87C1D8B42D700595BB3 /* OrenNayarFragment.fsh */; };
-		5F66F87F1D8B42D700595BB3 /* OrenNayarVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */; };
-		5F672F2B1D9B13C400F3C195 /* SkyboxVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */; };
-		5F672F2D1D9B13DD00F3C195 /* SkyboxFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F672F2C1D9B13DD00F3C195 /* SkyboxFragment.fsh */; };
 		5F720D7D1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F720D7B1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp */; };
 		5F8A6D791D8CB1630057E7C5 /* iOSFileOpen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D781D8CB1630057E7C5 /* iOSFileOpen.cpp */; };
 		5F8A6D7C1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp */; };
 		5F8A6D7F1D8CCA240057E7C5 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F8A6D7D1D8CCA240057E7C5 /* Utils.cpp */; };
-		5F94F4F91D88928F005A657F /* Bunny.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4E61D88928F005A657F /* Bunny.obj */; };
-		5F94F4FC1D88928F005A657F /* Cube.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4E91D88928F005A657F /* Cube.obj */; };
-		5F94F4FD1D88928F005A657F /* Dragon.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4EA1D88928F005A657F /* Dragon.obj */; };
-		5F94F4FE1D88928F005A657F /* HappyBuddha.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4EB1D88928F005A657F /* HappyBuddha.obj */; };
-		5F94F5011D88928F005A657F /* Lucy.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4EE1D88928F005A657F /* Lucy.obj */; };
-		5F94F5021D88928F005A657F /* Sphere.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4EF1D88928F005A657F /* Sphere.obj */; };
-		5F94F5041D88928F005A657F /* BlinnPhongFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4F31D88928F005A657F /* BlinnPhongFragment.fsh */; };
-		5F94F5051D88928F005A657F /* BlinnPhongVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4F41D88928F005A657F /* BlinnPhongVertex.vsh */; };
-		5F94F5061D88928F005A657F /* PhongFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4F51D88928F005A657F /* PhongFragment.fsh */; };
-		5F94F5071D88928F005A657F /* PhongVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4F61D88928F005A657F /* PhongVertex.vsh */; };
-		5F94F5081D88928F005A657F /* ShadowMapFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4F71D88928F005A657F /* ShadowMapFragment.fsh */; };
-		5F94F5091D88928F005A657F /* ShadowMapVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4F81D88928F005A657F /* ShadowMapVertex.vsh */; };
 		5F94F6261D8892A6005A657F /* CMakeLists.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F50C1D8892A6005A657F /* CMakeLists.txt */; };
 		5F94F6281D8892A6005A657F /* func_common.inl in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F5171D8892A6005A657F /* func_common.inl */; };
 		5F94F6291D8892A6005A657F /* func_common_simd.inl in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F5181D8892A6005A657F /* func_common_simd.inl */; };
@@ -151,20 +134,10 @@
 		5F94F69D1D8892A6005A657F /* OpenGLRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F94F6201D8892A6005A657F /* OpenGLRenderer.cpp */; };
 		5F94F69E1D8892A6005A657F /* OpenGLShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F94F6221D8892A6005A657F /* OpenGLShader.cpp */; };
 		5F94F69F1D8892A6005A657F /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F94F6241D8892A6005A657F /* Scene.cpp */; };
-		5F9BAA3F1D907AF9005D81A7 /* LambertianVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F9BAA3E1D907AF9005D81A7 /* LambertianVertex.vsh */; };
-		5F9BAA411D907B0C005D81A7 /* LambertianFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5F9BAA401D907B0C005D81A7 /* LambertianFragment.fsh */; };
 		5F9D61631DA13A6D00B87028 /* OpenGLTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F9D61611DA13A6D00B87028 /* OpenGLTexture.cpp */; };
-		5FAA96D81D9DD45900F05A6A /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D21D9DD45900F05A6A /* back.png */; };
-		5FAA96D91D9DD45900F05A6A /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D31D9DD45900F05A6A /* down.png */; };
-		5FAA96DA1D9DD45900F05A6A /* front.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D41D9DD45900F05A6A /* front.png */; };
-		5FAA96DB1D9DD45900F05A6A /* left.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D51D9DD45900F05A6A /* left.png */; };
-		5FAA96DC1D9DD45900F05A6A /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D61D9DD45900F05A6A /* right.png */; };
-		5FAA96DD1D9DD45900F05A6A /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FAA96D71D9DD45900F05A6A /* up.png */; };
-		5FB2AFDB1D8D96270034009D /* CookTorranceVertex.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FB2AFDA1D8D96270034009D /* CookTorranceVertex.vsh */; };
-		5FB2AFDD1D8D96390034009D /* CookTorranceFragment.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FB2AFDC1D8D96390034009D /* CookTorranceFragment.fsh */; };
-		5FBDCB431D93273600CEFD83 /* Lucy-texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F94F4F11D88928F005A657F /* Lucy-texture.png */; };
-		5FBDCB451D932C2D00CEFD83 /* Floor.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5FBDCB441D932C2D00CEFD83 /* Floor.obj */; };
 		5FC9CF7D1DAC408500C566E4 /* OpenGLFramebufferObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5FC9CF7B1DAC408500C566E4 /* OpenGLFramebufferObject.cpp */; };
+		5FCA374B1DB970E000C7F7E7 /* Objs in Resources */ = {isa = PBXBuildFile; fileRef = 5FCA37491DB970E000C7F7E7 /* Objs */; };
+		5FCA374C1DB970E000C7F7E7 /* Shaders in Resources */ = {isa = PBXBuildFile; fileRef = 5FCA374A1DB970E000C7F7E7 /* Shaders */; };
 		5FEF360A1CF7B3D7003DE7BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF36091CF7B3D7003DE7BC /* main.m */; };
 		5FEF360D1CF7B3D7003DE7BC /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF360C1CF7B3D7003DE7BC /* AppDelegate.mm */; };
 		5FEF36131CF7B3D7003DE7BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEF36111CF7B3D7003DE7BC /* Main.storyboard */; };
@@ -174,15 +147,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5F02B4A61DA70ED4001B0715 /* ThaiStatue.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ThaiStatue.obj; sourceTree = "<group>"; };
 		5F64266B1D00717A00166E20 /* OpenGLRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = OpenGLRenderViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5F64266C1D00717A00166E20 /* OpenGLRenderViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = OpenGLRenderViewController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5F64266D1D00717A00166E20 /* SceneListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SceneListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5F64266E1D00717A00166E20 /* SceneListViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = SceneListViewController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		5F66F87C1D8B42D700595BB3 /* OrenNayarFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OrenNayarFragment.fsh; sourceTree = "<group>"; };
-		5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = OrenNayarVertex.vsh; sourceTree = "<group>"; };
-		5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SkyboxVertex.vsh; sourceTree = "<group>"; };
-		5F672F2C1D9B13DD00F3C195 /* SkyboxFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = SkyboxFragment.fsh; sourceTree = "<group>"; };
 		5F720D7B1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; lineEnding = 0; path = OpenGLSkyboxProgram.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		5F720D7C1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = OpenGLSkyboxProgram.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		5F720D7E1DB3CA9500F29D74 /* OpenGLESHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = OpenGLESHeaders.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -192,19 +160,6 @@
 		5F8A6D7B1D8CC3200057E7C5 /* OpenGLRGBModelProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = OpenGLRGBModelProgram.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		5F8A6D7D1D8CCA240057E7C5 /* Utils.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; lineEnding = 0; path = Utils.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		5F8A6D7E1D8CCA240057E7C5 /* Utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = Utils.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		5F94F4E61D88928F005A657F /* Bunny.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Bunny.obj; sourceTree = "<group>"; };
-		5F94F4E91D88928F005A657F /* Cube.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cube.obj; sourceTree = "<group>"; };
-		5F94F4EA1D88928F005A657F /* Dragon.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dragon.obj; sourceTree = "<group>"; };
-		5F94F4EB1D88928F005A657F /* HappyBuddha.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HappyBuddha.obj; sourceTree = "<group>"; };
-		5F94F4EE1D88928F005A657F /* Lucy.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Lucy.obj; sourceTree = "<group>"; };
-		5F94F4EF1D88928F005A657F /* Sphere.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Sphere.obj; sourceTree = "<group>"; };
-		5F94F4F11D88928F005A657F /* Lucy-texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lucy-texture.png"; sourceTree = "<group>"; };
-		5F94F4F31D88928F005A657F /* BlinnPhongFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = BlinnPhongFragment.fsh; sourceTree = "<group>"; };
-		5F94F4F41D88928F005A657F /* BlinnPhongVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = BlinnPhongVertex.vsh; sourceTree = "<group>"; };
-		5F94F4F51D88928F005A657F /* PhongFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PhongFragment.fsh; sourceTree = "<group>"; };
-		5F94F4F61D88928F005A657F /* PhongVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = PhongVertex.vsh; sourceTree = "<group>"; };
-		5F94F4F71D88928F005A657F /* ShadowMapFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShadowMapFragment.fsh; sourceTree = "<group>"; };
-		5F94F4F81D88928F005A657F /* ShadowMapVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ShadowMapVertex.vsh; sourceTree = "<group>"; };
 		5F94F50C1D8892A6005A657F /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		5F94F50D1D8892A6005A657F /* common.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = common.hpp; sourceTree = "<group>"; };
 		5F94F50F1D8892A6005A657F /* _features.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = _features.hpp; sourceTree = "<group>"; };
@@ -481,21 +436,13 @@
 		5F94F6231D8892A6005A657F /* OpenGLShader.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; lineEnding = 0; path = OpenGLShader.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5F94F6241D8892A6005A657F /* Scene.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; lineEnding = 0; path = Scene.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		5F94F6251D8892A6005A657F /* Scene.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; lineEnding = 0; path = Scene.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		5F9BAA3E1D907AF9005D81A7 /* LambertianVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LambertianVertex.vsh; sourceTree = "<group>"; };
-		5F9BAA401D907B0C005D81A7 /* LambertianFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LambertianFragment.fsh; sourceTree = "<group>"; };
 		5F9D61611DA13A6D00B87028 /* OpenGLTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = OpenGLTexture.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		5F9D61621DA13A6D00B87028 /* OpenGLTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = OpenGLTexture.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
-		5FAA96D21D9DD45900F05A6A /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
-		5FAA96D31D9DD45900F05A6A /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
-		5FAA96D41D9DD45900F05A6A /* front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = front.png; sourceTree = "<group>"; };
-		5FAA96D51D9DD45900F05A6A /* left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left.png; sourceTree = "<group>"; };
-		5FAA96D61D9DD45900F05A6A /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
-		5FAA96D71D9DD45900F05A6A /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
-		5FB2AFDA1D8D96270034009D /* CookTorranceVertex.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CookTorranceVertex.vsh; sourceTree = "<group>"; };
-		5FB2AFDC1D8D96390034009D /* CookTorranceFragment.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = CookTorranceFragment.fsh; sourceTree = "<group>"; };
-		5FBDCB441D932C2D00CEFD83 /* Floor.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Floor.obj; sourceTree = "<group>"; };
 		5FC9CF7B1DAC408500C566E4 /* OpenGLFramebufferObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = OpenGLFramebufferObject.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		5FC9CF7C1DAC408500C566E4 /* OpenGLFramebufferObject.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; lineEnding = 0; path = OpenGLFramebufferObject.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		5FCA37491DB970E000C7F7E7 /* Objs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Objs; sourceTree = "<group>"; };
+		5FCA374A1DB970E000C7F7E7 /* Shaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Shaders; sourceTree = "<group>"; };
+		5FCA374D1DB9732400C7F7E7 /* OpenGLESConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLESConfiguration.h; sourceTree = "<group>"; };
 		5FE9B80F1D8C9C8E00852681 /* iOSFileOpen.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; lineEnding = 0; path = iOSFileOpen.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		5FEF36051CF7B3D7003DE7BC /* SpectralBRDFExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpectralBRDFExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEF36091CF7B3D7003DE7BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -534,62 +481,11 @@
 		5F94F4E41D88928F005A657F /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				5F94F4E51D88928F005A657F /* Objs */,
-				5F94F4F21D88928F005A657F /* Shaders */,
+				5FCA37491DB970E000C7F7E7 /* Objs */,
+				5FCA374A1DB970E000C7F7E7 /* Shaders */,
 			);
 			name = Assets;
 			path = ../Assets;
-			sourceTree = "<group>";
-		};
-		5F94F4E51D88928F005A657F /* Objs */ = {
-			isa = PBXGroup;
-			children = (
-				5F02B4A61DA70ED4001B0715 /* ThaiStatue.obj */,
-				5F94F4E61D88928F005A657F /* Bunny.obj */,
-				5FBDCB441D932C2D00CEFD83 /* Floor.obj */,
-				5F94F4E91D88928F005A657F /* Cube.obj */,
-				5F94F4EA1D88928F005A657F /* Dragon.obj */,
-				5F94F4EB1D88928F005A657F /* HappyBuddha.obj */,
-				5F94F4EE1D88928F005A657F /* Lucy.obj */,
-				5F94F4EF1D88928F005A657F /* Sphere.obj */,
-				5F94F4F01D88928F005A657F /* textures */,
-			);
-			path = Objs;
-			sourceTree = "<group>";
-		};
-		5F94F4F01D88928F005A657F /* textures */ = {
-			isa = PBXGroup;
-			children = (
-				5FAA96D21D9DD45900F05A6A /* back.png */,
-				5FAA96D31D9DD45900F05A6A /* down.png */,
-				5FAA96D41D9DD45900F05A6A /* front.png */,
-				5FAA96D51D9DD45900F05A6A /* left.png */,
-				5FAA96D61D9DD45900F05A6A /* right.png */,
-				5FAA96D71D9DD45900F05A6A /* up.png */,
-				5F94F4F11D88928F005A657F /* Lucy-texture.png */,
-			);
-			path = textures;
-			sourceTree = "<group>";
-		};
-		5F94F4F21D88928F005A657F /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				5F66F87C1D8B42D700595BB3 /* OrenNayarFragment.fsh */,
-				5F66F87D1D8B42D700595BB3 /* OrenNayarVertex.vsh */,
-				5F94F4F31D88928F005A657F /* BlinnPhongFragment.fsh */,
-				5F94F4F41D88928F005A657F /* BlinnPhongVertex.vsh */,
-				5F94F4F51D88928F005A657F /* PhongFragment.fsh */,
-				5F94F4F61D88928F005A657F /* PhongVertex.vsh */,
-				5FB2AFDC1D8D96390034009D /* CookTorranceFragment.fsh */,
-				5FB2AFDA1D8D96270034009D /* CookTorranceVertex.vsh */,
-				5F9BAA401D907B0C005D81A7 /* LambertianFragment.fsh */,
-				5F9BAA3E1D907AF9005D81A7 /* LambertianVertex.vsh */,
-				5F94F4F71D88928F005A657F /* ShadowMapFragment.fsh */,
-				5F94F4F81D88928F005A657F /* ShadowMapVertex.vsh */,
-				5F672F2C1D9B13DD00F3C195 /* SkyboxFragment.fsh */,
-				5F672F2A1D9B13C400F3C195 /* SkyboxVertex.vsh */,
-			);
-			path = Shaders;
 			sourceTree = "<group>";
 		};
 		5F94F50A1D8892A6005A657F /* SpectralBRDFExplorer */ = {
@@ -606,6 +502,7 @@
 				5F8A6D7E1D8CCA240057E7C5 /* Utils.hpp */,
 				5F8A6D7D1D8CCA240057E7C5 /* Utils.cpp */,
 				5F720D7E1DB3CA9500F29D74 /* OpenGLESHeaders.h */,
+				5FCA374D1DB9732400C7F7E7 /* OpenGLESConfiguration.h */,
 				5F94F61B1D8892A6005A657F /* OpenGLCamera.hpp */,
 				5F94F61A1D8892A6005A657F /* OpenGLCamera.cpp */,
 				5F94F61D1D8892A6005A657F /* OpenGLObjParser.hpp */,
@@ -1050,7 +947,6 @@
 			files = (
 				5F94F6841D8892A6005A657F /* polar_coordinates.inl in Resources */,
 				5F94F66C1D8892A6005A657F /* fast_trigonometry.inl in Resources */,
-				5F672F2D1D9B13DD00F3C195 /* SkyboxFragment.fsh in Resources */,
 				5F94F64A1D8892A6005A657F /* type_vec4.inl in Resources */,
 				5F94F6761D8892A6005A657F /* matrix_decompose.inl in Resources */,
 				5F94F6281D8892A6005A657F /* func_common.inl in Resources */,
@@ -1059,10 +955,8 @@
 				5F94F68E1D8892A6005A657F /* spline.inl in Resources */,
 				5F94F6921D8892A6005A657F /* transform2.inl in Resources */,
 				5F94F6631D8892A6005A657F /* common.inl in Resources */,
-				5F94F5051D88928F005A657F /* BlinnPhongVertex.vsh in Resources */,
 				5F94F6571D8892A6005A657F /* random.inl in Resources */,
 				5F94F62E1D8892A6005A657F /* func_integer.inl in Resources */,
-				5F94F5061D88928F005A657F /* PhongFragment.fsh in Resources */,
 				5F94F68D1D8892A6005A657F /* simd_vec4.inl in Resources */,
 				5F94F67A1D8892A6005A657F /* matrix_query.inl in Resources */,
 				5F94F67B1D8892A6005A657F /* matrix_transform_2d.inl in Resources */,
@@ -1075,7 +969,6 @@
 				5F94F6731D8892A6005A657F /* io.inl in Resources */,
 				5F94F68F1D8892A6005A657F /* std_based_type.inl in Resources */,
 				5F94F6311D8892A6005A657F /* func_matrix_simd.inl in Resources */,
-				5F94F4FE1D88928F005A657F /* HappyBuddha.obj in Resources */,
 				5F94F6711D8892A6005A657F /* integer.inl in Resources */,
 				5F94F66A1D8892A6005A657F /* fast_exponential.inl in Resources */,
 				5F94F6701D8892A6005A657F /* hash.inl in Resources */,
@@ -1083,16 +976,13 @@
 				5F94F6481D8892A6005A657F /* type_vec2.inl in Resources */,
 				5F94F64C1D8892A6005A657F /* bitfield.inl in Resources */,
 				5F94F6751D8892A6005A657F /* matrix_cross_product.inl in Resources */,
-				5F66F87F1D8B42D700595BB3 /* OrenNayarVertex.vsh in Resources */,
 				5F94F66E1D8892A6005A657F /* gradient_paint.inl in Resources */,
 				5F94F6321D8892A6005A657F /* func_packing.inl in Resources */,
 				5F94F6901D8892A6005A657F /* string_cast.inl in Resources */,
 				5F94F6611D8892A6005A657F /* color_space.inl in Resources */,
-				5F9BAA411D907B0C005D81A7 /* LambertianFragment.fsh in Resources */,
 				5FEF36151CF7B3D7003DE7BC /* Assets.xcassets in Resources */,
 				5F94F64F1D8892A6005A657F /* epsilon.inl in Resources */,
 				5F94F65B1D8892A6005A657F /* type_ptr.inl in Resources */,
-				5FAA96DA1D9DD45900F05A6A /* front.png in Resources */,
 				5F94F6891D8892A6005A657F /* rotate_vector.inl in Resources */,
 				5F94F6551D8892A6005A657F /* packing.inl in Resources */,
 				5F94F6541D8892A6005A657F /* noise.inl in Resources */,
@@ -1100,19 +990,14 @@
 				5F94F6451D8892A6005A657F /* type_mat4x4_simd.inl in Resources */,
 				5F94F67F1D8892A6005A657F /* normalize_dot.inl in Resources */,
 				5F94F6531D8892A6005A657F /* matrix_transform.inl in Resources */,
-				5F94F4FC1D88928F005A657F /* Cube.obj in Resources */,
 				5F94F6371D8892A6005A657F /* func_vector_relational_simd.inl in Resources */,
 				5F94F65D1D8892A6005A657F /* vec1.inl in Resources */,
 				5F94F6331D8892A6005A657F /* func_packing_simd.inl in Resources */,
-				5F02B4A71DA70ED4001B0715 /* ThaiStatue.obj in Resources */,
 				5F94F6401D8892A6005A657F /* type_mat3x3.inl in Resources */,
 				5F94F6651D8892A6005A657F /* component_wise.inl in Resources */,
-				5FAA96D91D9DD45900F05A6A /* down.png in Resources */,
 				5F94F6581D8892A6005A657F /* reciprocal.inl in Resources */,
 				5F94F65C1D8892A6005A657F /* ulp.inl in Resources */,
-				5F94F5041D88928F005A657F /* BlinnPhongFragment.fsh in Resources */,
 				5F94F6261D8892A6005A657F /* CMakeLists.txt in Resources */,
-				5FBDCB431D93273600CEFD83 /* Lucy-texture.png in Resources */,
 				5F94F6351D8892A6005A657F /* func_trigonometric_simd.inl in Resources */,
 				5F94F66F1D8892A6005A657F /* handed_coordinate_space.inl in Resources */,
 				5F94F63D1D8892A6005A657F /* type_mat2x3.inl in Resources */,
@@ -1120,7 +1005,6 @@
 				5F94F6781D8892A6005A657F /* matrix_major_storage.inl in Resources */,
 				5F94F66B1D8892A6005A657F /* fast_square_root.inl in Resources */,
 				5F94F6521D8892A6005A657F /* matrix_inverse.inl in Resources */,
-				5F672F2B1D9B13C400F3C195 /* SkyboxVertex.vsh in Resources */,
 				5F94F62D1D8892A6005A657F /* func_geometric_simd.inl in Resources */,
 				5F94F6961D8892A6005A657F /* vector_query.inl in Resources */,
 				5F94F6621D8892A6005A657F /* color_space_YCoCg.inl in Resources */,
@@ -1142,6 +1026,7 @@
 				5F94F67E1D8892A6005A657F /* normal.inl in Resources */,
 				5F94F6561D8892A6005A657F /* quaternion.inl in Resources */,
 				5F94F6301D8892A6005A657F /* func_matrix.inl in Resources */,
+				5FCA374C1DB970E000C7F7E7 /* Shaders in Resources */,
 				5F94F6821D8892A6005A657F /* orthonormalize.inl in Resources */,
 				5F94F64B1D8892A6005A657F /* type_vec4_simd.inl in Resources */,
 				5F94F6691D8892A6005A657F /* extended_min_max.inl in Resources */,
@@ -1149,34 +1034,20 @@
 				5F94F6881D8892A6005A657F /* rotate_normalized_axis.inl in Resources */,
 				5F94F6411D8892A6005A657F /* type_mat3x4.inl in Resources */,
 				5F94F63B1D8892A6005A657F /* type_mat.inl in Resources */,
-				5FB2AFDB1D8D96270034009D /* CookTorranceVertex.vsh in Resources */,
-				5F94F5021D88928F005A657F /* Sphere.obj in Resources */,
 				5F94F6851D8892A6005A657F /* projection.inl in Resources */,
-				5FAA96DD1D9DD45900F05A6A /* up.png in Resources */,
 				5F94F64E1D8892A6005A657F /* constants.inl in Resources */,
 				5F94F6361D8892A6005A657F /* func_vector_relational.inl in Resources */,
-				5F94F4F91D88928F005A657F /* Bunny.obj in Resources */,
 				5F94F6291D8892A6005A657F /* func_common_simd.inl in Resources */,
 				5F94F6671D8892A6005A657F /* euler_angles.inl in Resources */,
-				5FAA96DB1D9DD45900F05A6A /* left.png in Resources */,
 				5F94F6771D8892A6005A657F /* matrix_interpolation.inl in Resources */,
-				5F94F5081D88928F005A657F /* ShadowMapFragment.fsh in Resources */,
 				5F94F6431D8892A6005A657F /* type_mat4x3.inl in Resources */,
-				5FBDCB451D932C2D00CEFD83 /* Floor.obj in Resources */,
-				5F94F5071D88928F005A657F /* PhongVertex.vsh in Resources */,
-				5F66F87E1D8B42D700595BB3 /* OrenNayarFragment.fsh in Resources */,
 				5F94F62B1D8892A6005A657F /* func_exponential_simd.inl in Resources */,
 				5F94F6811D8892A6005A657F /* optimum_pow.inl in Resources */,
-				5FAA96D81D9DD45900F05A6A /* back.png in Resources */,
 				5F94F63C1D8892A6005A657F /* type_mat2x2.inl in Resources */,
-				5F94F5091D88928F005A657F /* ShadowMapVertex.vsh in Resources */,
 				5F94F6831D8892A6005A657F /* perpendicular.inl in Resources */,
 				5F94F66D1D8892A6005A657F /* float_notmalize.inl in Resources */,
 				5F94F6791D8892A6005A657F /* matrix_operation.inl in Resources */,
-				5F94F4FD1D88928F005A657F /* Dragon.obj in Resources */,
 				5F94F63F1D8892A6005A657F /* type_mat3x2.inl in Resources */,
-				5FB2AFDD1D8D96390034009D /* CookTorranceFragment.fsh in Resources */,
-				5F94F5011D88928F005A657F /* Lucy.obj in Resources */,
 				5F94F62F1D8892A6005A657F /* func_integer_simd.inl in Resources */,
 				5F94F63E1D8892A6005A657F /* type_mat2x4.inl in Resources */,
 				5F94F6941D8892A6005A657F /* type_trait.inl in Resources */,
@@ -1186,12 +1057,11 @@
 				5F94F6681D8892A6005A657F /* extend.inl in Resources */,
 				5F94F6801D8892A6005A657F /* number_precision.inl in Resources */,
 				5F94F67C1D8892A6005A657F /* mixed_product.inl in Resources */,
-				5FAA96DC1D9DD45900F05A6A /* right.png in Resources */,
 				5F94F6911D8892A6005A657F /* transform.inl in Resources */,
 				5F94F62A1D8892A6005A657F /* func_exponential.inl in Resources */,
 				5F94F62C1D8892A6005A657F /* func_geometric.inl in Resources */,
+				5FCA374B1DB970E000C7F7E7 /* Objs in Resources */,
 				5F94F6661D8892A6005A657F /* dual_quaternion.inl in Resources */,
-				5F9BAA3F1D907AF9005D81A7 /* LambertianVertex.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

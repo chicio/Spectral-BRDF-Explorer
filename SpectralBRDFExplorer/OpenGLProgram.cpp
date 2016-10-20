@@ -8,6 +8,12 @@
 
 #include "OpenGLProgram.hpp"
 
+OpenGLProgram::OpenGLProgram(std::string aShadersBasePath) {
+    
+    //Set shaders path.
+    shadersBasePath = aShadersBasePath;
+}
+
 bool OpenGLProgram::loadProgram(const char* vertexShaderSource, const char* fragmentShaderSource, std::string& errors) {
     
     std::string error;

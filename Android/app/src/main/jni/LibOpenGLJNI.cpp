@@ -12,20 +12,20 @@ JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_start(JNIEn
                                                                            jclass type,
                                                                            jobject assetManager) {
 
-    //Get asset manager native reference.
+    //Get assets manager native reference.
     android_fopen_set_asset_manager(AAssetManager_fromJava(env, assetManager));
 
     //TODO: move outside (dynamic in listview).
     //Load scene.
-    SceneLoader::loadRGBSceneAndroid();
+    SceneLoader::loadRGBScene();
 
     //Start render.
     std::string error;
     openGLRenderer = new OpenGLRenderer();
-    openGLRenderer->startRenderer(OpenGLCamera(glm::vec3(0.0f, 0.0f, 0.0f),
-                                               glm::vec3(0.0f, 0.0f, -5.0f),
-                                               glm::vec3(0.0f, 1.0f, 0.0f)),
-                                  error);
+    openGLRenderer->start(OpenGLCamera(glm::vec3(0.0f, 0.0f, 0.0f),
+                                       glm::vec3(0.0f, 0.0f, -5.0f),
+                                       glm::vec3(0.0f, 1.0f, 0.0f)),
+                          error);
 }
 
 JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_update(JNIEnv *env,

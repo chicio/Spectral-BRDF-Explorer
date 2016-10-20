@@ -39,6 +39,10 @@ public:
     OpenGLCamera* openGLCamera;
     OpenGLTexture* shadowTexture;
     
+    OpenGLRGBModelProgram() : OpenGLProgram() {}
+    
+    OpenGLRGBModelProgram(std::string aShadersBasePath) : OpenGLProgram(aShadersBasePath) {}
+    
     /*!
      Start a rgb program with its specific setup.
      

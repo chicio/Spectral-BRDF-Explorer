@@ -26,6 +26,11 @@
 #define TEXTURE_UNIT_ID_1_SAMPLER   1
 
 class OpenGLProgram {
+protected:
+    
+    /// Shaders base path.
+    std::string shadersBasePath;
+    
 public:
     
     /// Program handle.
@@ -34,6 +39,15 @@ public:
     GLuint vertexShader;
     /// Fragment shader handle.
     GLuint fragmentShader;
+    
+    OpenGLProgram() {}
+    
+    /*!
+     Constructor.
+     
+     @param aShadersBasePath shaders file base path.
+     */
+    OpenGLProgram(std::string aShadersBasePath);
             
     /*!
      Load a OpenGL ES program with its shaders and option.
@@ -67,7 +81,7 @@ public:
      Delete OpenGL ES program.
      Clean any vertex or fragment shader created.
      */
-    void deleteProgram();    
+    void deleteProgram();
 };
 
 #endif /* OpenGLProgram_hpp */

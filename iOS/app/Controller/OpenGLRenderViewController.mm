@@ -17,13 +17,17 @@
 
 @interface OpenGLRenderViewController () {
     
-    /// Renderer.
+    /// OpenGL ES Renderer.
     OpenGLRenderer openGLRenderer;
 }
 
+/// Pinch gesture recognizer.
 @property (strong, nonatomic) UIPinchGestureRecognizer *pinchRecognizer;
+/// Pan gesture recognizer.
 @property (strong, nonatomic) UIPanGestureRecognizer *panRecognizer;
+/// custom apple OpenGL ES context.
 @property (strong, nonatomic) EAGLContext *context;
+
 @end
 
 @implementation OpenGLRenderViewController
@@ -67,9 +71,9 @@
         std::string error;
         
         //Start renderer.
-        bool rendererStarted = openGLRenderer.startRenderer(OpenGLCamera(glm::vec3(0.0f, 7.0f, 1.0f),
-                                                                         glm::vec3(0.0f, 0.0f, -12.0f),
-                                                                         glm::vec3(0.0f, 1.0f, 0.0f)),
+        bool rendererStarted = openGLRenderer.start(OpenGLCamera(glm::vec3(0.0f, 7.0f, 1.0f),
+                                                                 glm::vec3(0.0f, 0.0f, -12.0f),
+                                                                 glm::vec3(0.0f, 1.0f, 0.0f)),
                                                             error);
         
         if(!rendererStarted) {
