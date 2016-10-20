@@ -20,12 +20,12 @@ import javax.microedition.khronos.opengles.GL10;
 public class OpenGLView extends GLSurfaceView {
 
     /**
-     * Current OpenGL ES Viewport.
+     * Current OpenGL ES view width.
      */
     private int currentWidth;
 
     /**
-     * Current OpenGL ES Viewport.
+     * Current OpenGL ES view height.
      */
     private int currentHeight;
 
