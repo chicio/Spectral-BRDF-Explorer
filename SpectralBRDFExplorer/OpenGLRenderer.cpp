@@ -41,7 +41,8 @@ bool OpenGLRenderer::start(const OpenGLCamera& camera, std::string& error) {
     }
     
     //Skybox program.
-    openGLSkyboxProgram = OpenGLSkyboxProgram(OpenGLESConfiguration::shadersBasePath);
+    openGLSkyboxProgram = OpenGLSkyboxProgram(OpenGLESConfiguration::shadersBasePath,
+                                              OpenGLESConfiguration::textureFileBasePath);
     openGLSkyboxProgram.skyboxModel = &Scene::instance().skybox;
     
     programLinked  = openGLSkyboxProgram.startProgram(errors);

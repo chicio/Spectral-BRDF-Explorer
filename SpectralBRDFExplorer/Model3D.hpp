@@ -39,6 +39,7 @@ public:
     glm::mat4 _normalMatrix;
     
     std::string textureName;
+    std::string textureBasePath;
     
     std::string lighting;
     
@@ -86,14 +87,19 @@ public:
     Material& getMaterial();
         
     void loadTexture() {
-        
+
+        //Create texture.
+        openGLTexture = OpenGLTexture(textureBasePath);
+
+        //Load texture.
         openGLTexture.loadTexture(textureName,
                                   {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
                                    OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
     }
     
-    void setTextureName(std::string name) {
-        
+    void setTexture(std::string aTextureBasePath, std::string name) {
+
+        textureBasePath = aTextureBasePath;
         textureName = name;
     }
 };

@@ -19,6 +19,8 @@ private:
     
     /// Skybox cubemap texture.
     OpenGLTexture skyboxTexture;
+    /// Texture base path.
+    std::string textureBasePath;
     
 public:
     
@@ -31,12 +33,13 @@ public:
     
     OpenGLSkyboxProgram() : OpenGLProgram() {}
     
-    OpenGLSkyboxProgram(std::string aShadersBasePath) : OpenGLProgram(aShadersBasePath) {}
+    OpenGLSkyboxProgram(std::string aShadersBasePath, std::string aTextureBasePath) :
+            OpenGLProgram(aShadersBasePath), textureBasePath{aTextureBasePath} {}
     
     /*!
      Start a skybox program with its specific setup.
      
-     @param error error message to be retur if the start fails.
+     @param error error message to be return if the start fails.
      
      @returns true if the program starts correctly, else false.
      */

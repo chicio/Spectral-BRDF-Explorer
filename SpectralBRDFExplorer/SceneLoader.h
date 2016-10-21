@@ -44,7 +44,7 @@ namespace SceneLoader {
             Model3D model3D3(OpenGLESConfiguration::modelFileBasePath, "Lucy");
             model3D3._modelMatrix = glm::translate(glm::mat4(), glm::vec3(5.0f, 0.0f, -11.0f));
             model3D3.setMaterial(Material::createJadeMaterial());
-            model3D3.setTextureName("Objs/Textures/Lucy-texture.png");
+            model3D3.setTexture(OpenGLESConfiguration::textureFileBasePath, "Lucy-texture.png");
             model3D3.lighting = "Phong";
             Scene::instance().models.push_back(model3D3);
 

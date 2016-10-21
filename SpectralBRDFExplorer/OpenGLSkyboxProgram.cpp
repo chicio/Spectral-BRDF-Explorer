@@ -36,12 +36,12 @@ bool OpenGLSkyboxProgram::startProgram(std::string& error) {
                  skyboxModel->modelData().getVerticesData().data(),
                  GL_STATIC_DRAW);
 
-    skyboxTexture.loadCubeMapTexture("Objs/Textures/left.png",
-                                     "Objs/Textures/right.png",
-                                     "Objs/Textures/up.png",
-                                     "Objs/Textures/down.png",
-                                     "Objs/Textures/front.png",
-                                     "Objs/Textures/back.png",
+    skyboxTexture.loadCubeMapTexture(textureBasePath + "left.png",
+                                     textureBasePath + "right.png",
+                                     textureBasePath + "up.png",
+                                     textureBasePath + "down.png",
+                                     textureBasePath + "front.png",
+                                     textureBasePath + "back.png",
                                      {OpenGLTextureParameter(GL_TEXTURE_MIN_FILTER, Int, {.intValue = GL_NEAREST}),
                                       OpenGLTextureParameter(GL_TEXTURE_MAG_FILTER, Int, {.intValue = GL_NEAREST})});
 

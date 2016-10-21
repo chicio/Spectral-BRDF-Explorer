@@ -41,14 +41,23 @@ struct OpenGLTextureParameter {
 };
 
 class OpenGLTexture {
+private:
+
+    ///Texture base path.
+    std::string textureBasePath;
+
 public:
     
-    /// OpenGL Texture id.
+    /// OpenGL ES Texture id.
     GLuint _textureId;
     /// Texture width.
     unsigned textureWidth;
     //// Texture height.
     unsigned textureHeight;
+
+    OpenGLTexture() {}
+
+    OpenGLTexture(std::string aTextureBasePath) : textureBasePath{aTextureBasePath} {};
     
     void startTexture(GLenum target);
     

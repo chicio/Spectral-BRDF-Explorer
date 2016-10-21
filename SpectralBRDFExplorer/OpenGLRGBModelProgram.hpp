@@ -30,7 +30,6 @@ public:
     GLint _materialDiffuse;
     GLint _materialSpecular;
     GLint _materialSpecularExponent;
-    GLuint _textureId;
     GLint _textureActive;
     GLint _textureSampler;
     GLint _shadowMapSamplerLoc;

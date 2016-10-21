@@ -19,7 +19,7 @@ void OpenGLTexture::startTexture(GLenum target) {
 
 void OpenGLTexture::setTextureParameters(GLenum target, std::vector<OpenGLTextureParameter> parametersList) {
     
-    for (auto parameter : parametersList) {
+    for (auto& parameter : parametersList) {
         
         switch (parameter.parameterDataType) {
             case Float:
@@ -39,8 +39,11 @@ bool OpenGLTexture::loadTexture(std::string textureFileName, std::vector<OpenGLT
     unsigned error;
     unsigned char* texturePixels;
     
+    //Create texture file path.
+    std::string textureFilePath = textureBasePath + textureFileName;
     
-    error = lodepng_decode32_file(&texturePixels, &textureWidth, &textureHeight, textureFileName.c_str());
+    //Load file.
+    error = lodepng_decode32_file(&texturePixels, &textureWidth, &textureHeight, textureFilePath.c_str());
     
     if (error) {
         
@@ -89,6 +92,8 @@ bool OpenGLTexture::loadCubeMapTexture(std::string left,
                                        std::string back,
                                        std::vector<OpenGLTextureParameter> parametersList) {
     
+    
+    
     //Create cubemap texture.
     startTexture(GL_TEXTURE_CUBE_MAP);
     
@@ -96,7 +101,8 @@ bool OpenGLTexture::loadCubeMapTexture(std::string left,
     unsigned char* texturePixels1;
     unsigned textureWidth;
     unsigned textureHeight;
-    error = lodepng_decode32_file(&texturePixels1, &textureWidth, &textureHeight, left.c_str());
+    std::string textureFilePath = textureBasePath + left;
+    error = lodepng_decode32_file(&texturePixels1, &textureWidth, &textureHeight, textureFilePath.c_str());
     
     //Load the cube face - Positive X
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X,
@@ -109,8 +115,9 @@ bool OpenGLTexture::loadCubeMapTexture(std::string left,
                  GL_UNSIGNED_BYTE,
                  texturePixels1);
     
+    textureFilePath = textureBasePath + right;
     unsigned char* texturePixels2;
-    error = lodepng_decode32_file(&texturePixels2, &textureWidth, &textureHeight, right.c_str());
+    error = lodepng_decode32_file(&texturePixels2, &textureWidth, &textureHeight, textureFilePath.c_str());
     
     glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
                  0,
@@ -122,8 +129,9 @@ bool OpenGLTexture::loadCubeMapTexture(std::string left,
                  GL_UNSIGNED_BYTE,
                  texturePixels2);
     
+    textureFilePath = textureBasePath + up;
     unsigned char* texturePixels3;
-    error = lodepng_decode32_file(&texturePixels3, &textureWidth, &textureHeight, up.c_str());
+    error = lodepng_decode32_file(&texturePixels3, &textureWidth, &textureHeight, textureFilePath.c_str());
     
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
                  0,
@@ -135,8 +143,9 @@ bool OpenGLTexture::loadCubeMapTexture(std::string left,
                  GL_UNSIGNED_BYTE,
                  texturePixels3);
     
+    textureFilePath = textureBasePath + down;
     unsigned char* texturePixels4;
-    error = lodepng_decode32_file(&texturePixels4, &textureWidth, &textureHeight, down.c_str());
+    error = lodepng_decode32_file(&texturePixels4, &textureWidth, &textureHeight, textureFilePath.c_str());
     
     glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
                  0,
@@ -148,8 +157,9 @@ bool OpenGLTexture::loadCubeMapTexture(std::string left,
                  GL_UNSIGNED_BYTE,
                  texturePixels4);
     
+    textureFilePath = textureBasePath + front;
     unsigned char* texturePixels5;
-    error = lodepng_decode32_file(&texturePixels5, &textureWidth, &textureHeight, front.c_str());
+    error = lodepng_decode32_file(&texturePixels5, &textureWidth, &textureHeight, textureFilePath.c_str());
     
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
                  0,
@@ -161,8 +171,9 @@ bool OpenGLTexture::loadCubeMapTexture(std::string left,
                  GL_UNSIGNED_BYTE,
                  texturePixels5);
     
+    textureFilePath = textureBasePath + back;
     unsigned char* texturePixels6;
-    error = lodepng_decode32_file(&texturePixels6, &textureWidth, &textureHeight, back.c_str());
+    error = lodepng_decode32_file(&texturePixels6, &textureWidth, &textureHeight, textureFilePath.c_str());
     
     glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
                  0,
