@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45B0940A1DBF711000AA0625 /* OpenGLShadowProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B094081DBF711000AA0625 /* OpenGLShadowProgram.cpp */; };
 		5F64266F1D00717A00166E20 /* OpenGLRenderViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266C1D00717A00166E20 /* OpenGLRenderViewController.mm */; };
 		5F6426701D00717A00166E20 /* SceneListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266E1D00717A00166E20 /* SceneListViewController.mm */; };
 		5F720D7D1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F720D7B1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp */; };
@@ -147,6 +148,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		45B094081DBF711000AA0625 /* OpenGLShadowProgram.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLShadowProgram.cpp; sourceTree = "<group>"; };
+		45B094091DBF711000AA0625 /* OpenGLShadowProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLShadowProgram.hpp; sourceTree = "<group>"; };
 		5F64266B1D00717A00166E20 /* OpenGLRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = OpenGLRenderViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5F64266C1D00717A00166E20 /* OpenGLRenderViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = OpenGLRenderViewController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5F64266D1D00717A00166E20 /* SceneListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SceneListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -517,6 +520,8 @@
 				5F8A6D7A1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp */,
 				5F720D7C1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.hpp */,
 				5F720D7B1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp */,
+				45B094091DBF711000AA0625 /* OpenGLShadowProgram.hpp */,
+				45B094081DBF711000AA0625 /* OpenGLShadowProgram.cpp */,
 				5F9D61621DA13A6D00B87028 /* OpenGLTexture.hpp */,
 				5F9D61611DA13A6D00B87028 /* OpenGLTexture.cpp */,
 				5FC9CF7C1DAC408500C566E4 /* OpenGLFramebufferObject.hpp */,
@@ -1091,6 +1096,7 @@
 				5F8A6D7C1D8CC3200057E7C5 /* OpenGLRGBModelProgram.cpp in Sources */,
 				5F8A6D791D8CB1630057E7C5 /* iOSFileOpen.cpp in Sources */,
 				5FEF360A1CF7B3D7003DE7BC /* main.m in Sources */,
+				45B0940A1DBF711000AA0625 /* OpenGLShadowProgram.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

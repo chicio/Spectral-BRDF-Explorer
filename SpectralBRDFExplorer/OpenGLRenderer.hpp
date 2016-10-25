@@ -25,6 +25,7 @@
 #include "OpenGLCamera.hpp"
 #include "OpenGLRGBModelProgram.hpp"
 #include "OpenGLSkyboxProgram.hpp"
+#include "OpenGLShadowProgram.hpp"
 
 class OpenGLRenderer {
 private:
@@ -33,12 +34,14 @@ private:
     std::vector<OpenGLRGBModelProgram> openGLModelPrograms;
     
     /// Shadow.
-    OpenGLProgram openGLShadowProgram;
-    OpenGLTexture shadowTexture;
-    OpenGLFramebufferObject shadowDepthFramebufferObject;
-    GLuint shadowMapBufferId;
-    GLint _shadowMapMvpLoc;
-    GLint _shadowMapMvpLightLoc;
+    OpenGLShadowProgram openGLShadowProgram;
+    
+//    OpenGLProgram openGLShadowProgram;
+//    OpenGLTexture shadowTexture;
+//    OpenGLFramebufferObject shadowDepthFramebufferObject;
+//    GLuint shadowMapBufferId;
+//    GLint _shadowMapMvpLoc;
+//    GLint _shadowMapMvpLightLoc;
     
     /// Skybox.
     OpenGLSkyboxProgram openGLSkyboxProgram;

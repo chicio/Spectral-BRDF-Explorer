@@ -1,0 +1,48 @@
+//
+//  OpenGLShadowProgram.hpp
+//  SpectralBRDFExplorer
+//
+//  Created by Duroni Fabrizio on 25/10/2016.
+//  Copyright © 2016 Fabrizio Duroni. All rights reserved.
+//
+
+#ifndef OpenGLShadowProgram_hpp
+#define OpenGLShadowProgram_hpp
+
+#include <glm/gtc/type_ptr.hpp>
+
+#include "OpenGLProgram.hpp"
+#include "OpenGLFramebufferObject.hpp"
+#include "Model3D.hpp"
+#include "Scene.hpp"
+
+class OpenGLShadowProgram : public OpenGLProgram {
+public:
+    
+    OpenGLTexture shadowTexture;
+    OpenGLFramebufferObject shadowDepthFramebufferObject;
+    GLuint shadowMapBufferId;
+    GLint _shadowMapMvpLoc;
+    GLint _shadowMapMvpLightLoc;
+    
+    OpenGLShadowProgram() : OpenGLProgram() {}
+    OpenGLShadowProgram(std::string aShadersBasePath) : OpenGLProgram(aShadersBasePath) {}
+    
+    /*!
+     Start a shadow program with its specific setup.
+     
+     @param error error message to be return if the start fails.
+     
+     @returns true if the program starts correctly, else false.
+     */
+    bool startProgram(std::string& error);
+    
+    /*
+     Draw method.
+     Contains all the OpenGL ES step need to draw a model
+     in the draw renderer method.
+     */
+    void draw();
+};
+
+#endif /* OpenGLShadowProgram_hpp */
