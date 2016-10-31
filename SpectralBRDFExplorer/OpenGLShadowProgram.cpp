@@ -56,6 +56,17 @@ bool OpenGLShadowProgram::startProgram(std::string& error) {
     return true;
 }
 
+void OpenGLShadowProgram::update(OpenGLCamera& openGLCamera, const glm::mat4& projectionMatrix) {
+    
+    for (auto& currentModel : Scene::instance().models) {
+        
+        //Shadow map matrix.
+        currentModel._modelViewProjectionLightMatrix = projectionMatrix * glm::lookAt(Scene::instance().lightDirection,
+                                                                                      openGLCamera.center,
+                                                                                      glm::vec3(0.0f, 1.0f, 0.0f)) * currentModel._modelMatrix;
+    }
+}
+
 void OpenGLShadowProgram::draw() {
     
     glUseProgram(program);

@@ -48,6 +48,10 @@ bool OpenGLSkyboxProgram::startProgram(std::string& error) {
     return true;
 }
 
+void OpenGLSkyboxProgram::update(OpenGLCamera& openGLCamera, const glm::mat4& projectionMatrix) {
+    
+    Scene::instance().skybox._modelViewProjectionMatrix = projectionMatrix * openGLCamera.lookAtMatrix() * Scene::instance().skybox._modelMatrix;
+}
 
 void OpenGLSkyboxProgram::draw() {
     

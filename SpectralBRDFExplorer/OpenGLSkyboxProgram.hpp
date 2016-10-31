@@ -13,6 +13,7 @@
 
 #include "OpenGLProgram.hpp"
 #include "Model3D.hpp"
+#include "Scene.hpp"
 
 class OpenGLSkyboxProgram : public OpenGLProgram {
 private:
@@ -44,6 +45,14 @@ public:
      @returns true if the program starts correctly, else false.
      */
     bool startProgram(std::string& error);
+    
+    /*!
+     Update skybox models using the current camera and projection matrix.
+     
+     @param camera the current camera.
+     @param projectionMatrix the projection matrix (it is usually a orthogonal matrix).
+     */
+    void update(OpenGLCamera& openGLCamera, const glm::mat4& projectionMatrix);
     
     /*
      Draw method.

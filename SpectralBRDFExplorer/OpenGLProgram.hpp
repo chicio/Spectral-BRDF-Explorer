@@ -14,8 +14,10 @@
 #include <cstdlib>
 #include <cstring>
 #include <string>
+#include <iostream>
 
 #include "OpenGLShader.hpp"
+#include "OpenGLCamera.hpp"
 #include "Utils.hpp"
 
 #define VERTEX_POS_INDX             0
@@ -61,7 +63,7 @@ public:
     bool loadProgram(const char* vertexShaderSource, const char* fragmentShaderSource, std::string& errors);
     
     /*!
-     Start a program.
+     Start a program. Every subclass must implement it.
      Each subclass will implements this method with
      the specific setup needed for what it must draw.
      
@@ -69,13 +71,33 @@ public:
      
      @returns true if the program starts correctly, else false.
      */
-    virtual bool startProgram(std::string& error) { return false; };
+    virtual bool startProgram(std::string& error) {
+        
+        std::cout << "startProgram() not implemented." << std::endl;
+        
+        return false;
+    }
     
-    /*
-     Draw method.
+    /*!
+     Draw method. Every subclass must implement it.
      Must contain all the opengl step need to draw with a program.
      */
-    virtual void draw() {};
+    virtual void draw() {
+        
+        std::cout << "draw() not implemented." << std::endl;
+    }
+    
+    /*!
+     Update method. Every subclass must implement it.
+     Must contain model view project matrix construction login.
+     
+     @param openGLCamera the current camera scene.
+     @param projectionMatrix the projectionMatrix used for the current scene.
+     */
+    virtual void update(OpenGLCamera& openGLCamera, const glm::mat4& projectionMatrix) {
+        
+        std::cout << "update() not implemented." << std::endl;
+    }
     
     /*!
      Delete OpenGL ES program.

@@ -83,18 +83,12 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
     
     glm::mat4 orthoMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f);
     
-    for (auto& currentModel : Scene::instance().models) {
+    for (auto& modelProgram : openGLModelPrograms) {
         
-        //Main scene matrix.
-        currentModel._modelViewMatrix = openGLCamera.lookAtMatrix() * currentModel._modelMatrix;
-        currentModel._modelViewProjectionMatrix = projectionMatrix * currentModel._modelViewMatrix;
-        currentModel._normalMatrix = glm::inverseTranspose(currentModel._modelViewMatrix);
-        
-        //Shadow map matrix.
-        currentModel._modelViewProjectionLightMatrix = orthoMatrix * glm::lookAt(Scene::instance().lightDirection,
-                                                                                 openGLCamera.center,
-                                                                                 glm::vec3(0.0f, 1.0f, 0.0f)) * currentModel._modelMatrix;
+        modelProgram.update(openGLCamera, projectionMatrix);
     }
+    
+    openGLShadowProgram.update(openGLCamera, orthoMatrix);
     
     Scene::instance().skybox._modelViewProjectionMatrix = projectionMatrix * openGLCamera.lookAtMatrix() * Scene::instance().skybox._modelMatrix;
 }

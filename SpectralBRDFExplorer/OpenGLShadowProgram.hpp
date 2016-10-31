@@ -37,6 +37,14 @@ public:
      */
     bool startProgram(std::string& error);
     
+    /*!
+     Update models using the current camera and projection matrix.
+     
+     @param camera the current camera.
+     @param projectionMatrix the projection matrix (it is usually a orthogonal matrix).
+     */
+    void update(OpenGLCamera& openGLCamera, const glm::mat4& projectionMatrix);
+    
     /*
      Draw method.
      Contains all the OpenGL ES step need to draw a model

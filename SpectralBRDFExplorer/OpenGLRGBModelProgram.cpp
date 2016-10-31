@@ -56,6 +56,14 @@ bool OpenGLRGBModelProgram::startProgram(std::string& error) {
     return true;
 }
 
+void OpenGLRGBModelProgram::update(OpenGLCamera& openGLCamera, const glm::mat4& projectionMatrix) {
+    
+    //Main scene matrix.
+    model->_modelViewMatrix = openGLCamera.lookAtMatrix() * model->_modelMatrix;
+    model->_modelViewProjectionMatrix = projectionMatrix * model->_modelViewMatrix;
+    model->_normalMatrix = glm::inverseTranspose(model->_modelViewMatrix);
+}
+
 void OpenGLRGBModelProgram::draw() {
  
     glUseProgram(program);
