@@ -108,8 +108,9 @@
     CGPoint rotation = [recognizer translationInView:recognizer.view];
     
     openGLRenderer.openGLCamera.setRotationFactors(rotation.x * -0.02, rotation.y * 0.01);
-    
-    NSLog(@"rotation %f %f", rotation.x, rotation.y);
+
+    //Update camera.
+    openGLRenderer.openGLCamera.updateCamera();
 }
 
 - (void)pinch:(UIPinchGestureRecognizer *)recognizer {
@@ -125,6 +126,9 @@
         //if > 1.0 zoom in.
         openGLRenderer.openGLCamera.setZoomFactor(scale * 0.08f);
     }
+    
+    //Update camera.
+    openGLRenderer.openGLCamera.updateCamera();
 }
 
 #pragma mark Draw OpenGL

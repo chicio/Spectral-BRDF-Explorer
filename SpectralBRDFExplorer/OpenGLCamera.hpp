@@ -90,6 +90,11 @@ public:
     void setRotationFactors(float newPhiRotation, float newThetaRotation);
     
     /*!
+     Update the camera with the current data available.
+     */
+    void updateCamera();
+    
+    /*!
      Update camera position.
      
      @returns camera matrix updated.

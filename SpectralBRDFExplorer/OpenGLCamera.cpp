@@ -44,7 +44,7 @@ void OpenGLCamera::setRotationFactors(float newPhi, float newTheta) {
     thetaRotation = newTheta;
 }
 
-glm::mat4 OpenGLCamera::lookAtMatrix() {
+void OpenGLCamera::updateCamera() {
 
     //Camera is zoomed using user gesture.
     //Update eye position based on zoom factor.
@@ -53,7 +53,7 @@ glm::mat4 OpenGLCamera::lookAtMatrix() {
         eye.z = eye.z + zoomFactor;
         oldZoomFactor = zoomFactor;
     }
-
+    
     //Camera is rotated using spherical coordinate calculate with user gestures input.
     if(phiRotation != oldPhiRotation || thetaRotation != oldThetaRotation) {
         
@@ -68,7 +68,10 @@ glm::mat4 OpenGLCamera::lookAtMatrix() {
         eyeOffset.y = sceneCenter.y + cos(theta) * (sceneCenter.z * -1.0f);
         eyeOffset.z = sceneCenter.z + cos(phi) * sin(theta) * (sceneCenter.z * -1.0f);
     }
-    
+}
+
+glm::mat4 OpenGLCamera::lookAtMatrix() {
+
     //Create lookAt matrix.
     glm::mat4 lookAtMatrix = glm::lookAt(eye + eyeOffset, center, up);
     

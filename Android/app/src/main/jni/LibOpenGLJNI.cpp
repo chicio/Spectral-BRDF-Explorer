@@ -48,7 +48,11 @@ JNIEXPORT void JNICALL
 Java_it_chicio_spectralbrdfexplorer_LibOpenGL_cameraRotation(JNIEnv *env, jclass type,
                                                              jfloat rotationX, jfloat rotationY) {
 
+    //Set rotation factors.
     openGLRenderer->openGLCamera.setRotationFactors(rotationX * -0.02, rotationY * 0.01);
+
+    //Update camera.
+    openGLRenderer->openGLCamera.updateCamera();
 }
 
 JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_cameraZoom(JNIEnv *env,
@@ -64,4 +68,7 @@ JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_cameraZoom(
         //if > 1.0 zoom in.
         openGLRenderer->openGLCamera.setZoomFactor(scale * 0.08f);
     }
+
+    //Update camera.
+    openGLRenderer->openGLCamera.updateCamera();
 }
