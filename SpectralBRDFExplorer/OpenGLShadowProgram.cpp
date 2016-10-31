@@ -58,12 +58,15 @@ bool OpenGLShadowProgram::startProgram(std::string& error) {
 
 void OpenGLShadowProgram::update(OpenGLCamera& openGLCamera, const glm::mat4& projectionMatrix) {
     
-    for (auto& currentModel : Scene::instance().models) {
+    //Construct a new camera matrix using light position as point of view.
+    glm::mat4 cameraMatrix = glm::lookAt(lightDirection,
+                                         openGLCamera.center,
+                                         glm::vec3(0.0f, 1.0f, 0.0f));
+    
+    for (auto& currentModel : *models) {
         
-        //Shadow map matrix.
-        currentModel._modelViewProjectionLightMatrix = projectionMatrix * glm::lookAt(Scene::instance().lightDirection,
-                                                                                      openGLCamera.center,
-                                                                                      glm::vec3(0.0f, 1.0f, 0.0f)) * currentModel._modelMatrix;
+        //Update shadow map matrix using camera defined below and projection matrix received as input.
+        currentModel._modelViewProjectionLightMatrix = projectionMatrix * cameraMatrix * currentModel._modelMatrix;
     }
 }
 
@@ -73,18 +76,23 @@ void OpenGLShadowProgram::draw() {
     
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_POLYGON_OFFSET_FILL);     // reduce shadow rendering artifact
+    glEnable(GL_POLYGON_OFFSET_FILL); // reduce shadow rendering artifact
     
     glClear(GL_DEPTH_BUFFER_BIT);
-    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);     // disable color rendering, only write to depth buffer
+    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE); // disable color rendering, only write to depth buffer
     glPolygonOffset(5.0f, 100.0f);
     
-    for (auto& currentModel : Scene::instance().models) {
+    for (auto& currentModel : *models) {
         
         glBindBuffer(GL_ARRAY_BUFFER, currentModel._vboId);
         glEnableVertexAttribArray(VERTEX_POS_INDX);
         glEnableVertexAttribArray(VERTEX_NORMAL_INDX);
-        glVertexAttribPointer(VERTEX_POS_INDX, VERTEX_POS_SIZE, GL_FLOAT, GL_FALSE, currentModel.modelData().getStride(), 0);
+        glVertexAttribPointer(VERTEX_POS_INDX,
+                              VERTEX_POS_SIZE,
+                              GL_FLOAT,
+                              GL_FALSE,
+                              currentModel.modelData().getStride(),
+                              0);
         glVertexAttribPointer(VERTEX_NORMAL_INDX,
                               VERTEX_NORMAL_SIZE,
                               GL_FLOAT,
@@ -93,7 +101,10 @@ void OpenGLShadowProgram::draw() {
                               (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat)));
         
         //Load uniforms.
-        glUniformMatrix4fv(_shadowMapMvpLightLoc, 1, GL_FALSE, glm::value_ptr(currentModel._modelViewProjectionLightMatrix));
+        glUniformMatrix4fv(_shadowMapMvpLightLoc,
+                           1,
+                           GL_FALSE,
+                           glm::value_ptr(currentModel._modelViewProjectionLightMatrix));
         
         //Draw model.
         glDrawArrays(GL_TRIANGLES, 0, currentModel.modelData().getNumberOfVerticesToDraw());

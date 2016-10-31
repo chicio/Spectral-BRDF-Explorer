@@ -50,7 +50,7 @@ bool OpenGLSkyboxProgram::startProgram(std::string& error) {
 
 void OpenGLSkyboxProgram::update(OpenGLCamera& openGLCamera, const glm::mat4& projectionMatrix) {
     
-    Scene::instance().skybox._modelViewProjectionMatrix = projectionMatrix * openGLCamera.lookAtMatrix() * Scene::instance().skybox._modelMatrix;
+    skyboxModel->_modelViewProjectionMatrix = projectionMatrix * openGLCamera.lookAtMatrix()* skyboxModel->_modelMatrix;
 }
 
 void OpenGLSkyboxProgram::draw() {

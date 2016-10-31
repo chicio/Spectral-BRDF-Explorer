@@ -13,7 +13,6 @@
 
 #include "OpenGLProgram.hpp"
 #include "Model3D.hpp"
-#include "Scene.hpp"
 
 class OpenGLSkyboxProgram : public OpenGLProgram {
 private:

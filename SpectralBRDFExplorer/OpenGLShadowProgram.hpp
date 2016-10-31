@@ -14,7 +14,6 @@
 #include "OpenGLProgram.hpp"
 #include "OpenGLFramebufferObject.hpp"
 #include "Model3D.hpp"
-#include "Scene.hpp"
 
 class OpenGLShadowProgram : public OpenGLProgram {
 public:
@@ -24,6 +23,9 @@ public:
     GLuint shadowMapBufferId;
     GLint _shadowMapMvpLoc;
     GLint _shadowMapMvpLightLoc;
+    
+    glm::vec3 lightDirection;
+    std::vector<Model3D>* models;
     
     OpenGLShadowProgram() : OpenGLProgram() {}
     OpenGLShadowProgram(std::string aShadersBasePath) : OpenGLProgram(aShadersBasePath) {}

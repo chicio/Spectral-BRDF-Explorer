@@ -57,6 +57,8 @@ bool OpenGLRenderer::start(const OpenGLCamera& camera, std::string& error) {
     
     //Load Shadow mapping programs.
     openGLShadowProgram = OpenGLShadowProgram(OpenGLESConfiguration::shadersBasePath);
+    openGLShadowProgram.lightDirection = Scene::instance().lightDirection;
+    openGLShadowProgram.models = &Scene::instance().models;
     
     programLinked = openGLShadowProgram.startProgram(errors);
     
