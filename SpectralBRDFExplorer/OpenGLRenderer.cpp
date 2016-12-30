@@ -22,11 +22,11 @@ bool OpenGLRenderer::start(const OpenGLCamera& camera, std::string& error) {
     for (auto& currentModel : Scene::instance().models) {
         
         //Create program for model.
-        OpenGLRGBModelProgram modelProgram(OpenGLESConfiguration::shadersBasePath);
-        modelProgram.model = &currentModel;
-        modelProgram.openGLCamera = &openGLCamera;
-        
-        programLinked = modelProgram.startProgram(errors);
+//        OpenGLModelRGBProgram modelProgram(OpenGLESConfiguration::shadersBasePath);
+        OpenGLModelSpectralProgram* modelProgram = new OpenGLModelSpectralProgram(OpenGLESConfig::shadersBasePath);
+        modelProgram->model = &currentModel;
+        modelProgram->openGLCamera = &openGLCamera;
+        programLinked = modelProgram->startProgram(errors);
         
         if (!programLinked || !errors.empty()) {
             
@@ -41,8 +41,7 @@ bool OpenGLRenderer::start(const OpenGLCamera& camera, std::string& error) {
     }
     
     //Skybox program.
-    openGLSkyboxProgram = OpenGLSkyboxProgram(OpenGLESConfiguration::shadersBasePath,
-                                              OpenGLESConfiguration::textureFileBasePath);
+    openGLSkyboxProgram = OpenGLSkyboxProgram(OpenGLESConfig::shadersBasePath, OpenGLESConfig::textureFileBasePath);
     openGLSkyboxProgram.skyboxModel = &Scene::instance().skybox;
     
     programLinked  = openGLSkyboxProgram.startProgram(errors);
@@ -56,7 +55,7 @@ bool OpenGLRenderer::start(const OpenGLCamera& camera, std::string& error) {
     }
     
     //Load Shadow mapping programs.
-    openGLShadowProgram = OpenGLShadowProgram(OpenGLESConfiguration::shadersBasePath);
+    openGLShadowProgram = OpenGLShadowProgram(OpenGLESConfig::shadersBasePath);
     openGLShadowProgram.lightDirection = Scene::instance().lightDirection;
     openGLShadowProgram.models = &Scene::instance().models;
     
@@ -87,7 +86,8 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
     
     for (auto& modelProgram : openGLModelPrograms) {
         
-        modelProgram.update(openGLCamera, projectionMatrix);
+//        modelProgram.update(openGLCamera, projectionMatrix);
+        modelProgram->update(openGLCamera, projectionMatrix);
     }
     
     openGLShadowProgram.update(openGLCamera, orthoMatrix);
@@ -121,10 +121,12 @@ void OpenGLRenderer::draw() {
     for (auto& modelProgram : openGLModelPrograms) {
         
         //Set shadow texture.
-        modelProgram.shadowTexture = &openGLShadowProgram.shadowTexture;
+//        modelProgram.shadowTexture = &openGLShadowProgram.shadowTexture;
+        modelProgram->shadowTexture = &openGLShadowProgram.shadowTexture;
 
         //Draw current model.
-        modelProgram.draw();
+//        modelProgram.draw();
+        modelProgram->draw();
     }
 }
 
@@ -137,8 +139,10 @@ void OpenGLRenderer::shutdown() {
     
     for (auto& program : openGLModelPrograms) {
         
-        vbo.push_back(program.model->_vboId);
-        program.deleteProgram();
+//        vbo.push_back(program.model->_vboId);
+//        program.deleteProgram();
+        vbo.push_back(program->model->_vboId);
+        program->deleteProgram();
     }
     
     glDeleteBuffers((int)Scene::instance().models.size(), vbo.data());

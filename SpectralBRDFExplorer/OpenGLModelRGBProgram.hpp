@@ -12,19 +12,13 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 
-#include "OpenGLProgram.hpp"
+#include "OpenGLModelProgram.hpp"
 #include "Scene.hpp"
 #include "Model3D.hpp"
 
-class OpenGLRGBModelProgram : public OpenGLProgram {
+class OpenGLModelRGBProgram : public OpenGLModelProgram {
 public:
     
-    GLint _mvLocation;
-    GLint _mvpLocation;
-    GLint _mvpLightLocation;
-    GLint _normalLocation;
-    GLint _viewPositionLocation;
-    GLint _lightDirection;
     GLint _lightColor;
     GLint _materialAmbient;
     GLint _materialDiffuse;
@@ -32,15 +26,18 @@ public:
     GLint _materialSpecularExponent;
     GLint _textureActive;
     GLint _textureSampler;
-    GLint _shadowMapSamplerLoc;
-
-    Model3D* model;
-    OpenGLCamera* openGLCamera;
-    OpenGLTexture* shadowTexture;
     
-    OpenGLRGBModelProgram() : OpenGLProgram() {}
+    /*!
+     Constructor.
+     */
+    OpenGLModelRGBProgram() : OpenGLModelProgram() {}
     
-    OpenGLRGBModelProgram(std::string aShadersBasePath) : OpenGLProgram(aShadersBasePath) {}
+    /*!
+     Constructor.
+     
+     @param aShadersBasePath the shader path.
+     */
+    OpenGLModelRGBProgram(std::string aShadersBasePath) : OpenGLModelProgram(aShadersBasePath) {}
     
     /*!
      Start a rgb program with its specific setup.

@@ -23,7 +23,9 @@
 #include "OpenGLTexture.hpp"
 #include "OpenGLFramebufferObject.hpp"
 #include "OpenGLCamera.hpp"
-#include "OpenGLRGBModelProgram.hpp"
+#include "OpenGLModelProgram.hpp"
+#include "OpenGLModelRGBProgram.hpp"
+#include "OpenGLModelSpectralProgram.hpp"
 #include "OpenGLSkyboxProgram.hpp"
 #include "OpenGLShadowProgram.hpp"
 
@@ -31,7 +33,7 @@ class OpenGLRenderer {
 private:
     
     /// Models.
-    std::vector<OpenGLRGBModelProgram> openGLModelPrograms;
+    std::vector<OpenGLModelProgram *> openGLModelPrograms;
     
     /// Shadow.
     OpenGLShadowProgram openGLShadowProgram;

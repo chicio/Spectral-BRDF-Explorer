@@ -44,7 +44,7 @@
     //Create context.
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
     
-    if(!self.context) {
+    if (!self.context) {
         
         //Failed to load OpenGL ES 3 context.
         UIAlertController* alert = [UIAlertController
@@ -55,7 +55,7 @@
         [self presentViewController:alert animated:YES completion:nil];
     }
     
-    if([EAGLContext setCurrentContext:self.context]) {
+    if ([EAGLContext setCurrentContext:self.context]) {
         
         self.preferredFramesPerSecond = 30;
         
@@ -76,7 +76,7 @@
                                                                  glm::vec3(0.0f, 1.0f, 0.0f)),
                                                             error);
         
-        if(!rendererStarted) {
+        if (!rendererStarted) {
             
             //Shutdown OpenGL.
             openGLRenderer.shutdown();

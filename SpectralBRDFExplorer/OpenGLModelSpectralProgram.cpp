@@ -6,9 +6,10 @@
 //  
 //
 
-#include "OpenGLRGBModelProgram.hpp"
+#include <iostream>
+#include "OpenGLModelSpectralProgram.hpp"
 
-bool OpenGLRGBModelProgram::startProgram(std::string& error) {
+bool OpenGLModelSpectralProgram::startProgram(std::string& error) {
     
     std::string errors;
     std::string vertexShader = getFileContents(shadersBasePath + model->lighting + "Vertex.vsh");
@@ -56,7 +57,7 @@ bool OpenGLRGBModelProgram::startProgram(std::string& error) {
     return true;
 }
 
-void OpenGLRGBModelProgram::update(OpenGLCamera& openGLCamera, const glm::mat4& projectionMatrix) {
+void OpenGLModelSpectralProgram::update(OpenGLCamera& openGLCamera, const glm::mat4& projectionMatrix) {
     
     //Main scene matrix.
     model->_modelViewMatrix = openGLCamera.lookAtMatrix() * model->_modelMatrix;
@@ -64,8 +65,8 @@ void OpenGLRGBModelProgram::update(OpenGLCamera& openGLCamera, const glm::mat4& 
     model->_normalMatrix = glm::inverseTranspose(model->_modelViewMatrix);
 }
 
-void OpenGLRGBModelProgram::draw() {
- 
+void OpenGLModelSpectralProgram::draw() {
+    
     glUseProgram(program);
     
     glEnable(GL_CULL_FACE);

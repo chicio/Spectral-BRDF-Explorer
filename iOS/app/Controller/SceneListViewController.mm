@@ -45,6 +45,11 @@
         case 0:
             SceneLoader::loadRGBScene();
             break;
+        case 1:
+            SceneLoader::loadSpectralScene();
+            break;
+        default:
+            break;
     }
 }
 

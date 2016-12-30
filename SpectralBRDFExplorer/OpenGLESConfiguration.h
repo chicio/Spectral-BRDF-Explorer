@@ -11,7 +11,7 @@
 
 #include <string>
 
-namespace OpenGLESConfiguration {
+namespace OpenGLESConfig {
     
     /// Shaders base path.
     const std::string shadersBasePath = "Shaders/";
