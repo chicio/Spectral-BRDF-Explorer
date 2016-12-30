@@ -450,6 +450,8 @@
 		5FDA60ED1E169D1000301939 /* OpenGLModelRGBProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLModelRGBProgram.hpp; sourceTree = "<group>"; };
 		5FDA60EE1E169D1000301939 /* OpenGLModelSpectralProgram.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLModelSpectralProgram.cpp; sourceTree = "<group>"; };
 		5FDA60EF1E169D1000301939 /* OpenGLModelSpectralProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLModelSpectralProgram.hpp; sourceTree = "<group>"; };
+		5FDA60F41E16BEBB00301939 /* Illuminant.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Illuminant.hpp; sourceTree = "<group>"; };
+		5FDA60F51E16BEFE00301939 /* MacbethColorChecker.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MacbethColorChecker.hpp; sourceTree = "<group>"; };
 		5FE9B80F1D8C9C8E00852681 /* iOSFileOpen.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; lineEnding = 0; path = iOSFileOpen.hpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		5FEF36051CF7B3D7003DE7BC /* SpectralBRDFExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpectralBRDFExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEF36091CF7B3D7003DE7BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = main.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -500,6 +502,8 @@
 			children = (
 				5F94F50B1D8892A6005A657F /* glm */,
 				5F94F6141D8892A6005A657F /* lodepng */,
+				5FDA60F41E16BEBB00301939 /* Illuminant.hpp */,
+				5FDA60F51E16BEFE00301939 /* MacbethColorChecker.hpp */,
 				5F94F6171D8892A6005A657F /* Material.hpp */,
 				5F94F6191D8892A6005A657F /* Model3D.hpp */,
 				5F94F6181D8892A6005A657F /* Model3D.cpp */,

@@ -22,7 +22,7 @@ private:
     /// Model name.
     std::string name;
     /// Model Material.
-    Material material;
+    Material* material;
     /// Obj parser that incapsulate model data about vertices and normal.
     OpenGLObjParser openglObj;
     
@@ -77,14 +77,14 @@ public:
      
      @param choosenMaterial material to be loaded.
      */
-    void setMaterial(const Material& choosenMaterial);
+    void setMaterial(Material* choosenMaterial);
     
     /*!
      Get model material.
      
      @returns model material
      */
-    Material& getMaterial();
+    Material* getMaterial();
         
     void loadTexture() {
 

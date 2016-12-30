@@ -35,7 +35,15 @@ struct RGBColor {
     RGBColor(float r, float g, float b, float a) : red{r}, green{g}, blue{b}, alpha{a} {};
 };
 
-struct Material {
+class Material {
+public:
+    
+    /// Shiness.
+    float sh;
+};
+
+class RGBMaterial : public Material {
+public:
     
     /// Ambient component.
     RGBColor ka;
@@ -43,63 +51,68 @@ struct Material {
     RGBColor kd;
     /// Specular component.
     RGBColor ks;
-    /// Shiness.
-    float sh;
     
-    static Material createRubyMaterial() {
+    static Material* createRubyMaterial() {
         
-        Material material;
-        material.ka = RGBColor(0.1745f, 0.01175f, 0.01175f, 1.0);
-        material.kd = RGBColor(0.61424f, 0.04136f, 0.04136f, 1.0f);
-        material.ks = RGBColor(0.727811f, 0.626959f, 0.626959f, 1.0f);
-        material.sh = 76.8f;
+        RGBMaterial* material = new RGBMaterial();
+        material->ka = RGBColor(0.1745f, 0.01175f, 0.01175f, 1.0);
+        material->kd = RGBColor(0.61424f, 0.04136f, 0.04136f, 1.0f);
+        material->ks = RGBColor(0.727811f, 0.626959f, 0.626959f, 1.0f);
+        material->sh = 76.8f;
         
         return material;
     };
     
-    static Material createBronzeMaterial() {
+    static Material* createBronzeMaterial() {
 
-        Material material;
-        material.ka = RGBColor(0.2125f, 0.1275f, 0.054f, 1.0f);
-        material.kd = RGBColor(0.714f, 0.4284f, 0.18144f, 1.0f);
-        material.ks = RGBColor(0.393548, 0.271906, 0.166721, 1.0f);
-        material.sh = 25.6f;
+        RGBMaterial* material = new RGBMaterial();
+        material->ka = RGBColor(0.2125f, 0.1275f, 0.054f, 1.0f);
+        material->kd = RGBColor(0.714f, 0.4284f, 0.18144f, 1.0f);
+        material->ks = RGBColor(0.393548, 0.271906, 0.166721, 1.0f);
+        material->sh = 25.6f;
         
         return material;
     }
     
-    static Material createOrangeMaterial() {
+    static Material* createOrangeMaterial() {
         
-        Material material;
-        material.ka = RGBColor(0.0f, 0.0f, 0.0f, 1.0f);
-        material.kd = RGBColor(0.992157f, 0.513726f, 0.18144f, 1.0f);
-        material.ks = RGBColor(0.0225f, 0.0225f, 0.0225f, 1.0f);
-        material.sh = 12.8f;
-        
-        return material;
-    }
-    
-    static Material createMatteMaterial() {
-        
-        Material material;
-        material.ka = RGBColor(0.2f, 0.2f, 0.2f, 1.0f);
-        material.kd = RGBColor(0.8f, 0.8f, 0.8f, 1.0f);
-        material.ks = RGBColor(0.0f, 0.0f, 0.0f, 1.0f);
-        material.sh = 12.8f;
+        RGBMaterial* material = new RGBMaterial();
+        material->ka = RGBColor(0.0f, 0.0f, 0.0f, 1.0f);
+        material->kd = RGBColor(0.992157f, 0.513726f, 0.18144f, 1.0f);
+        material->ks = RGBColor(0.0225f, 0.0225f, 0.0225f, 1.0f);
+        material->sh = 12.8f;
         
         return material;
     }
     
-    static Material createJadeMaterial() {
+    static Material* createMatteMaterial() {
         
-        Material material;
-        material.ka = RGBColor(0.135f, 0.2225f, 0.1575f, 1.0f);
-        material.kd = RGBColor(0.54f, 0.89f, 0.63f, 1.0f);
-        material.ks = RGBColor(0.316228f, 0.316228f, 0.316228f, 1.0f);
-        material.sh = 99.0f;
+        RGBMaterial* material = new RGBMaterial();
+        material->ka = RGBColor(0.2f, 0.2f, 0.2f, 1.0f);
+        material->kd = RGBColor(0.8f, 0.8f, 0.8f, 1.0f);
+        material->ks = RGBColor(0.0f, 0.0f, 0.0f, 1.0f);
+        material->sh = 12.8f;
         
         return material;
     }
+    
+    static Material* createJadeMaterial() {
+        
+        RGBMaterial* material = new RGBMaterial();
+        material->ka = RGBColor(0.135f, 0.2225f, 0.1575f, 1.0f);
+        material->kd = RGBColor(0.54f, 0.89f, 0.63f, 1.0f);
+        material->ks = RGBColor(0.316228f, 0.316228f, 0.316228f, 1.0f);
+        material->sh = 99.0f;
+        
+        return material;
+    }
+};
+
+class SpectralMaterial : public Material {
+public:
+    
+    float spectrumSamples[81];
+
 };
 
 #endif /* Material_h */

@@ -22,7 +22,7 @@ std::string Model3D::getName() {
     return name;
 }
 
-void Model3D::setMaterial(const Material& choosenMaterial) {
+void Model3D::setMaterial(Material* choosenMaterial) {
     
     //Set material.
     material = choosenMaterial;
@@ -33,7 +33,7 @@ OpenGLObjParser& Model3D::modelData() {
     return openglObj;
 };
 
-Material& Model3D::getMaterial() {
+Material* Model3D::getMaterial() {
     
     return material;
 };

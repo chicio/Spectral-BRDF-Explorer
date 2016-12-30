@@ -61,9 +61,6 @@ void OpenGLSkyboxProgram::draw() {
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_POLYGON_OFFSET_FILL);
     
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glDepthMask(GL_FALSE);
     
     glUniform1i(_skyBoxTextureSamplerLocation, TEXTURE_UNIT_ID_0_SAMPLER);

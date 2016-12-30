@@ -26,7 +26,7 @@ public:
     /// Models contained in the scene.
     std::vector<Model3D> models;
     /// Skybox, if there's one.
-    Model3D skybox;
+    Model3D* skybox;
     /// Near plane.
     float nearPlane;
     /// Far Plane;

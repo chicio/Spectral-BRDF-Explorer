@@ -67,7 +67,7 @@ void OpenGLModelRGBProgram::update(OpenGLCamera& openGLCamera, const glm::mat4& 
 void OpenGLModelRGBProgram::draw() {
  
     glUseProgram(program);
-    
+        
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
@@ -123,22 +123,25 @@ void OpenGLModelRGBProgram::draw() {
                 Scene::instance().lightDirection.y,
                 Scene::instance().lightDirection.z);
     glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
+    
+    RGBMaterial* material = static_cast<RGBMaterial*>(model->getMaterial());
+    
     glUniform4f(_materialAmbient,
-                model->getMaterial().ka.red,
-                model->getMaterial().ka.green,
-                model->getMaterial().ka.blue,
-                model->getMaterial().ka.alpha);
+                material->ka.red,
+                material->ka.green,
+                material->ka.blue,
+                material->ka.alpha);
     glUniform4f(_materialDiffuse,
-                model->getMaterial().kd.red,
-                model->getMaterial().kd.green,
-                model->getMaterial().kd.blue,
-                model->getMaterial().kd.alpha);
+                material->kd.red,
+                material->kd.green,
+                material->kd.blue,
+                material->kd.alpha);
     glUniform4f(_materialSpecular,
-                model->getMaterial().ks.red,
-                model->getMaterial().ks.green,
-                model->getMaterial().ks.blue,
-                model->getMaterial().ks.alpha);
-    glUniform1f(_materialSpecularExponent, model->getMaterial().sh);
+                material->ks.red,
+                material->ks.green,
+                material->ks.blue,
+                material->ks.alpha);
+    glUniform1f(_materialSpecularExponent, model->getMaterial()->sh);
     
     glDrawArrays(GL_TRIANGLES, 0, model->modelData().getNumberOfVerticesToDraw());
     glDisableVertexAttribArray(VERTEX_POS_INDX);
