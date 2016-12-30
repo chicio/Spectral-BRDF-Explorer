@@ -36,13 +36,6 @@ private:
     /// Shadow.
     OpenGLShadowProgram openGLShadowProgram;
     
-//    OpenGLProgram openGLShadowProgram;
-//    OpenGLTexture shadowTexture;
-//    OpenGLFramebufferObject shadowDepthFramebufferObject;
-//    GLuint shadowMapBufferId;
-//    GLint _shadowMapMvpLoc;
-//    GLint _shadowMapMvpLightLoc;
-    
     /// Skybox.
     OpenGLSkyboxProgram openGLSkyboxProgram;
     
