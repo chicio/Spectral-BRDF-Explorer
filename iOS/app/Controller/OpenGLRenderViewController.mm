@@ -19,6 +19,8 @@
     
     /// OpenGL ES Renderer.
     OpenGLRenderer openGLRenderer;
+    /// Bool used to check if the render started.
+    bool rendererStarted;
 }
 
 /// Pinch gesture recognizer.
@@ -71,7 +73,7 @@
         std::string error;
         
         //Start renderer.
-        bool rendererStarted = openGLRenderer.start(OpenGLCamera(glm::vec3(0.0f, 7.0f, 1.0f),
+        rendererStarted = openGLRenderer.start(OpenGLCamera(glm::vec3(0.0f, 7.0f, 1.0f),
                                                                  glm::vec3(0.0f, 0.0f, -12.0f),
                                                                  glm::vec3(0.0f, 1.0f, 0.0f)),
                                                             error);
@@ -135,11 +137,21 @@
 
 - (void)update {
     
+    if (!rendererStarted) {
+
+        return;
+    }
+    
     //Update modelview and projection matrix if needed.
     openGLRenderer.update(self.view.bounds.size.width, self.view.bounds.size.height, self.timeSinceLastUpdate);
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
+    
+    if (!rendererStarted) {
+        
+        return;
+    }
     
     //Draw current model using renderer created.
     openGLRenderer.draw();

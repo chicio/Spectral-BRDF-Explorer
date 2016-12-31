@@ -79,8 +79,8 @@ namespace SceneLoader {
         
         Model3D model3D1(OpenGLESConfig::modelFileBasePath, "HappyBuddha");
         model3D1._modelMatrix = glm::translate(glm::mat4(), glm::vec3(-2.0f, 0.0f, -11.0f));
-        model3D1.setMaterial(RGBMaterial::createBronzeMaterial());
-        model3D1.lighting = "Phong";
+        model3D1.setMaterial(SpectralMaterial::createRedDiffuseMackbethMaterial());
+        model3D1.lighting = "Lambertian";
         Scene::instance().models.push_back(model3D1);
         
         Model3D floor3D(OpenGLESConfig::modelFileBasePath, "Floor");
@@ -89,12 +89,6 @@ namespace SceneLoader {
         floor3D.setMaterial(RGBMaterial::createMatteMaterial());
         floor3D.lighting = "Lambertian";
         Scene::instance().models.push_back(floor3D);
-        
-//        Model3D* skybox = new Model3D(OpenGLESConfig::modelFileBasePath, "Cube");
-//        skybox->_modelMatrix = glm::scale(glm::mat4(), glm::vec3(60.0, 60.0f, 60.0f));;
-//        skybox->setMaterial(RGBMaterial::createMatteMaterial());
-//        skybox->lighting = "Lambertian";
-//        Scene::instance().skybox = skybox;
         
         Scene::instance().nearPlane = 0.1f;
         Scene::instance().farPlane = 200.0f;

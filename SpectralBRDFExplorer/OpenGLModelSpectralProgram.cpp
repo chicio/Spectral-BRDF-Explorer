@@ -6,14 +6,13 @@
 //  
 //
 
-#include <iostream>
 #include "OpenGLModelSpectralProgram.hpp"
 
 bool OpenGLModelSpectralProgram::startProgram(std::string& error) {
     
     std::string errors;
-    std::string vertexShader = getFileContents(shadersBasePath + model->lighting + "Vertex.vsh");
-    std::string fragmentShader = getFileContents(shadersBasePath + model->lighting + "Fragment.fsh");
+    std::string vertexShader = getFileContents(shadersBasePath + model->lighting + "SpectralVertex.vsh");
+    std::string fragmentShader = getFileContents(shadersBasePath + model->lighting + "SpectralFragment.fsh");
     
     bool programLinked = loadProgram(vertexShader.c_str(), fragmentShader.c_str(), errors);
     
@@ -32,13 +31,10 @@ bool OpenGLModelSpectralProgram::startProgram(std::string& error) {
     _normalLocation = glGetUniformLocation(program, "normalMatrix");
     _viewPositionLocation = glGetUniformLocation(program, "viewPosition");
     _lightDirection = glGetUniformLocation(program, "light.direction");
-    _lightColor = glGetUniformLocation(program, "light.color");
-    _materialAmbient = glGetUniformLocation(program, "surfaceMaterial.ka");
-    _materialDiffuse = glGetUniformLocation(program, "surfaceMaterial.kd");
-    _materialSpecular = glGetUniformLocation(program, "surfaceMaterial.ks");
+    _materialAmbient = glGetUniformLocation(program, "surfaceMaterial.ambientPercentage");
+    _materialDiffuse = glGetUniformLocation(program, "surfaceMaterial.diffusePercentage");
+    _materialSpecular = glGetUniformLocation(program, "surfaceMaterial.specularPercentage");
     _materialSpecularExponent = glGetUniformLocation(program, "surfaceMaterial.sh");
-    _textureActive = glGetUniformLocation(program, "textureActive");
-    _textureSampler = glGetUniformLocation(program, "textureSampler");
     _shadowMapSamplerLoc = glGetUniformLocation(program, "shadowMapSampler");
     
     glGenBuffers(1, &(model->_vboId));
@@ -75,7 +71,7 @@ void OpenGLModelSpectralProgram::draw() {
     
     //Set texture unit for each sampler (even if not used).
     glUniform1i(_shadowMapSamplerLoc, TEXTURE_UNIT_ID_0_SAMPLER);
-    glUniform1i(_textureSampler, TEXTURE_UNIT_ID_1_SAMPLER);
+//    glUniform1i(_textureSampler, TEXTURE_UNIT_ID_1_SAMPLER);
     
     // Bind the shadow map texture
     glActiveTexture(GL_TEXTURE0);
@@ -92,24 +88,24 @@ void OpenGLModelSpectralProgram::draw() {
                           model->modelData().getStride(),
                           (GLvoid *)(VERTEX_POS_SIZE * sizeof(GLfloat)));
     
-    if (model->modelData().hasTexture()) {
-        
-        glEnableVertexAttribArray(VERTEX_TEXCOORDINATE_INDX);
-        glVertexAttribPointer(VERTEX_TEXCOORDINATE_INDX,
-                              VERTEX_TEXCOORDINATE_SIZE,
-                              GL_FLOAT,
-                              GL_FALSE,
-                              model->modelData().getStride(),
-                              (GLvoid *)((VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) * sizeof(GLfloat)));
-        
-        glUniform1i(_textureActive, 1);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, model->openGLTexture._textureId);
-    } else {
-        
-        //Set uniform flag for texture active to false.
-        glUniform1i(_textureActive, 0);
-    }
+//    if (model->modelData().hasTexture()) {
+//        
+//        glEnableVertexAttribArray(VERTEX_TEXCOORDINATE_INDX);
+//        glVertexAttribPointer(VERTEX_TEXCOORDINATE_INDX,
+//                              VERTEX_TEXCOORDINATE_SIZE,
+//                              GL_FLOAT,
+//                              GL_FALSE,
+//                              model->modelData().getStride(),
+//                              (GLvoid *)((VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) * sizeof(GLfloat)));
+//        
+//        glUniform1i(_textureActive, 1);
+//        glActiveTexture(GL_TEXTURE1);
+//        glBindTexture(GL_TEXTURE_2D, model->openGLTexture._textureId);
+//    } else {
+//        
+//        //Set uniform flag for texture active to false.
+//        glUniform1i(_textureActive, 0);
+//    }
     
     glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, glm::value_ptr(model->_modelViewMatrix));
     glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(model->_modelViewProjectionMatrix));
@@ -123,35 +119,42 @@ void OpenGLModelSpectralProgram::draw() {
                 Scene::instance().lightDirection.x,
                 Scene::instance().lightDirection.y,
                 Scene::instance().lightDirection.z);
-    glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
+//    glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
     
-    RGBMaterial* material = static_cast<RGBMaterial*>(model->getMaterial());
+//    RGBMaterial* material = static_cast<RGBMaterial*>(model->getMaterial());
+//    
+//    glUniform4f(_materialAmbient,
+//                material->ambientColor.red,
+//                material->ambientColor.green,
+//                material->ambientColor.blue,
+//                material->ambientColor.alpha);
+//    glUniform4f(_materialDiffuse,
+//                material->diffuseColor.red,
+//                material->diffuseColor.green,
+//                material->diffuseColor.blue,
+//                material->diffuseColor.alpha);
+//    glUniform4f(_materialSpecular,
+//                material->specularColor.red,
+//                material->specularColor.green,
+//                material->specularColor.blue,
+//                material->specularColor.alpha);
+//    glUniform1f(_materialSpecularExponent, model->getMaterial()->sh);
     
-    glUniform4f(_materialAmbient,
-                material->ka.red,
-                material->ka.green,
-                material->ka.blue,
-                material->ka.alpha);
-    glUniform4f(_materialDiffuse,
-                material->kd.red,
-                material->kd.green,
-                material->kd.blue,
-                material->kd.alpha);
-    glUniform4f(_materialSpecular,
-                material->ks.red,
-                material->ks.green,
-                material->ks.blue,
-                material->ks.alpha);
-    glUniform1f(_materialSpecularExponent, model->getMaterial()->sh);
+    SpectralMaterial* material = static_cast<SpectralMaterial*>(model->getMaterial());
+    
+    glUniform1f(_materialAmbient, material->ambientPercentage);
+    glUniform1f(_materialDiffuse, material->diffusePercentage);
+    glUniform1f(_materialSpecular, material->specularPercentage);
+    glUniform1f(_materialSpecularExponent, material->sh);
     
     glDrawArrays(GL_TRIANGLES, 0, model->modelData().getNumberOfVerticesToDraw());
     glDisableVertexAttribArray(VERTEX_POS_INDX);
     glDisableVertexAttribArray(VERTEX_NORMAL_INDX);
     
-    if(model->modelData().hasTexture()) {
-        
-        glDisableVertexAttribArray(VERTEX_TEXCOORDINATE_INDX);
-    }
+//    if(model->modelData().hasTexture()) {
+//        
+//        glDisableVertexAttribArray(VERTEX_TEXCOORDINATE_INDX);
+//    }
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

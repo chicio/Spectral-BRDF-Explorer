@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		45B0940A1DBF711000AA0625 /* OpenGLShadowProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B094081DBF711000AA0625 /* OpenGLShadowProgram.cpp */; };
+		5F50727F1E17FAC1007EF004 /* OpenGLModelProgramBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F50727D1E17FAC1007EF004 /* OpenGLModelProgramBuilder.cpp */; };
 		5F64266F1D00717A00166E20 /* OpenGLRenderViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266C1D00717A00166E20 /* OpenGLRenderViewController.mm */; };
 		5F6426701D00717A00166E20 /* SceneListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F64266E1D00717A00166E20 /* SceneListViewController.mm */; };
 		5F720D7D1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F720D7B1DB3CA0D00F29D74 /* OpenGLSkyboxProgram.cpp */; };
@@ -151,6 +152,8 @@
 /* Begin PBXFileReference section */
 		45B094081DBF711000AA0625 /* OpenGLShadowProgram.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLShadowProgram.cpp; sourceTree = "<group>"; };
 		45B094091DBF711000AA0625 /* OpenGLShadowProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLShadowProgram.hpp; sourceTree = "<group>"; };
+		5F50727D1E17FAC1007EF004 /* OpenGLModelProgramBuilder.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLModelProgramBuilder.cpp; sourceTree = "<group>"; };
+		5F50727E1E17FAC1007EF004 /* OpenGLModelProgramBuilder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLModelProgramBuilder.hpp; sourceTree = "<group>"; };
 		5F64266B1D00717A00166E20 /* OpenGLRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = OpenGLRenderViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5F64266C1D00717A00166E20 /* OpenGLRenderViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = OpenGLRenderViewController.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		5F64266D1D00717A00166E20 /* SceneListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = SceneListViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -525,6 +528,8 @@
 				5F94F61F1D8892A6005A657F /* OpenGLProgram.hpp */,
 				5F94F61E1D8892A6005A657F /* OpenGLProgram.cpp */,
 				5FDA60EB1E169D1000301939 /* OpenGLModelProgram.hpp */,
+				5F50727E1E17FAC1007EF004 /* OpenGLModelProgramBuilder.hpp */,
+				5F50727D1E17FAC1007EF004 /* OpenGLModelProgramBuilder.cpp */,
 				5FDA60ED1E169D1000301939 /* OpenGLModelRGBProgram.hpp */,
 				5FDA60EC1E169D1000301939 /* OpenGLModelRGBProgram.cpp */,
 				5FDA60EF1E169D1000301939 /* OpenGLModelSpectralProgram.hpp */,
@@ -1101,6 +1106,7 @@
 				5FC9CF7D1DAC408500C566E4 /* OpenGLFramebufferObject.cpp in Sources */,
 				5F94F69F1D8892A6005A657F /* Scene.cpp in Sources */,
 				5F94F6991D8892A6005A657F /* Model3D.cpp in Sources */,
+				5F50727F1E17FAC1007EF004 /* OpenGLModelProgramBuilder.cpp in Sources */,
 				5F6426701D00717A00166E20 /* SceneListViewController.mm in Sources */,
 				5F94F69D1D8892A6005A657F /* OpenGLRenderer.cpp in Sources */,
 				5F8A6D7F1D8CCA240057E7C5 /* Utils.cpp in Sources */,

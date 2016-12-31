@@ -26,6 +26,7 @@
 #include "OpenGLModelProgram.hpp"
 #include "OpenGLModelRGBProgram.hpp"
 #include "OpenGLModelSpectralProgram.hpp"
+#include "OpenGLModelProgramBuilder.hpp"
 #include "OpenGLSkyboxProgram.hpp"
 #include "OpenGLShadowProgram.hpp"
 

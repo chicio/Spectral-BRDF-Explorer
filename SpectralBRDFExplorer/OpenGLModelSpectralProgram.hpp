@@ -19,13 +19,10 @@
 class OpenGLModelSpectralProgram : public OpenGLModelProgram {
 public:
     
-    GLint _lightColor;
     GLint _materialAmbient;
     GLint _materialDiffuse;
     GLint _materialSpecular;
     GLint _materialSpecularExponent;
-    GLint _textureActive;
-    GLint _textureSampler;
     
     /*!
      Constructor.

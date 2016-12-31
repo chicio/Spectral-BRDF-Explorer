@@ -18,14 +18,19 @@ bool OpenGLRenderer::start(const OpenGLCamera& camera, std::string& error) {
     bool programLinked;
     std::string errors;
     
+    OpenGLModelProgramBuilder openGLModelProgramBuilder;
+    
     //Load models programs.
     for (auto& currentModel : Scene::instance().models) {
         
         //Create program for model.
 //                OpenGLModelSpectralProgram* modelProgram = new OpenGLModelSpectralProgram(OpenGLESConfig::shadersBasePath);
-                OpenGLModelRGBProgram* modelProgram = new OpenGLModelRGBProgram(OpenGLESConfig::shadersBasePath);
-        modelProgram->model = &currentModel;
-        modelProgram->openGLCamera = &openGLCamera;
+//                OpenGLModelRGBProgram* modelProgram = new OpenGLModelRGBProgram(OpenGLESConfig::shadersBasePath);
+//        modelProgram->model = &currentModel;
+//        modelProgram->openGLCamera = &openGLCamera;
+        
+        OpenGLModelProgram* modelProgram = openGLModelProgramBuilder.buildOpenGLModelProgram(currentModel, openGLCamera);
+        
         programLinked = modelProgram->startProgram(errors);
         
         if (!programLinked || !errors.empty()) {
@@ -157,11 +162,14 @@ void OpenGLRenderer::shutdown() {
     
     for (auto& program : openGLModelPrograms) {
         
-        //        vbo.push_back(program.model->_vboId);
-        //        program.deleteProgram();
+//        vbo.push_back(program.model->_vboId);
+//        program.deleteProgram();
         vbo.push_back(program->model->_vboId);
         program->deleteProgram();
     }
     
-    glDeleteBuffers((int)Scene::instance().models.size(), vbo.data());
+    if (openGLModelPrograms.size() > 0) {
+        
+        glDeleteBuffers((int)Scene::instance().models.size(), vbo.data());
+    }
 }

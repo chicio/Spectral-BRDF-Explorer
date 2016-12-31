@@ -11,8 +11,8 @@
 bool OpenGLModelRGBProgram::startProgram(std::string& error) {
     
     std::string errors;
-    std::string vertexShader = getFileContents(shadersBasePath + model->lighting + "Vertex.vsh");
-    std::string fragmentShader = getFileContents(shadersBasePath + model->lighting + "Fragment.fsh");
+    std::string vertexShader = getFileContents(shadersBasePath + model->lighting + "RGBVertex.vsh");
+    std::string fragmentShader = getFileContents(shadersBasePath + model->lighting + "RGBFragment.fsh");
     
     bool programLinked = loadProgram(vertexShader.c_str(), fragmentShader.c_str(), errors);
     
@@ -127,21 +127,21 @@ void OpenGLModelRGBProgram::draw() {
     RGBMaterial* material = static_cast<RGBMaterial*>(model->getMaterial());
     
     glUniform4f(_materialAmbient,
-                material->ka.red,
-                material->ka.green,
-                material->ka.blue,
-                material->ka.alpha);
+                material->ambientColor.red,
+                material->ambientColor.green,
+                material->ambientColor.blue,
+                material->ambientColor.alpha);
     glUniform4f(_materialDiffuse,
-                material->kd.red,
-                material->kd.green,
-                material->kd.blue,
-                material->kd.alpha);
+                material->diffuseColor.red,
+                material->diffuseColor.green,
+                material->diffuseColor.blue,
+                material->diffuseColor.alpha);
     glUniform4f(_materialSpecular,
-                material->ks.red,
-                material->ks.green,
-                material->ks.blue,
-                material->ks.alpha);
-    glUniform1f(_materialSpecularExponent, model->getMaterial()->sh);
+                material->specularColor.red,
+                material->specularColor.green,
+                material->specularColor.blue,
+                material->specularColor.alpha);
+    glUniform1f(_materialSpecularExponent, material->sh);
     
     glDrawArrays(GL_TRIANGLES, 0, model->modelData().getNumberOfVerticesToDraw());
     glDisableVertexAttribArray(VERTEX_POS_INDX);
