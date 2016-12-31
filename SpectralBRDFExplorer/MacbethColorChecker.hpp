@@ -11,8 +11,6 @@
 
 #include <OpenGLESHeaders.h>
 
-#include "Constants.hpp"
-
 namespace MacbethColorChecker {
     
     /// macbeth 1.

@@ -25,7 +25,7 @@ model {
             toolchain = 'clang'
             stl         = 'gnustl_static'
             CFlags.addAll(['-Wall'])
-            cppFlags.addAll(['-std=c++11','-Wall',
+            cppFlags.addAll(['-std=c++11','-Wall', '-frtti',
                              '-I' + file('src/main/jni'),
                              '-I' + file('../../SpectralBRDFExplorer'),
                              '-I' + file('../../SpectralBRDFExplorer/lodepng')])
