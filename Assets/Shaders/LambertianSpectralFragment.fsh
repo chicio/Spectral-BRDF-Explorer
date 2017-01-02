@@ -2,15 +2,36 @@
 
 precision mediump float;
 
-struct material {
+/// Spectrum samples.
+const int samples = 31;
+
+/**
+ Spectral material definition.
+ Uses percentage to define the quantity spectrum
+ of spectrum used for lighting.
+ */
+struct SpectralMaterial {
+    
     float ambientPercentage;
     float diffusePercentage;
     float specularPercentage;
     float sh;
 };
 
-struct directionalLight {
+struct DirectionalLight {
+    
     vec3 direction;
+};
+
+/**
+ Color matching function.
+ Used in tristimulus conversion.
+ */
+struct ColorMatchingFunction {
+    
+    float x[samples];
+    float y[samples];
+    float z[samples];
 };
 
 in vec3 normalInterp;
@@ -18,15 +39,135 @@ in vec3 vertPos;
 in vec2 textureCoordinate;
 in vec4 shadowCoord;
 
-out vec4 o_fragColor;
+out vec4 fragmentColor;
 
 uniform vec3 viewPosition;
-uniform directionalLight light;
-uniform material surfaceMaterial;
+uniform DirectionalLight light;
+uniform SpectralMaterial surfaceMaterial;
 uniform lowp sampler2DShadow shadowMapSampler;
 
-/// Spectrum samples.
-const int samples = 31;
+/*************** Spectrum ***************/
+
+/**
+ Calculate result spectrum of the object using spectral data
+ for illuminant and object surface using the lighting model of 
+ the shader.
+ 
+ @param illuminant illuminant spectrum.
+ @param object object spectrum.
+ @param cosTheta attenuation factor.
+ @param shadowPercentage the shadow percentage.
+ */
+float[samples] calculateSpectrum(float illuminant[samples], float object[samples], float cosTheta, float shadowPercentage) {
+    
+    float objectIlluminantSpectrum[samples];
+    float spectrumAmbient[samples];
+    float spectrumDiffuse[samples];
+    float resultSpectrum[samples];
+    
+    for (int i = 0; i < samples; i++) {
+        
+        objectIlluminantSpectrum[i] = illuminant[i] * object[i];
+        spectrumAmbient[i] = objectIlluminantSpectrum[i] * surfaceMaterial.ambientPercentage;
+        spectrumDiffuse[i] = objectIlluminantSpectrum[i] * surfaceMaterial.diffusePercentage * cosTheta * shadowPercentage;
+        resultSpectrum[i] = spectrumAmbient[i] + spectrumDiffuse[i];
+    }
+    
+    return resultSpectrum;
+}
+
+/*************** Tristimulus ***************/
+
+/**
+ Create a color matching function using 2 standard observer. 
+ This data is used in tristimulus conversion.
+ 
+ @returns a ColorMatchingFunction struct with 2 observer data.
+ */
+ColorMatchingFunction standardObserver2() {
+    
+    float x[samples] = float[samples](
+        0.014310,0.043510,0.134380,0.283900,0.348280,0.336200,0.290800,0.195360,0.095640,0.032010,0.004900,0.009300,
+        0.063270,0.165500,0.290400,0.433450,0.594500,0.762100,0.916300,1.026300,1.062200,1.002600,0.854450,0.642400,
+        0.447900,0.283500,0.164900,0.087400,0.046770,0.022700,0.011359
+    );
+    
+    float y[samples] = float[samples](
+        0.000396,0.001210,0.004000,0.011600,0.023000,0.038000,0.060000,0.090980,0.139020,0.208020,0.323000,0.503000,
+        0.710000,0.862000,0.954000,0.994950,0.995000,0.952000,0.870000,0.757000,0.631000,0.503000,0.381000,0.265000,
+        0.175000,0.107000,0.061000,0.032000,0.017000,0.008210,0.004102
+    );
+    
+    float z[samples] = float[samples](
+        0.067850,0.207400,0.645600,1.385600,1.747060,1.772110,1.669200,1.287640,0.812950,0.465180,0.272000,0.158200,
+        0.078250,0.042160,0.020300,0.008750,0.003900,0.002100,0.001650,0.001100,0.000800,0.000340,0.000190,0.000050,
+        0.000020,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000
+    );
+    
+    ColorMatchingFunction cmf = ColorMatchingFunction(x, y, z);
+    
+    return cmf;
+}
+
+/**
+ Convert spectrum to CIE 1931 XYZ tristimulus values.
+ 
+ @param result object * illuminant with lighting model applied.
+ @param illuminant the illuminant spectrum.
+ 
+ @returns vec3 with tristimulus components.
+ */
+vec3 tristimulus(float result[samples], float illuminant[samples]) {
+    
+    ColorMatchingFunction cmfStdObserver2 = standardObserver2();
+    
+    //Tristimulus values.
+    float X = 0.0f;
+    float Y = 0.0f;
+    float Z = 0.0f;
+    
+    //Normalizing constant.
+    float luminanceSum = 0.0f;
+    
+    //Integration approximation (Riemann).
+    for (int i = 0; i < samples; i++) {
+        
+        X += result[i] * cmfStdObserver2.x[i];
+        Y += result[i] * cmfStdObserver2.y[i];
+        Z += result[i] * cmfStdObserver2.z[i];
+        luminanceSum += illuminant[i] * cmfStdObserver2.y[i];
+    }
+    
+    float k = 1.0f / luminanceSum;
+    
+    X = X * k;
+    Y = Y * k;
+    Z = Z * k;
+    
+    vec3 tristimulus = vec3(X, Y, Z);
+
+    return tristimulus;
+}
+
+/**
+ Convert tristimulus to sRGB color space.
+ 
+ @param tristimulus the tristimulus values.
+ 
+ @returns vec4 with sRGB values.
+ */
+vec4 tristimulusTosRGB(vec3 tristimulus) {
+    
+    float r =  3.240479f * tristimulus.x - 1.537150f * tristimulus.y - 0.498535f * tristimulus.z;
+    float g = -0.969256f * tristimulus.x + 1.875991f * tristimulus.y + 0.041556f * tristimulus.z;
+    float b =  0.055648f * tristimulus.x - 0.204043f * tristimulus.y + 1.057311f * tristimulus.z;
+    
+    vec4 rgbColor = vec4(r, g, b, 1.0);
+    
+    return rgbColor;
+}
+
+/*************** Shadow ***************/
 
 float shadow() {
     
@@ -51,6 +192,8 @@ float shadow() {
     return shadowPercentage;
 }
 
+/*************** Main ***************/
+
 void main() {
 
     //Calculate light direction and view direction.
@@ -58,9 +201,6 @@ void main() {
     vec3 viewDirection = normalize(viewPosition - vertPos);
     float cosTheta = max(0.0, dot(normalInterp, normalize(lightDirection)));
     float shadowPercentage = shadow();
-    
-    /****** Spectrum *******/
-    ///////Spectrum  calculation
     
 //    ///Illuminant A
 //    float illuminant[samples] = float[samples](
@@ -84,70 +224,12 @@ void main() {
         0.729
     );
     
-    float objectIlluminantSpectrum[samples];
-    float spectrumAmbient[samples];
-    float spectrumDiffuse[samples];
-    float resultSpectrum[samples];
+    //Calculate spectrum.
+    float result[samples] = calculateSpectrum(illuminant, object, cosTheta, shadowPercentage);
     
-    for (int i = 0; i < samples; i++) {
-        
-        objectIlluminantSpectrum[i] = illuminant[i] * object[i];
-        spectrumAmbient[i] = objectIlluminantSpectrum[i] * surfaceMaterial.ambientPercentage;
-        spectrumDiffuse[i] = objectIlluminantSpectrum[i] * surfaceMaterial.diffusePercentage * cosTheta * shadowPercentage;
-        resultSpectrum[i] = spectrumAmbient[i] + spectrumDiffuse[i];
-    }
+    //Convert to tristimulus.
+    vec3 tristimulus = tristimulus(result, illuminant);
     
-    ///////Tristimulus conversion.
-    float x[samples] = float[samples](
-            0.014310,0.043510,0.134380,0.283900,0.348280,0.336200,0.290800,0.195360,0.095640,0.032010,0.004900,0.009300,
-            0.063270,0.165500,0.290400,0.433450,0.594500,0.762100,0.916300,1.026300,1.062200,1.002600,0.854450,0.642400,
-            0.447900,0.283500,0.164900,0.087400,0.046770,0.022700,0.011359
-    );
-    float y[samples] = float[samples](
-            0.000396,0.001210,0.004000,0.011600,0.023000,0.038000,0.060000,0.090980,0.139020,0.208020,0.323000,0.503000,
-            0.710000,0.862000,0.954000,0.994950,0.995000,0.952000,0.870000,0.757000,0.631000,0.503000,0.381000,0.265000,
-            0.175000,0.107000,0.061000,0.032000,0.017000,0.008210,0.004102
-    );
-    float z[samples] = float[samples](
-            0.067850,0.207400,0.645600,1.385600,1.747060,1.772110,1.669200,1.287640,0.812950,0.465180,0.272000,0.158200,
-            0.078250,0.042160,0.020300,0.008750,0.003900,0.002100,0.001650,0.001100,0.000800,0.000340,0.000190,0.000050,
-            0.000020,0.000000,0.000000,0.000000,0.000000,0.000000,0.000000
-    );
-    
-    //Tristimulus values.
-    float X = 0.0f;
-    float Y = 0.0f;
-    float Z = 0.0f;
-    
-    //Normalizing constant.
-    float luminanceSum = 0.0f;
-
-    //Integration approximation.
-    for (int i = 0; i < samples; i++) {
-        
-        X += resultSpectrum[i] * x[i];
-        Y += resultSpectrum[i] * y[i];
-        Z += resultSpectrum[i] * z[i];
-        luminanceSum += illuminant[i] * y[i];
-    }
-    
-    //Scale to Y.
-    //Usually k is chosen to give a value of 100 for luminance Y of samples with a unit reflectance spectrum.
-    float k = 1.0f/luminanceSum;
-    
-    X = X * k;
-    Y = Y * k;
-    Z = Z * k;
-    
-    vec3 tristimulus = vec3(X, Y, Z);
-    
-    ////RGB conversion.
-    float r =  3.240479f * tristimulus.x - 1.537150f * tristimulus.y - 0.498535f * tristimulus.z;
-    float g = -0.969256f * tristimulus.x + 1.875991f * tristimulus.y + 0.041556f * tristimulus.z;
-    float b =  0.055648f * tristimulus.x - 0.204043f * tristimulus.y + 1.057311f * tristimulus.z;
-
-    vec4 rgbColor = vec4(r, g, b, 1.0);
-    /*****************/
-
-    o_fragColor = rgbColor;
+    //Convert to sRGB.
+    fragmentColor = tristimulusTosRGB(tristimulus);
 }
