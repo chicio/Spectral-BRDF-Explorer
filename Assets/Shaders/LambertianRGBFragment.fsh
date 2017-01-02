@@ -119,17 +119,14 @@ void main() {
     //Cosine theta diffuse lambertian component.
     float cosTheta = max(0.0, dot(normalInterp, normalize(lightDirection)));
     
-    if (cosTheta > 0.0) {
-                
-        if(textureActive == 0) {
+    if(textureActive == 0) {
 
-            //No texture. Standard lighting.
-            diffuse = surfaceMaterial.kd * light.color * cosTheta;
-        } else {
+        //No texture. Standard lighting.
+        diffuse = surfaceMaterial.kd * light.color * cosTheta;
+    } else {
             
-            //Lighting using texture.
-            diffuse = surfaceMaterial.kd * textureColor * cosTheta;
-        }
+        //Lighting using texture.
+        diffuse = surfaceMaterial.kd * textureColor * cosTheta;
     }
     
     o_fragColor = ambient + diffuse * shadow();
