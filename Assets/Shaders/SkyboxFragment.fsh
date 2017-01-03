@@ -2,13 +2,16 @@
 
 precision mediump float;
 
+/// Texture coordinate (position obatined from vertex shader).
 in vec3 textureCoordinate;
 
-out vec4 o_fragColor;
+/// Fragment color.
+out vec4 fragColor;
 
+/// Skybox texture sampler.
 uniform samplerCube skyboxSampler;
 
 void main() {
 
-    o_fragColor = texture(skyboxSampler, textureCoordinate);
+    fragColor = texture(skyboxSampler, textureCoordinate);
 }

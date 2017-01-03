@@ -19,13 +19,16 @@
 class OpenGLModelRGBProgram : public OpenGLModelProgram {
 public:
     
-    GLint _lightColor;
-    GLint _materialAmbient;
-    GLint _materialDiffuse;
-    GLint _materialSpecular;
-    GLint _materialSpecularExponent;
-    GLint _textureActive;
-    GLint _textureSampler;
+    /// Light color.
+    GLint lightColor;
+    /// Ambiente component.
+    GLint materialAmbient;
+    /// Diffuse component.
+    GLint materialDiffuse;
+    /// Specular component.
+    GLint materialSpecular;
+    /// Specular exponent component.
+    GLint materialSpecularExponent;
     
     /*!
      Constructor.

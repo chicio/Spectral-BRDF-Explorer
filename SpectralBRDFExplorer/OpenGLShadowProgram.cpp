@@ -49,7 +49,8 @@ bool OpenGLShadowProgram::startProgram(std::string& error) {
     
     if (!framebufferCreation) {
         
-        //TODO: get framebuffer creation errors.
+        error = "Framebuffer object creation error.";
+        
         return false;
     }
     

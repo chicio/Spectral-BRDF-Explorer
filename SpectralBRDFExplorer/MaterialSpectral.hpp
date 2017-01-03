@@ -3,7 +3,7 @@
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 03/01/2017.
-//  Copyright © 2017 Fabrizio Duroni. All rights reserved.
+//  
 //
 
 #ifndef MaterialSpectral_hpp
@@ -32,6 +32,18 @@ public:
         material->ambientPercentage = 0.2f;
         material->diffusePercentage = 0.8f;
         material->specularPercentage = 0.0f;
+        std::copy(macbethSpectrum, macbethSpectrum + SBEConfiguration::numberOfSamples, material->spectrumSamples);
+        
+        return material;
+    }
+    
+    static Material* createSpecularMacbethMaterial(const float macbethSpectrum[SBEConfiguration::numberOfSamples]) {
+        
+        MaterialSpectral* material = new MaterialSpectral();
+        material->ambientPercentage = 0.2f;
+        material->diffusePercentage = 0.65f;
+        material->specularPercentage = 0.15f;
+        material->sh = 76.8f;
         std::copy(macbethSpectrum, macbethSpectrum + SBEConfiguration::numberOfSamples, material->spectrumSamples);
         
         return material;

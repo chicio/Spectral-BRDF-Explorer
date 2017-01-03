@@ -70,39 +70,41 @@ uniform DirectionalSpectralLight light;
 uniform SpectralMaterial surfaceMaterial;
 /// Shadow sampler.
 uniform lowp sampler2DShadow shadowMapSampler;
-/// Texture sampler.
-uniform sampler2D textureSampler;
-/// Flag used to check if there's an active texture.
-uniform int textureActive;
 
 /*************** Spectrum ***************/
 
 /**
  Calculate result spectrum of the object using spectral data
- for illuminant and object surface using the lighting model of 
+ for illuminant and object surface using the lighting model of
  the shader.
  
  @param light spectral light.
  @param surfaceMaterial surface material.
  @param cosTheta attenuation factor.
  @param shadowPercentage the shadow percentage.
+ @param phongModelComponent phong specular component.
  */
 float[samples] calculateSpectrum(DirectionalSpectralLight light,
                                  SpectralMaterial surfaceMaterial,
                                  float cosTheta,
-                                 float shadowPercentage) {
+                                 float shadowPercentage,
+                                 float phongModelComponent) {
     
     float objectIlluminantSpectrum[samples];
     float spectrumAmbient[samples];
     float spectrumDiffuse[samples];
+    float spectrumSpecular[samples];
     float resultSpectrum[samples];
+    
+    float specularComponent = phongModelComponent * surfaceMaterial.specularPercentage;
     
     for (int i = 0; i < samples; i++) {
         
         objectIlluminantSpectrum[i] = light.spectrum[i] * surfaceMaterial.spectrum[i];
         spectrumAmbient[i] = objectIlluminantSpectrum[i] * surfaceMaterial.ambientPercentage;
         spectrumDiffuse[i] = objectIlluminantSpectrum[i] * surfaceMaterial.diffusePercentage * cosTheta * shadowPercentage;
-        resultSpectrum[i] = spectrumAmbient[i] + spectrumDiffuse[i];
+        spectrumSpecular[i] = light.spectrum[i] * specularComponent * shadowPercentage;
+        resultSpectrum[i] = spectrumAmbient[i] + spectrumDiffuse[i] + spectrumSpecular[i];
     }
     
     return resultSpectrum;
@@ -111,7 +113,7 @@ float[samples] calculateSpectrum(DirectionalSpectralLight light,
 /*************** Tristimulus ***************/
 
 /**
- Create a color matching function using 2 standard observer. 
+ Create a color matching function using 2 standard observer.
  This data is used in tristimulus conversion.
  
  @returns a ColorMatchingFunction struct with 2 observer data.
@@ -177,7 +179,7 @@ vec3 tristimulus(float resultSpectrum[samples], DirectionalSpectralLight light) 
     Z = Z * k;
     
     vec3 tristimulus = vec3(X, Y, Z);
-
+    
     return tristimulus;
 }
 
@@ -199,56 +201,11 @@ vec4 tristimulusTosRGB(vec3 tristimulus) {
     return rgbColor;
 }
 
-/*************** Texture ***************/
-
-/**
- Procedural checker texture with antialiasing.
- 
- Classical checker texture. Antialiasing is obtained
- estimating the average value of the texture over an
- area covered by the pixel. First of all the rate of
- change of the texture over adjacent pixels (gradient
- vector). Its magnitude is used as filter width to
- decide if we need antialiasing.
- 
- @see "Advanced RenderMan: Creating CGI for Motion Pictures" http://dl.acm.org/citation.cfm?id=555371
- @see "OpenGL ES 3.0 Programming Guide" http://opengles-book.com
- @see "OpenGL ES 3.0 Programming Guide" source code https://github.com/danginsburg/opengles3-book
- 
- @param textureCoordinate texture coordinate.
- @param color0 first color of the checker.
- @param color1 second color of the checker.
- @param frequency the frequency of the checker.
- 
- @returns the color of the checker texture.
- */
-vec4 proceduralTextureChecker(vec2 textureCoordinate, vec4 color0, vec4 color1, float frequency) {
-    
-    vec4 color;
-    
-    vec2 textureFilterWidth = fwidth(textureCoordinate);
-    vec2 fuzz = textureFilterWidth * float(frequency) * 2.0;
-    vec2 check_pos = fract(textureCoordinate * float(frequency));
-    float fuzz_max = max(fuzz.s, fuzz.t);
-    
-    if(fuzz_max <= 0.5) {
-        
-        vec2 p = smoothstep(vec2(0.5), fuzz + vec2(0.5), check_pos) + (1.0 - smoothstep(vec2(0.0), fuzz, check_pos));
-        color = mix(color0, color1, p.x * p.y + (1.0 - p.x) * (1.0 - p.y));
-        color = mix(color, (color0 + color1) / 2.0, smoothstep(0.125, 0.5, fuzz_max));
-    } else {
-        
-        color = (color0 + color1) / 2.0;
-    }
-    
-    return color;
-}
-
 /*************** Shadow ***************/
 
 /**
  Calculate shadows using percentage closer filtering.
- Shadow texture has been obatined using shadow mapping 
+ Shadow texture has been obatined using shadow mapping
  technique (see OpenGLShadowMapProgram.cpp).
  
  @param shadowCoordinate the shadow coordinate on the shadow texture.
@@ -281,7 +238,7 @@ float shadow(vec4 shadowCoordinate) {
 /*************** Main ***************/
 
 void main() {
-
+    
     //Calculate light direction and view direction.
     vec3 lightDirection = normalize(light.direction);
     vec3 viewDirection = normalize(viewPosition - vertPos);
@@ -290,24 +247,20 @@ void main() {
     //Shadow percentage.
     float shadowPercentage = shadow(shadowCoordinate);
     
-    //Calculate spectrum.
-    float result[samples] = calculateSpectrum(light, surfaceMaterial, cosTheta, shadowPercentage);
+    //Apply phong model for specular component.
+    vec3 reflectionDirection = reflect(-lightDirection, normalInterp);
+    float phongSpecularComponent = pow(max(0.0, dot(reflectionDirection, normalInterp)), surfaceMaterial.sh);
     
+    //Calculate spectrum.
+    float result[samples] = calculateSpectrum(light,
+                                              surfaceMaterial,
+                                              cosTheta,
+                                              shadowPercentage,
+                                              phongSpecularComponent);
+
     //Convert to tristimulus.
     vec3 tristimulus = tristimulus(result, light);
-    vec4 rgbColor = tristimulusTosRGB(tristimulus);
-    
-    if(textureActive != 0) {
-        
-        //Add texture to color obtained from spectral data.
-        //In this way it is possibile to add an rgb color to the
-        //one obtained from spectral calculation.
-        rgbColor = rgbColor * proceduralTextureChecker(textureCoordinate,
-                                                       vec4(0.502, 0.0, 0.117, 1.0),
-                                                       vec4(0.9, 0.9, 0.9, 1.0),
-                                                       float(10));
-    }
     
     //Convert to sRGB.
-    fragmentColor = rgbColor;
+    fragmentColor = tristimulusTosRGB(tristimulus);
 }

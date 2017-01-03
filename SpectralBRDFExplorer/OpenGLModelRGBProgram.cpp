@@ -23,29 +23,19 @@ bool OpenGLModelRGBProgram::startProgram(std::string& error) {
         
         return false;
     }
+
+    //Load standard uniform.
+    loadModelBaseUniform();
     
-    //Prepare uniform to be loaded in shaders.
-    _mvLocation = glGetUniformLocation(program, "mvMatrix");
-    _mvpLocation = glGetUniformLocation(program, "mvpMatrix");
-    _mvpLightLocation = glGetUniformLocation(program, "mvpLightMatrix");
-    _normalLocation = glGetUniformLocation(program, "normalMatrix");
-    _viewPositionLocation = glGetUniformLocation(program, "viewPosition");
-    _lightDirection = glGetUniformLocation(program, "light.direction");
-    _lightColor = glGetUniformLocation(program, "light.color");
-    _materialAmbient = glGetUniformLocation(program, "surfaceMaterial.ka");
-    _materialDiffuse = glGetUniformLocation(program, "surfaceMaterial.kd");
-    _materialSpecular = glGetUniformLocation(program, "surfaceMaterial.ks");
-    _materialSpecularExponent = glGetUniformLocation(program, "surfaceMaterial.sh");
-    _textureActive = glGetUniformLocation(program, "textureActive");
-    _textureSampler = glGetUniformLocation(program, "textureSampler");
-    _shadowMapSamplerLoc = glGetUniformLocation(program, "shadowMapSampler");
+    //Load RGB unifrom.
+    lightColor = glGetUniformLocation(program, "light.color");
+    materialAmbient = glGetUniformLocation(program, "surfaceMaterial.ka");
+    materialDiffuse = glGetUniformLocation(program, "surfaceMaterial.kd");
+    materialSpecular = glGetUniformLocation(program, "surfaceMaterial.ks");
+    materialSpecularExponent = glGetUniformLocation(program, "surfaceMaterial.sh");
     
-    glGenBuffers(1, &(model->_vboId));
-    glBindBuffer(GL_ARRAY_BUFFER, model->_vboId);
-    glBufferData(GL_ARRAY_BUFFER,
-                 model->modelData().getVerticesDataSize(),
-                 model->modelData().getVerticesData().data(),
-                 GL_STATIC_DRAW);
+    //Load vertex buffer.
+    loadModelVertexBufferObject();
     
     //Prepare texture.
     if (model->modelData().hasTexture()) {
@@ -73,8 +63,8 @@ void OpenGLModelRGBProgram::draw() {
     glDepthMask(GL_TRUE);
     
     //Set texture unit for each sampler (even if not used).
-    glUniform1i(_shadowMapSamplerLoc, TEXTURE_UNIT_ID_0_SAMPLER);
-    glUniform1i(_textureSampler, TEXTURE_UNIT_ID_1_SAMPLER);
+    glUniform1i(shadowMapSamplerLoc, TEXTURE_UNIT_ID_0_SAMPLER);
+    glUniform1i(textureSampler, TEXTURE_UNIT_ID_1_SAMPLER);
     
     // Bind the shadow map texture
     glActiveTexture(GL_TEXTURE0);
@@ -101,47 +91,47 @@ void OpenGLModelRGBProgram::draw() {
                               model->modelData().getStride(),
                               (GLvoid *)((VERTEX_POS_SIZE + VERTEX_NORMAL_SIZE) * sizeof(GLfloat)));
         
-        glUniform1i(_textureActive, 1);
+        glUniform1i(textureActive, 1);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, model->openGLTexture._textureId);
     } else {
         
         //Set uniform flag for texture active to false.
-        glUniform1i(_textureActive, 0);
+        glUniform1i(textureActive, 0);
     }
     
-    glUniformMatrix4fv(_mvLocation, 1, GL_FALSE, glm::value_ptr(model->_modelViewMatrix));
-    glUniformMatrix4fv(_mvpLocation, 1, GL_FALSE, glm::value_ptr(model->_modelViewProjectionMatrix));
-    glUniformMatrix4fv(_mvpLightLocation, 1, GL_FALSE, glm::value_ptr(model->_modelViewProjectionLightMatrix));
-    glUniformMatrix4fv(_normalLocation, 1, GL_FALSE, glm::value_ptr(model->_normalMatrix));
-    glUniform3f(_viewPositionLocation,
+    glUniformMatrix4fv(mvLocation, 1, GL_FALSE, glm::value_ptr(model->_modelViewMatrix));
+    glUniformMatrix4fv(mvpLocation, 1, GL_FALSE, glm::value_ptr(model->_modelViewProjectionMatrix));
+    glUniformMatrix4fv(mvpLightLocation, 1, GL_FALSE, glm::value_ptr(model->_modelViewProjectionLightMatrix));
+    glUniformMatrix4fv(normalLocation, 1, GL_FALSE, glm::value_ptr(model->_normalMatrix));
+    glUniform3f(viewPositionLocation,
                 openGLCamera->eye.x + openGLCamera->eyeOffset.x,
                 openGLCamera->eye.y + openGLCamera->eyeOffset.y,
                 openGLCamera->eye.z + openGLCamera->eyeOffset.z);
-    glUniform3f(_lightDirection,
+    glUniform3f(lightDirection,
                 Scene::instance().lightDirection.x,
                 Scene::instance().lightDirection.y,
                 Scene::instance().lightDirection.z);
-    glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
+    glUniform4f(lightColor, 1.0, 1.0, 1.0, 1.0);
     
     MaterialRGB* material = static_cast<MaterialRGB*>(model->getMaterial());
     
-    glUniform4f(_materialAmbient,
+    glUniform4f(materialAmbient,
                 material->ambientColor.red,
                 material->ambientColor.green,
                 material->ambientColor.blue,
                 material->ambientColor.alpha);
-    glUniform4f(_materialDiffuse,
+    glUniform4f(materialDiffuse,
                 material->diffuseColor.red,
                 material->diffuseColor.green,
                 material->diffuseColor.blue,
                 material->diffuseColor.alpha);
-    glUniform4f(_materialSpecular,
+    glUniform4f(materialSpecular,
                 material->specularColor.red,
                 material->specularColor.green,
                 material->specularColor.blue,
                 material->specularColor.alpha);
-    glUniform1f(_materialSpecularExponent, material->sh);
+    glUniform1f(materialSpecularExponent, material->sh);
     
     glDrawArrays(GL_TRIANGLES, 0, model->modelData().getNumberOfVerticesToDraw());
     glDisableVertexAttribArray(VERTEX_POS_INDX);

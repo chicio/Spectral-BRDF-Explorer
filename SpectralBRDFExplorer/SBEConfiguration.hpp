@@ -3,7 +3,7 @@
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 03/01/2017.
-//  Copyright © 2017 Fabrizio Duroni. All rights reserved.
+//  
 //
 
 #ifndef SpectralBRDFExplorerConfiguration_h

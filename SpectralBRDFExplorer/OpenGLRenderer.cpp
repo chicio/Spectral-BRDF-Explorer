@@ -23,12 +23,6 @@ bool OpenGLRenderer::start(const OpenGLCamera& camera, std::string& error) {
     //Load models programs.
     for (auto& currentModel : Scene::instance().models) {
         
-        //Create program for model.
-//                OpenGLModelSpectralProgram* modelProgram = new OpenGLModelSpectralProgram(OpenGLESConfig::shadersBasePath);
-//                OpenGLModelRGBProgram* modelProgram = new OpenGLModelRGBProgram(OpenGLESConfig::shadersBasePath);
-//        modelProgram->model = &currentModel;
-//        modelProgram->openGLCamera = &openGLCamera;
-        
         OpenGLModelProgram* modelProgram = openGLModelProgramBuilder.buildOpenGLModelProgram(currentModel, openGLCamera);
         
         programLinked = modelProgram->startProgram(errors);
@@ -110,7 +104,7 @@ void OpenGLRenderer::update(float width, float height, double timeSinceLastUpdat
 
 void OpenGLRenderer::draw() {
     
-    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+    glClearColor(0.75f, 0.75f, 0.75f, 1.0f);
     
     GLint m_viewport[4];
     glGetIntegerv(GL_VIEWPORT, m_viewport);
@@ -131,7 +125,7 @@ void OpenGLRenderer::draw() {
 
     //Activate all color components (have been disabled for shadow rendering).
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(0.75f, 0.75f, 0.75f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //Draw skybox.
@@ -144,11 +138,9 @@ void OpenGLRenderer::draw() {
     for (auto& modelProgram : openGLModelPrograms) {
         
         //Set shadow texture.
-        //        modelProgram.shadowTexture = &openGLShadowProgram.shadowTexture;
         modelProgram->shadowTexture = &openGLShadowProgram.shadowTexture;
         
         //Draw current model.
-        //        modelProgram.draw();
         modelProgram->draw();
     }
 }
@@ -160,14 +152,14 @@ void OpenGLRenderer::shutdown() {
     //Clear vertex buffer objects.
     std::vector<GLuint> vbo;
     
+    //Delete programs.
     for (auto& program : openGLModelPrograms) {
         
-//        vbo.push_back(program.model->_vboId);
-//        program.deleteProgram();
         vbo.push_back(program->model->_vboId);
         program->deleteProgram();
     }
     
+    //Delete buffers.
     if (openGLModelPrograms.size() > 0) {
         
         glDeleteBuffers((int)Scene::instance().models.size(), vbo.data());

@@ -15,7 +15,6 @@ bool OpenGLFramebufferObject::attach2DTexture(GLuint textureId, GLenum attachmen
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &defaultFramebuffer);
     
     //Setup FBO.
-    //GLenum none = GL_NONE;
     glGenFramebuffers(1, &framebufferObjectId);
     glBindFramebuffer(GL_FRAMEBUFFER, framebufferObjectId);
     
@@ -29,7 +28,7 @@ bool OpenGLFramebufferObject::attach2DTexture(GLuint textureId, GLenum attachmen
     
     if(GL_FRAMEBUFFER_COMPLETE != glCheckFramebufferStatus(GL_FRAMEBUFFER)) {
         
-        std::cout << "ERROR FRAMEBUFFER OBJECT " << glCheckFramebufferStatus(GL_FRAMEBUFFER);
+        //std::cout << "ERROR FRAMEBUFFER OBJECT " << glCheckFramebufferStatus(GL_FRAMEBUFFER);
         return false;
     }
     
