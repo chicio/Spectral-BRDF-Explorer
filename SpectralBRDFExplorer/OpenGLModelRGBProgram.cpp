@@ -124,7 +124,7 @@ void OpenGLModelRGBProgram::draw() {
                 Scene::instance().lightDirection.z);
     glUniform4f(_lightColor, 1.0, 1.0, 1.0, 1.0);
     
-    RGBMaterial* material = static_cast<RGBMaterial*>(model->getMaterial());
+    MaterialRGB* material = static_cast<MaterialRGB*>(model->getMaterial());
     
     glUniform4f(_materialAmbient,
                 material->ambientColor.red,

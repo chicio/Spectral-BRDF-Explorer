@@ -10,6 +10,8 @@
 #define OpenGLModelProgramBuilder_hpp
 
 #include "Model3D.hpp"
+#include "MaterialSpectral.hpp"
+#include "MaterialRGB.hpp"
 #include "OpenGLCamera.hpp"
 #include "OpenGLModelProgram.hpp"
 #include "OpenGLModelRGBProgram.hpp"

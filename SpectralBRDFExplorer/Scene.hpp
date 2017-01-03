@@ -9,6 +9,7 @@
 #ifndef Scene_hpp
 #define Scene_hpp
 
+#include "Illuminant.hpp"
 #include "Model3D.hpp"
 
 class Scene {

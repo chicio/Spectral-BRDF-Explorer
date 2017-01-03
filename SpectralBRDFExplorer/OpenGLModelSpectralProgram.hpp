@@ -12,6 +12,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_inverse.hpp>
 
+#include "SBEConfiguration.hpp"
 #include "OpenGLModelProgram.hpp"
 #include "Scene.hpp"
 #include "Model3D.hpp"
@@ -19,10 +20,12 @@
 class OpenGLModelSpectralProgram : public OpenGLModelProgram {
 public:
     
-    GLint _materialAmbient;
-    GLint _materialDiffuse;
-    GLint _materialSpecular;
-    GLint _materialSpecularExponent;
+    GLint _materialAmbientLocation;
+    GLint _materialDiffuseLocation;
+    GLint _materialSpecularLocation;
+    GLint _materialSpecularExponentLocation;
+    GLint _lightSpectrumLocation;
+    GLint _objectLocation;
     
     /*!
      Constructor.

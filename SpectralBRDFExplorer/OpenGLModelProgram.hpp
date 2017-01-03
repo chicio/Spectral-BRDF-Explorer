@@ -25,7 +25,6 @@ public:
     GLint _normalLocation;
     GLint _viewPositionLocation;
     GLint _lightDirection;
-    
     GLint _shadowMapSamplerLoc;
 
     Model3D* model;

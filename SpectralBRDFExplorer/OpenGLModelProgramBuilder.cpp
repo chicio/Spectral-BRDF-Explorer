@@ -13,7 +13,7 @@ OpenGLModelProgram* OpenGLModelProgramBuilder::buildOpenGLModelProgram(Model3D& 
     OpenGLModelProgram* program;
     
     //Init program based on material of the model.
-    SpectralMaterial* material = dynamic_cast<SpectralMaterial*>(model.getMaterial());
+    MaterialSpectral* material = dynamic_cast<MaterialSpectral*>(model.getMaterial());
     
     if (material != nullptr) {
         

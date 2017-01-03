@@ -15,6 +15,8 @@
 #include "OpenGLTexture.hpp"
 #include "OpenGLObjParser.hpp"
 #include "Material.hpp"
+#include "MaterialRGB.hpp"
+#include "MaterialSpectral.hpp"
 
 class Model3D {
 private:

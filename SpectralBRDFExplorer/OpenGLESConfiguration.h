@@ -3,7 +3,7 @@
 //  SpectralBRDFExplorer
 //
 //  Created by Fabrizio Duroni on 20/10/2016.
-//  Copyright © 2016 Fabrizio Duroni. All rights reserved.
+//
 //
 
 #ifndef OpenGLESConfiguration_h

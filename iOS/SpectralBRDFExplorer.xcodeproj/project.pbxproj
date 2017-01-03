@@ -152,6 +152,9 @@
 /* Begin PBXFileReference section */
 		45B094081DBF711000AA0625 /* OpenGLShadowProgram.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLShadowProgram.cpp; sourceTree = "<group>"; };
 		45B094091DBF711000AA0625 /* OpenGLShadowProgram.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLShadowProgram.hpp; sourceTree = "<group>"; };
+		5F08A37F1E1B1CE90038F99B /* MaterialRGB.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MaterialRGB.hpp; sourceTree = "<group>"; };
+		5F08A3821E1B1D440038F99B /* MaterialSpectral.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MaterialSpectral.hpp; sourceTree = "<group>"; };
+		5F08A3841E1B1E2B0038F99B /* SBEConfiguration.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SBEConfiguration.hpp; sourceTree = "<group>"; };
 		5F50727D1E17FAC1007EF004 /* OpenGLModelProgramBuilder.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = OpenGLModelProgramBuilder.cpp; sourceTree = "<group>"; };
 		5F50727E1E17FAC1007EF004 /* OpenGLModelProgramBuilder.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OpenGLModelProgramBuilder.hpp; sourceTree = "<group>"; };
 		5F64266B1D00717A00166E20 /* OpenGLRenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = OpenGLRenderViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -508,11 +511,14 @@
 				5FDA60F41E16BEBB00301939 /* Illuminant.hpp */,
 				5FDA60F51E16BEFE00301939 /* MacbethColorChecker.hpp */,
 				5F94F6171D8892A6005A657F /* Material.hpp */,
+				5F08A3821E1B1D440038F99B /* MaterialSpectral.hpp */,
+				5F08A37F1E1B1CE90038F99B /* MaterialRGB.hpp */,
 				5F94F6191D8892A6005A657F /* Model3D.hpp */,
 				5F94F6181D8892A6005A657F /* Model3D.cpp */,
 				5F94F6251D8892A6005A657F /* Scene.hpp */,
 				5F94F6241D8892A6005A657F /* Scene.cpp */,
 				5F720D7F1DB3D69000F29D74 /* SceneLoader.h */,
+				5F08A3841E1B1E2B0038F99B /* SBEConfiguration.hpp */,
 				5F8A6D7E1D8CCA240057E7C5 /* Utils.hpp */,
 				5F8A6D7D1D8CCA240057E7C5 /* Utils.cpp */,
 				5F720D7E1DB3CA9500F29D74 /* OpenGLESHeaders.h */,
