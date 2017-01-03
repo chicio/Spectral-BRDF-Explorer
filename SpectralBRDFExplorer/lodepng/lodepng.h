@@ -1,4 +1,4 @@
-/*
+/**
 LodePNG version 20160501
 
 Copyright (c) 2005-2016 Lode Vandevenne
@@ -22,6 +22,13 @@ freely, subject to the following restrictions:
     3. This notice may not be removed or altered from any source
     distribution.
 */
+
+/**
+ THIS IS NOT THE ORIGINAL LodePNG library.
+ I modified it for my personal use.
+ 
+ Modified by Fabrizio Duroni on 03/01/17.
+ */
 
 #ifndef LODEPNG_H
 #define LODEPNG_H
