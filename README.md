@@ -14,7 +14,15 @@ OpenGL ES application inspired by [Walt Animation Disney Studios BRDF Viewer](ht
 
 In computer graphics usually color calculation is usually done using RGB colors. As a consequence of the fact that light is a subset of the entire electromagnetic spectrum, color in rendering can be computed using spectral distribution data, the tristimulus values and the correlated CIE XYZ color space (Kang, 2007 [1]). This color space was created by the main authority on color and illumination: International Commission on Illumination (CIE). The formulas that define the tristimulus values are (Kang, 2007 [1]):
 
-<immagini>Immagini
+<p align="center">
+<img src="https://github.com/chicio/Spectral-BRDF-Explorer/blob/master/Screenshots/tristimulus-x.png"/>
+</p>
+<p align="center">
+<img src="https://github.com/chicio/Spectral-BRDF-Explorer/blob/master/Screenshots/tristimulus-y.png"/>
+</p>
+<p align="center">
+<img src="https://github.com/chicio/Spectral-BRDF-Explorer/blob/master/Screenshots/tristimulus-z.png"/>
+</p>
 
 In this way it is possible to render scenes with high color fidelity, that could show physical phenomenons like metamerism, impossible to obtain with standard RGB data.
 
@@ -46,13 +54,19 @@ The scenes support also other computer graphics technique (not strictly related 
 - all lighting models
 - Skybox and shadow mapping
 
+<p align="center">
+<img src="https://github.com/chicio/Spectral-BRDF-Explorer/blob/master/Screenshots/rgb.gif"/>
+</p>
+
 **Scene 2**
 - Spectral data
 	- Illuminant D65 [] and Macbeth color checker [7] spectral data
 - all lighting models
 - Skybox and shadow mapping
 
-
+<p align="center">
+<img src="https://github.com/chicio/Sales-Taxes/blob/master/Screenshots/spectral.gif"/>
+</p>
 
 ***
 
