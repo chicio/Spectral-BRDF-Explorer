@@ -65,7 +65,7 @@ The scenes support also other computer graphics technique (not strictly related 
 - Skybox and shadow mapping
 
 <p align="center">
-<img src="https://github.com/chicio/Sales-Taxes/blob/master/Screenshots/spectral.gif"/>
+<img src="https://github.com/chicio/Spectral-BRDF-Explorer/blob/master/Screenshots/spectral.gif"/>
 </p>
 
 ***
