@@ -14,6 +14,18 @@ public class OpenGLRenderActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
+        //Get scene selected.
+        int sceneSelected = 0;
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+
+            sceneSelected = extras.getInt(getString(R.string.sceneSelectedIntentExtra));
+        }
+
+        LibOpenGL.loadAssetManager(getAssets());
+        LibOpenGL.loadScene(sceneSelected);
+
         //Setup OpenGL view.
         openGLView = new OpenGLView(this);
         setContentView(openGLView);

@@ -6,8 +6,7 @@
 
 extern "C" {
     JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_start(JNIEnv *env,
-                                                                               jclass type,
-                                                                               jobject assetManager);
+                                                                               jclass type);
     JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_update(JNIEnv *env,
                                                                                 jclass type,
                                                                                 jint width,
@@ -21,4 +20,11 @@ extern "C" {
     JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_cameraZoom(JNIEnv *env,
                                                                                     jclass type,
                                                                                     jfloat scale);
+
+    JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_loadAssetManager(JNIEnv *env,
+                                                                                          jclass type,
+                                                                                          jobject assetManager);
+    JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_loadScene(JNIEnv *env,
+                                                                                   jclass type,
+                                                                                   jint sceneIdentifier);
 }

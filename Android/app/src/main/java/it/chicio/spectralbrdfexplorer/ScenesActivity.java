@@ -42,10 +42,9 @@ public class ScenesActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                //TODO: dynamic selection.
-
                 //Start OpenGL render activity.
                 Intent openglRenderIntent = new Intent(context, OpenGLRenderActivity.class);
+                openglRenderIntent.putExtra(getString(R.string.sceneSelectedIntentExtra), position);
                 startActivity(openglRenderIntent);
             }
         });

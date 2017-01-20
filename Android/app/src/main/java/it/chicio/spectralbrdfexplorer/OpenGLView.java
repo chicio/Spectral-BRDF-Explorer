@@ -1,18 +1,11 @@
 package it.chicio.spectralbrdfexplorer;
 
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.gesture.Gesture;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -60,7 +53,7 @@ public class OpenGLView extends GLSurfaceView {
         @Override
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 
-            LibOpenGL.start(getResources().getAssets());
+            LibOpenGL.start();
         }
 
         @Override

@@ -9,15 +9,7 @@
 static OpenGLRenderer* openGLRenderer;
 
 JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_start(JNIEnv *env,
-                                                                           jclass type,
-                                                                           jobject assetManager) {
-
-    //Get assets manager native reference.
-    android_fopen_set_asset_manager(AAssetManager_fromJava(env, assetManager));
-
-    //TODO: move outside (dynamic in listview).
-    //Load scene.
-    SceneLoader::loadRGBScene();
+                                                                           jclass type) {
 
     //Start render.
     std::string error;
@@ -71,4 +63,27 @@ JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_cameraZoom(
 
     //Update camera.
     openGLRenderer->openGLCamera.updateCamera();
+}
+
+JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_loadAssetManager(JNIEnv *env,
+                                                                                      jclass type,
+                                                                                      jobject assetManager) {
+
+    //Get assets manager native reference.
+    android_fopen_set_asset_manager(AAssetManager_fromJava(env, assetManager));
+}
+
+
+JNIEXPORT void JNICALL Java_it_chicio_spectralbrdfexplorer_LibOpenGL_loadScene(JNIEnv *env,
+                                                                               jclass type,
+                                                                               jint sceneIdentifier) {
+
+    //Load scene.
+    if (sceneIdentifier == 1) {
+
+        SceneLoader::loadSpectralScene();
+    } else {
+
+        SceneLoader::loadRGBScene();
+    }
 }
