@@ -60,7 +60,7 @@ The scenes support also other computer graphics technique (not strictly related 
 
 **Scene 2**
 - Spectral data
-	- Illuminant D65 [] and Macbeth color checker [7] spectral data
+	- Illuminant D65 [6] and Macbeth color checker [7] spectral data
 - all lighting models
 - Skybox and shadow mapping
 
