@@ -3,7 +3,7 @@
 [![Build Status](https://www.bitrise.io/app/6e58fb34f951eea4.svg?token=FoOVtEqyeSqs499m0WPWfA&branch=master)](https://www.bitrise.io/app/6e58fb34f951eea4)
 [![Build Status](https://www.bitrise.io/app/0f216f14818a0da5.svg?token=E_AXUmBiaFKXBgCdOC32dg&branch=master)](https://www.bitrise.io/app/0f216f14818a0da5)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/chicio/Spectral-BRDF-Explorer/master/LICENSE.md)
-![Supported platform](https://img.shields.io/badge/platforms-iOS%20%7C%20Android-orange.svg)
+[![Supported platform](https://img.shields.io/badge/platforms-iOS%20%7C%20Android-orange.svg)](https://img.shields.io/badge/platforms-iOS%20%7C%20Android-orange.svg)
 
 
 OpenGL ES application inspired by [Walt Animation Disney Studios BRDF Viewer](https://github.com/wdas/brdf). A simple application thats shows some of the most famous lighting model used in computer graphics and that supports color calculation using RGB and spectral data of lights and object surfaces.
@@ -91,4 +91,3 @@ For other information about color calculation in computer graphics see my thesis
 [6] Wikipedia [Online]. Available:  https://en.wikipedia.org/wiki/Illuminant_D65. 
 
 [7] D. Pascale, “RGB coordinates of the Macbeth ColorChecker,” The BabelColor Company, 1 June 2006. [Online]. Available: http://www.babelcolor.com.
-
