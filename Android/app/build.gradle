@@ -3,7 +3,7 @@ apply plugin: 'com.android.model.application'
 model {
     android {
         compileSdkVersion 25
-        buildToolsVersion "25.0.2"
+        buildToolsVersion "25.0.3"
 
         defaultConfig {
             applicationId "it.chicio.android.spectralbrdfexplorer"
@@ -24,8 +24,8 @@ model {
             moduleName "LibOpenGLJNI"
             toolchain = 'clang'
             stl         = 'gnustl_static'
-            CFlags.addAll(['-Wall'])
-            cppFlags.addAll(['-std=c++11','-Wall', '-frtti',
+            CFlags.addAll(['-Wall', '-fintegrated-as'])
+            cppFlags.addAll(['-std=c++11','-Wall', '-frtti', '-fintegrated-as',
                              '-I' + file('src/main/jni'),
                              '-I' + file('../../SpectralBRDFExplorer'),
                              '-I' + file('../../SpectralBRDFExplorer/lodepng')])
@@ -57,5 +57,5 @@ model {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:design:25.2.0'
+    compile 'com.android.support:design:25.3.1'
 }
