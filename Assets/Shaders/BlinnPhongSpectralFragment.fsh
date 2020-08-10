@@ -249,7 +249,7 @@ void main() {
     
     //Apply phong model for specular component.
     vec3 h = normalize(lightDirection + viewDirection);
-    float blinnPhongSpecularComponent = pow(max(0.0, dot(h, normalInterp)), surfaceMaterial.sh);
+    float blinnPhongSpecularComponent = pow(max(0.0, dot(h, viewDirection)), surfaceMaterial.sh);
     
     //Calculate spectrum.
     float result[samples] = calculateSpectrum(light,

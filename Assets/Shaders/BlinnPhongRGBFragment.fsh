@@ -119,7 +119,7 @@ void main() {
         }
         
         //Blinn phong model.
-        specular = surfaceMaterial.ks * light.color * pow(max(0.0, dot(h, normalInterp)), surfaceMaterial.sh);
+        specular = surfaceMaterial.ks * light.color * pow(max(0.0, dot(h, viewDirection)), surfaceMaterial.sh);
     }
     
     fragmentColor = ambient + (diffuse + specular) * shadow(shadowCoordinate);
