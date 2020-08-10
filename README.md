@@ -1,7 +1,7 @@
 # Spectral BRDF Explorer
 
-[![Build Status](https://www.bitrise.io/app/6e58fb34f951eea4.svg?token=FoOVtEqyeSqs499m0WPWfA&branch=master)](https://www.bitrise.io/app/6e58fb34f951eea4)
-[![Build Status](https://www.bitrise.io/app/0f216f14818a0da5.svg?token=E_AXUmBiaFKXBgCdOC32dg&branch=master)](https://www.bitrise.io/app/0f216f14818a0da5)
+[![Build iOS](https://app.bitrise.io/app/0f216f14818a0da5/status.svg?token=E_AXUmBiaFKXBgCdOC32dg&branch=master)](https://app.bitrise.io/app/0f216f14818a0da5)
+[![Build Android](https://app.bitrise.io/app/6e58fb34f951eea4/status.svg?token=FoOVtEqyeSqs499m0WPWfA&branch=master)](https://app.bitrise.io/app/6e58fb34f951eea4)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/chicio/Spectral-BRDF-Explorer/master/LICENSE.md)
 [![Supported platform](https://img.shields.io/badge/platforms-iOS%20%7C%20Android-orange.svg)](https://img.shields.io/badge/platforms-iOS%20%7C%20Android-orange.svg)
 
